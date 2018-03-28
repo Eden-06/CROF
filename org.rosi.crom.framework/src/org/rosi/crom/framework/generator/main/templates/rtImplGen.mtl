@@ -9,7 +9,7 @@
  * The documentation of the template rtImplGen.
  * @param aNaturalType
  */]
-[template public rtImplGen(ct : CompartmentType,relations:Set(Relation)) post (replaceAll('\t', '').trim())]
+[template public rtImplGen(ct : CompartmentType,relations:Set(Relation))]
 [comment][for(ar:AbstractRole | ct.parts.role)]
 [if(ar.oclIsKindOf(RoleType))]
 [roleTypeGen(ar.oclAsType(RoleType),relations)/]
@@ -89,16 +89,14 @@ public class [nt.name/][rt.name/] extends [nt.name/]Impl implements [rt.name/]{
 	[ntRelationsshipGen(rt,relationships,constraints,nt,relations)/]
 	[attributeMethod(rt.attributes)/]
 	[operation(rt.operations)/]
-	[comment]	[ntIsSameGen(rt,relations)/][/comment]
 	public [nt.name/] get[nt.name/]() {
-			Iterator<[nt.name/]> itr=[nt.name.toLowerFirst()/][rt.name/]s.keySet().iterator();
-			while(itr.hasNext()) {
-				[nt.name/] key=itr.next();
-				if([nt.name.toLowerFirst()/][rt.name/]s.get(key).equals(this))
-					return key;
+		for(Entry<[nt.name/],[rt.name/]> entry:[nt.name.toLowerFirst()/][rt.name/]s.entrySet()) {
+			if (Objects.equals(this, entry.getValue())) {
+				return entry.getKey();
 			}
-			return null;
 		}
+		return null;
+	}
 }
 [/template]
 [template private ctRoleTypeImplGen(ct:CompartmentType,rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
@@ -110,7 +108,14 @@ class [ct.name/][rt.name/] extends [ct.name/]Impl implements [rt.name/]{
 	[ctRelationsshipGen(rt,relationships,constraints,ct,relations)/]
 	[attributeMethod(rt.attributes)/]
 	[operation(rt.operations)/]
-	
+	public [ct.name/] get[ct.name/]() {
+		for(Entry<[ct.name/],[rt.name/]> entry:[ct.name.toLowerFirst()/][rt.name/]s.entrySet()) {
+			if (Objects.equals(this, entry.getValue())) {
+				return entry.getKey();
+			}
+		}
+		return null;
+	}
 }
 [/template]
 
