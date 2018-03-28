@@ -25,6 +25,7 @@ there is something wrong in rtInterfaceGen!
 interface [rt.name/]{
 	[attributeMethodForInterface(rt.attributes)/]
 	[operationForInterface(rt.operations)/]
+	Object getPlayer();
 }
 [/template]
 
@@ -34,6 +35,7 @@ interface [rt.name/]{
 interface [rt.name/]{
 	[attributeMethodForInterface(rt.attributes)/]
 	[operationForInterface(rt.operations)/][comment][roleGroupIsSameGen(rg,relations)/][/comment]
+	Object getPlayer();
 }
 [/for]
 [/let]

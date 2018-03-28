@@ -89,7 +89,8 @@ public class [nt.name/][rt.name/] extends [nt.name/]Impl implements [rt.name/]{
 	[ntRelationsshipGen(rt,relationships,constraints,nt,relations)/]
 	[attributeMethod(rt.attributes)/]
 	[operation(rt.operations)/]
-	public [nt.name/] get[nt.name/]() {
+	@Override
+	public [nt.name/] getPlayer() {
 		for(Entry<[nt.name/],[rt.name/]> entry:[nt.name.toLowerFirst()/][rt.name/]s.entrySet()) {
 			if (Objects.equals(this, entry.getValue())) {
 				return entry.getKey();
@@ -108,7 +109,8 @@ class [ct.name/][rt.name/] extends [ct.name/]Impl implements [rt.name/]{
 	[ctRelationsshipGen(rt,relationships,constraints,ct,relations)/]
 	[attributeMethod(rt.attributes)/]
 	[operation(rt.operations)/]
-	public [ct.name/] get[ct.name/]() {
+	@Override
+	public [ct.name/] getPlayer() {
 		for(Entry<[ct.name/],[rt.name/]> entry:[ct.name.toLowerFirst()/][rt.name/]s.entrySet()) {
 			if (Objects.equals(this, entry.getValue())) {
 				return entry.getKey();
