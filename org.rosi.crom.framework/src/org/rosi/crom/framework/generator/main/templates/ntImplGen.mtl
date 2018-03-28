@@ -1,0 +1,69 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module ntImplGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+
+[template public ntImplGen(nt : NaturalType,model:Model)]
+[file (getFolderPath() +'/impl/'+ nt.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.Map;
+
+import [getPackagePath()/].*;
+
+[comment]
+[let roles : Set(AbstractRole) = getRoleTypeByNaturalType(nt,getAllFulfillment(model.relations))]
+[if(not roles->isEmpty())]
+[for(ar:AbstractRole | roles)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(t:Type|getPlayerByRoleType(aRoleType,model.relations))]
+import [getPackagePath()/].[getOwner(aRoleType).name/];
+[/for]
+[else]
+[for(t:Type|getPlayerByRoleGroup(ar.oclAsType(RoleGroup),model.relations))]
+import [getPackagePath()/].[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup),model)/];
+[/for]
+[/if]
+[/for]
+[/if]
+[/let]
+[/comment]
+
+public class [nt.name/]Impl implements [nt.name/]{
+	protected [nt.name/]State state=new [nt.name/]State();
+	[attributeMethodForState(nt.attributes)/]
+	[operation(nt.operations)/]
+	[ntEditRoleBlock(nt,model)/]
+
+
+}
+
+[/file]
+[/template]
+
+[template private ntEditRoleBlock(aNaturalType : NaturalType,aModel : Model)]
+[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillment(aModel.relations))]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+public Map get[aRoleType.name.toUpperFirst()/]s() {
+	return state.[aRoleType.name.toLowerFirst()/]s;
+}
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+[/for]
+[/if]
+[/let]
+[/template]
+
+

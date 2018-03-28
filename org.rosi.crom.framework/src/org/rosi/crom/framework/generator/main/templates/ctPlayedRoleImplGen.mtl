@@ -1,0 +1,65 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module ctPlayedRoleImplGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+[import org::rosi::crom::framework::generator::main::templates::ctUniversalImplGen/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public ctPlayedRoleImplGen(ct : CompartmentType, model : Model)]
+[file (getFolderPath() +'/impl/'+ ct.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
+import [getPackagePath()/].*;
+[comment][ctImportBlock(ct,model.relations)/][/comment]
+[comment][let roles : Set(AbstractRole) = getRoles(ct,getAllFulfillment(model.relations))]
+[if(not roles->isEmpty())]
+[for(ar:AbstractRole | roles)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(t:Type|getPlayers(aRoleType,model.relations))]
+import [getPackagePath()/].[getCompartmentNameByRoleType(aRoleType,model)/];
+[/for]
+[else]
+[for(t:Type|getPlayers(ar.oclAsType(RoleGroup),model.relations))]
+import [getPackagePath()/].[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup),model)/];
+[/for]
+[/if]
+[/for]
+[/if]
+[/let][/comment]
+public class [ct.name.toUpperFirst()/]Impl implements [ct.name.toUpperFirst()/]{
+	[ct.name/]State state=new [ct.name/]State();	
+	[ctContextBlock(ct,model)/]
+	[ctEditRoleBlock(ct,model)/]
+}
+[/file]
+[/template]
+
+[template private ctEditRoleBlock(aCompartmentType : CompartmentType,aModel : Model)]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillment(aModel.relations))]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+public Map get[aRoleType.name.toUpperFirst()/]s() {
+	return state.[aRoleType.name.toLowerFirst()/]s;
+}
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+[/for]
+[/if]
+[/let]
+[/template]

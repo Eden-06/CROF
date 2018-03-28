@@ -1,0 +1,24 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module ntInterfaceGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+[template public ntInterfaceGen(nt : NaturalType,model : Model)]
+
+[file (getFolderPath() +'/'+ nt.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+
+
+public interface [nt.name.toUpperFirst()/]{
+	[attributeMethodForInterface(nt.attributes)/]
+	[operationForInterface(nt.operations)/]
+}
+[/file]
+[/template]

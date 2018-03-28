@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="org.rosi.crom.framework.generator.popupMenus.contribution.IFile"
+            nameFilter="*.crom"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="org.rosi.crom.framework.generator.ui.popupMenus.AcceleoGenerateAcceleoAction"
+               id="org.crof.generator.popupMenus.acceleoGenerateAcceleoAction"
+               label="crom2Java"
+               menubarPath="org.rosi.crom.toformal.menu/group1">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.rosi.crom.framework.generator.category"
+            name="CROM Project">
+      </category>
+      <wizard
+            category="org.rosi.crom.framework.generator.category"
+            class="org.rosi.crom.framework.ui.wizard.newCROMProjectWizard"
+            icon="icons/ref-10.png"
+            id="org.rosi.crom.frameworkgenerator.newCROMProjectWizard"
+            name="Create New CROM Project">
+      </wizard>
+   </extension>
+
+</plugin>

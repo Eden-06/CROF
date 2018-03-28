@@ -1,0 +1,59 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module ctPlayedRoleStateGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+[import org::rosi::crom::framework::generator::main::templates::rtImplGen/]
+[import org::rosi::crom::framework::generator::main::templates::rtInterfaceGen/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public ctPlayedRoleStateGen(ct : CompartmentType, model:Model)]
+[file (getFolderPath() +'/impl/'+ ct.name.toUpperFirst()+'State.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.Map;
+import java.util.HashMap;
+
+import [getPackagePath()/].*;
+
+public class [ct.name.toUpperFirst()/]State{
+	[publicAttributeValue(ct.attributes)/]
+	[ctStateRoleBlock(ct,model)/]
+}
+[/file]
+[/template]
+
+
+
+[comment][template private ctStateImpoertBlock(ct : CompartmentType,model : Model) post (replaceAll('\t', '').trim())]
+[let roles : Set(AbstractRole) = getRoles(ct,getAllFulfillment(model.relations))]
+[if(not roles->isEmpty())]
+[for(ar:AbstractRole | roles)]
+[if(ar.oclIsKindOf(RoleType))]
+import [getPackagePath()/].impl.[getOwner(aRoleType).name/]Impl;
+import [getPackagePath()/].impl.[getOwner(aRoleType).name/]Impl.[ct.name/][aRoleType.name/]Impl;
+[else]
+import [getPackagePath()/].impl.[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup),model)/]Impl;
+[for(rt:RoleType|ar.oclAsType(RoleGroup).elements)]
+import [getPackagePath()/].impl.[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup),model)/]Impl.[ct.name/][rt.name/]Impl;
+[/for]
+[/if]
+[/for]
+[/if]
+[/let]
+[/template][/comment]
+
+[template private ctStateRoleBlock(aCompartmentType : CompartmentType,model : Model) post (replaceAll('\t', '').trim())]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillment(model.relations))]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
+[/for]
+[/if]
+[/let]
+[/template]

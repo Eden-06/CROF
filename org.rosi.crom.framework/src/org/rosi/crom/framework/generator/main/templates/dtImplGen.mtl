@@ -1,0 +1,26 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateDataType.
+ */]
+[module dtImplGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public dtImplGen(aDataType : DataType)]
+[file (getFolderPath() +'/impl/'+ aDataType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import [getPackagePath()/].[aDataType.name/];
+
+public class [aDataType.name/]Impl implements [aDataType.name/]{
+	[privateAttributeValue(aDataType.attributes)/]
+	[attributeMethod(aDataType.attributes)/]
+	[operation(aDataType.operations)/]
+}
+[/file]
+[/template]
+
+

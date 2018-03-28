@@ -1,0 +1,31 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module ctNotPlayedRoleImplGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+[import org::rosi::crom::framework::generator::main::templates::ctUniversalImplGen/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public ctNotPlayedRoleImplGen(ct : CompartmentType, model : Model)]
+[file (getFolderPath() +'/impl/'+ ct.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Iterator;
+import [getPackagePath()/].*;
+[comment][ctImportBlock(ct,model.relations)/][/comment]
+
+public class [ct.name.toUpperFirst()/]Impl implements [ct.name.toUpperFirst()/]{	
+	[ctContextBlock(ct,model)/]
+}
+[/file]
+[/template]
+

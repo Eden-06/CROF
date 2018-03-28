@@ -1,0 +1,64 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateEnum.
+ */]
+[module enumGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+
+[**
+ * The documentation of the template enumGen.
+ * @param aModel
+ */]
+[template public enumGen(aModel:Model)]
+[file (getFolderPath() +'/impl/Enum.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+public enum Enum {
+	[enum(aModel)/]
+}
+[/file]
+
+[/template]
+
+[template public enum(aModel:Model) post (replaceAll('\n', ' ').trim())]
+[for(aModelElement:ModelElement|aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[aModelElement.oclAsType(DataType).name.toUpper()/], [aModelElement.oclAsType(DataType).name.toUpper()/]IMPL,
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[aModelElement.oclAsType(NaturalType).name.toUpper()/], [aModelElement.oclAsType(NaturalType).name.toUpper()/]IMPL,
+[elseif(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+[aCompartmentType.name.toUpper()/], [aCompartmentType.name.toUpper()/]IMPL,
+[for(aRoleGroupElement:RoleGroupElement|aCompartmentType.parts.role)]
+[if(aRoleGroupElement.oclIsKindOf(RoleType))]
+[let aRoleType:RoleType=aRoleGroupElement.oclAsType(RoleType)]
+[roleTypeGen(aRoleType,aModel)/]
+[/let]
+[elseif(aRoleGroupElement.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getRole(aRoleGroupElement.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[roleTypeGen(aRoleType,aModel)/]
+[/for]
+[/let]
+[/if]
+[/for]
+[/let]
+[/if]
+[/for]
+[/template]
+
+[template private roleTypeGen(aRoleType:RoleType, aModel:Model) post (replaceAll('\n', ' ').trim())]
+[aRoleType.name.toUpper()/],
+[let types:Set(Type)=getPlayers(aRoleType,aModel.relations)]
+[for(aType:Type|types)]
+[if(aType.oclIsKindOf(NaturalType))]
+[aType.oclAsType(NaturalType).name.toUpper()/][aRoleType.name.toUpper()/],
+[elseif(aType.oclIsKindOf(CompartmentType))]
+[aType.oclAsType(NaturalType).name.toUpper()/][aRoleType.name.toUpper()/],
+[else]
+Something Wrong with feature "getPlayer" in enumGen.mtl.
+[/if]
+[/for]
+[/let]
+[/template]
+

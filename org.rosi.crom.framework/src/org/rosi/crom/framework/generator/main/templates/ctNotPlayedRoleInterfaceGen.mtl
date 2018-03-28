@@ -1,0 +1,25 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module ctNotPlayedRoleInterfaceGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::main::templates::util/]
+[import org::rosi::crom::framework::generator::main::templates::ctUniversalInterfaceGen/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public ctNotPlayedRoleInterfaceGen(ct : CompartmentType, aModel : Model)]
+
+[file (getFolderPath() +'/'+ ct.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+import java.util.List;
+
+public interface [ct.name/]{
+	[ctInterfaceUniversalGen(ct,aModel)/]
+}
+[/file]
+[/template]
