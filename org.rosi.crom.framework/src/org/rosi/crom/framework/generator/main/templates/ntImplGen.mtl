@@ -54,7 +54,7 @@ public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
 public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
 	state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
 }
-public Map get[aRoleType.name.toUpperFirst()/]s() {
+public Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aNaturalType.name/][aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s() {
 	return state.[aRoleType.name.toLowerFirst()/]s;
 }
 public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
