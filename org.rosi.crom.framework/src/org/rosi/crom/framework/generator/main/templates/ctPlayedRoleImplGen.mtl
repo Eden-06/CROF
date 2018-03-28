@@ -49,7 +49,7 @@ public class [ct.name.toUpperFirst()/]Impl implements [ct.name.toUpperFirst()/]{
 [/template]
 
 [template private ctEditRoleBlock(aCompartmentType : CompartmentType,aModel : Model)]
-[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillment(aModel.relations))]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillments(aModel.relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {

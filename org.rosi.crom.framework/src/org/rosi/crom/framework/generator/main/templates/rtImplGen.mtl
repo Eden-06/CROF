@@ -194,7 +194,7 @@ public boolean add[relationship.name.toUpperFirst()/]([relationship.first.holder
 [template private ctIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
 [if(relationship.second.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillment(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
 if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -202,7 +202,7 @@ if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillment(relations)),relationship.second.holder))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.second.holder))]
 if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -212,7 +212,7 @@ if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/template][template private ntIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
 [if(relationship.second.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillment(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillments(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
 if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -220,7 +220,7 @@ if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillment(relations)),relationship.second.holder))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillments(relations)),relationship.second.holder))]
 if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -233,7 +233,7 @@ if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [template private ctIrreflexiveSecondGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
 [if(relationship.first.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillment(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
 if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -241,7 +241,7 @@ if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillment(relations)),relationship.first.holder))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.first.holder))]
 if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -253,7 +253,7 @@ if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [template private ntIrreflexiveSecondGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
 [if(relationship.first.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillment(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillments(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
 if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
@@ -261,7 +261,7 @@ if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillment(relations)),relationship.first.holder))]
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillments(relations)),relationship.first.holder))]
 if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }

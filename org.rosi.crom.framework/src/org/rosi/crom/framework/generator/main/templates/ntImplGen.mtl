@@ -53,7 +53,7 @@ public class [nt.name/]Impl implements [nt.name/]{
 [/template]
 
 [template private ntEditRoleBlock(aNaturalType : NaturalType,aModel : Model)]
-[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillment(aModel.relations))]
+[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {

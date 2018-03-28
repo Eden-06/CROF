@@ -172,7 +172,7 @@ void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
 [query public hasRole(roles:Set(AbstractRole),rg:RoleGroup):Boolean=roles->includes(rg)/]
 
 [query public preparePartForConstructor(ct:CompartmentType):Set(Part) = ct.parts ->select(parts | parts.lower = 1) /]
-[query public getAllFulfillment(relations:Set(Relation)): Set(Fulfillment) = relations ->selectByType(Fulfillment)/]
+[query public getAllFulfillments(relations:Set(Relation)): Set(Fulfillment) = relations ->selectByType(Fulfillment)/]
 
 [comment][query public findAllRoleTypesInCompartmentType(ct:CompartmentType):Set(AbstractRole)=Sequence{self.parts.role->selectByType(RoleGroup).elements->selectByType(RoleType),self.parts.role->selectByType(RoleType)}->flatten()->excluding(null)->asSet()/][/comment]
 [query public isCompartmentTypePlayedRole(ct:CompartmentType,relations:Set(Relation)):Boolean=if ((relations->selectByType(Fulfillment).filler)->selectByType(CompartmentType))->includes(ct) then true else false endif/]

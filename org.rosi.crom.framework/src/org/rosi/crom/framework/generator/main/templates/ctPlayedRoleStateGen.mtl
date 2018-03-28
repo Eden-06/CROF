@@ -49,7 +49,7 @@ import [getPackagePath()/].impl.[getCompartmentNameByRoleGroup(ar.oclAsType(Role
 [/template][/comment]
 
 [template private ctStateRoleBlock(aCompartmentType : CompartmentType,model : Model) post (replaceAll('\t', '').trim())]
-[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillment(model.relations))]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillments(model.relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
