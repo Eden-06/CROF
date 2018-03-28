@@ -10,8 +10,8 @@
  * @param aNaturalType
  */]
 
-[template public ntImplGen(nt : NaturalType,model:Model)]
-[file (getFolderPath() +'/impl/'+ nt.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+[template public ntImplGen(aNaturalType : NaturalType,aModel:Model)]
+[file (getFolderPath() +'/impl/'+ aNaturalType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
 package [getPackagePath()/].impl;
 
 import java.util.Map;
@@ -36,17 +36,12 @@ import [getPackagePath()/].[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup
 [/let]
 [/comment]
 
-public class [nt.name/]Impl implements [nt.name/]{
-	protected [nt.name/]State state=new [nt.name/]State();
-	[attributeMethodForState(nt.attributes)/]
-	[operation(nt.operations)/]
-	[ntEditRoleBlock(nt,model)/]
-	
-	@Override
-	public boolean isSame([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]) {	
-		return this.state.equals((([nt.name.toUpperFirst()/]Impl)[nt.name.toLowerFirst()/]).state);
-	}
-
+public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
+	protected [aNaturalType.name/]State state=new [aNaturalType.name/]State();
+	[attributeMethodForState(aNaturalType.attributes)/]
+	[operation(aNaturalType.operations)/]
+	[ntEditRoleBlock(aNaturalType,aModel)/]
+	[playerFunctionGen(aNaturalType,aModel)/]
 }
 
 [/file]
@@ -67,6 +62,25 @@ public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRole
 }
 [/for]
 [/if]
+[/let]
+[/template]
+
+[template public playerFunctionGen(aNaturalType : NaturalType,aModel : Model)]
+@Override
+public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	
+	return this.state.equals((([aNaturalType.name.toUpperFirst()/]Impl)[aNaturalType.name.toLowerFirst()/]).state);
+}
+[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey(this);
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(this);
+}
+[/for]
 [/let]
 [/template]
 

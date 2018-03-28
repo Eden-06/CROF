@@ -44,6 +44,7 @@ public class [ct.name.toUpperFirst()/]Impl implements [ct.name.toUpperFirst()/]{
 	[ct.name/]State state=new [ct.name/]State();	
 	[ctContextBlock(ct,model)/]
 	[ctEditRoleBlock(ct,model)/]
+	[playerFunctionGen(ct,model)/]
 }
 [/file]
 [/template]
@@ -63,5 +64,24 @@ public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRole
 }
 [/for]
 [/if]
+[/let]
+[/template]
+
+[template public playerFunctionGen(aCompartmentType : CompartmentType,aModel : Model)]
+@Override
+public boolean isSame([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]) {	
+	return this.state.equals((([aCompartmentType.name.toUpperFirst()/]Impl)[aCompartmentType.name.toLowerFirst()/]).state);
+}
+[let roleTypes:Set(RoleType)=getRoles(aCompartmentType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey(this);
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(this);
+}
+[/for]
 [/let]
 [/template]

@@ -11,15 +11,26 @@
  * @param aDataType
  */]
 
-[template public ctPlayedRoleInterfaceGen(ct : CompartmentType, aModel : Model)]
+[template public ctPlayedRoleInterfaceGen(aCompartmentType : CompartmentType, aModel : Model)]
 
-[file (getFolderPath() +'/'+ ct.name.toUpperFirst()+'.java', false, 'UTF-8')]
+[file (getFolderPath() +'/'+ aCompartmentType.name.toUpperFirst()+'.java', false, 'UTF-8')]
 package [getPackagePath()/];
 
 import java.util.List;
 
-public interface [ct.name/]{
-	[ctInterfaceUniversalGen(ct,aModel)/]
+public interface [aCompartmentType.name/]{
+	[ctInterfaceUniversalGen(aCompartmentType,aModel)/]
+	[playerFunctionGen(aCompartmentType,aModel)/]
 }
 [/file]
+[/template]
+
+[template public playerFunctionGen(aCompartmentType : CompartmentType,aModel : Model)]
+boolean isSame([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[let roleTypes:Set(RoleType)=getRoles(aCompartmentType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+[/for]
+[/let]
 [/template]
