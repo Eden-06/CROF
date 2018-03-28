@@ -41,7 +41,11 @@ public class [nt.name/]Impl implements [nt.name/]{
 	[attributeMethodForState(nt.attributes)/]
 	[operation(nt.operations)/]
 	[ntEditRoleBlock(nt,model)/]
-
+	
+	@Override
+	public boolean isSame([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]) {	
+		return this.state.equals((([nt.name.toUpperFirst()/]Impl)[nt.name.toLowerFirst()/]).state);
+	}
 
 }
 

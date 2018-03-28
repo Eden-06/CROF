@@ -19,6 +19,7 @@ package [getPackagePath()/];
 public interface [nt.name.toUpperFirst()/]{
 	[attributeMethodForInterface(nt.attributes)/]
 	[operationForInterface(nt.operations)/]
+	boolean isSame([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
 }
 [/file]
 [/template]
