@@ -175,7 +175,7 @@ void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
 [query public getAllFulfillments(relations:Set(Relation)): Set(Fulfillment) = relations ->selectByType(Fulfillment)/]
 
 [comment][query public findAllRoleTypesInCompartmentType(ct:CompartmentType):Set(AbstractRole)=Sequence{self.parts.role->selectByType(RoleGroup).elements->selectByType(RoleType),self.parts.role->selectByType(RoleType)}->flatten()->excluding(null)->asSet()/][/comment]
-[query public isCompartmentTypePlayedRole(ct:CompartmentType,relations:Set(Relation)):Boolean=if ((relations->selectByType(Fulfillment).filler)->selectByType(CompartmentType))->includes(ct) then true else false endif/]
+[query public isCompartmentTypePlayedRole(ct:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(Fulfillment).filler->selectByType(CompartmentType)->includes(ct) /]
 [query public getNaturalTypeByNameOfRoleType(rt:RoleType,fulfillments:Set(Fulfillment)):Set(NaturalType)=fulfillments -> select(fulfillments | fulfillments.filled=rt).filler->asSet()/]
 [query public getNaturalTypeByNameOfRoleGroup(rg:RoleGroup,fulfillments:Set(Fulfillment)):Set(NaturalType)=fulfillments -> select(fulfillments | fulfillments.filled=rg).filler->asSet()/]
 [query public getTypeNameInNaturalType(nt:NaturalType) : 
@@ -257,20 +257,44 @@ void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
 	endif/]
 
 
-[query public palyerCollection(type:Type,types:Set(Type)):Set(Type)=Sequence{type,types}->flatten()->excluding(null)->asSet()/]
+[query public palyerCollection(aType:Type,types:Set(Type)):Set(Type)=Sequence{aType,types}->flatten()->excluding(null)->asSet()/]
 [query public palyerCollection(types1:Set(Type),types2:Set(Type)):Set(Type)=Sequence{types1,types2}->flatten()->excluding(null)->asSet()/]
 [query public palyerCollection(types:Set(Type)):Set(Type)=types->flatten()->excluding(null)->asSet()/]
-[query public palyerCollection(type:Type):Set(Type)=Sequence{type}->flatten()->excluding(null)->asSet()/]
+[query public palyerCollection(aType:Type):Set(Type)=Sequence{aType}->flatten()->excluding(null)->asSet()/]
+[query public getRelationshipsWithoutConstraint(aCompartmentType:CompartmentType):Set(Relationship)=aCompartmentType.relationships->asSet()/]
+[query public getRelationshipsWithConstraint(aCompartmentType:CompartmentType):Set(Relationship)=
+	aCompartmentType.constraints->iterate(aConstraint : Constraint; relationships:OrderedSet(Relationship) = OrderedSet{} | 
+	if (aConstraint.oclIsKindOf(Irreflexive))
+	then relationships->append(aConstraint.oclAsType(Irreflexive).relation)
+	else if(aConstraint.oclIsKindOf(Reflexive))
+		then relationships->append(aConstraint.oclAsType(Reflexive).relation)
+		else if(aConstraint.oclIsKindOf(Total))
+			then relationships->append(aConstraint.oclAsType(Total).relation)
+			else if(aConstraint.oclIsKindOf(Cyclic))
+				then relationships->append(aConstraint.oclAsType(Cyclic).relation)
+				else if(aConstraint.oclIsKindOf(Acyclic))
+					then relationships->append(aConstraint.oclAsType(Acyclic).relation)
+					else relationships
+					endif
+				endif
+			endif
+		endif
+	endif 
+	)->asSet()/]
 
-[template public get(rg:RoleGroup,types:Set(Type))]
+[query public getRelationships(aRoleType : RoleType,relationships:OrderedSet(Relationship)):Set(Relationship)=
+	relationships->iterate(aRelationship : Relationship; newRelationships:OrderedSet(Relationship) = OrderedSet{} | 
+	if (aRelationship.first.holder=aRoleType or aRelationship.second.holder=aRoleType)
+	then newRelationships->append(aRelationship)
+	else newRelationships
+	endif)->asSet()/]
 
-[for(ar:RoleGroupElement|rg.elements)]
-[if(ar.oclIsKindOf(RoleGroup))]
-
-[else]
-[/if]
-[/for]
-[/template]
+[comment][query public getConstraint(relationships:OrderedSet(Relationship)):Set(Relationship)=
+	relationships->iterate(aRelationship : Relationship; newRelationships:OrderedSet(Relationship) = OrderedSet{} | 
+	if (aRelationship.first.holder=aRoleType or aRelationship.second.holder=aRoleType)
+	then newRelationships->append(aRelationship)
+	else newRelationships
+	endif)->asSet()/][/comment]
 
 
 

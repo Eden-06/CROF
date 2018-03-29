@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CROF
 Bundle-SymbolicName: org.rosi.crom.framework;singleton:=true
-Bundle-Version: 0.3.9.qualifier
+Bundle-Version: 0.4.0.qualifier
 Bundle-Activator: org.rosi.crom.framework.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

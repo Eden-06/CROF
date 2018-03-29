@@ -83,21 +83,23 @@ something wrong in rtImplGen.mtl line 21.
 [template private ntRoleTypeImplGen(nt:NaturalType,rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
 public class [nt.name/][rt.name/] extends [nt.name/]Impl implements [rt.name/]{
 	[privateAttributeValue(rt.attributes)/]
+[comment]	[privateAttributeOfRelationships(rt,relationships)/][/comment]
 	public [nt.name/][rt.name/]([nt.name/]Impl [nt.name.toLowerFirst()/]Impl){
 			this.state=[nt.name.toLowerFirst()/]Impl.state;
 	}
-	[ntRelationsshipGen(rt,relationships,constraints,nt,relations)/]
+[comment]	[ntRelationsshipGen(rt,relationships,constraints,nt,relations)/][/comment]
 	[attributeMethod(rt.attributes)/]
 	[operation(rt.operations)/]
 	@Override
 	public [nt.name/] getPlayer() {
-		for(Entry<[nt.name/],[rt.name/]> entry:[nt.name.toLowerFirst()/][rt.name/]s.entrySet()) {
+		for(Map.Entry<[nt.name/],[rt.name/]> entry:[nt.name.toLowerFirst()/][rt.name/]s.entrySet()) {
 			if (Objects.equals(this, entry.getValue())) {
 				return entry.getKey();
 			}
 		}
 		return null;
 	}
+	
 }
 [/template]
 [template private ctRoleTypeImplGen(ct:CompartmentType,rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
@@ -106,12 +108,12 @@ class [ct.name/][rt.name/] extends [ct.name/]Impl implements [rt.name/]{
 	public [ct.name/][rt.name/]([ct.name/]Impl [ct.name.toLowerFirst()/]Impl){
 			this.state=[ct.name.toLowerFirst()/]Impl.state;
 		}
-	[ctRelationsshipGen(rt,relationships,constraints,ct,relations)/]
+[comment]	[ctRelationsshipGen(rt,relationships,constraints,ct,relations)/][/comment]
 	[attributeMethod(rt.attributes)/]
 	[operation(rt.operations)/]
 	@Override
 	public [ct.name/] getPlayer() {
-		for(Entry<[ct.name/],[rt.name/]> entry:[ct.name.toLowerFirst()/][rt.name/]s.entrySet()) {
+		for(Map.Entry<[ct.name/],[rt.name/]> entry:[ct.name.toLowerFirst()/][rt.name/]s.entrySet()) {
 			if (Objects.equals(this, entry.getValue())) {
 				return entry.getKey();
 			}
@@ -121,7 +123,18 @@ class [ct.name/][rt.name/] extends [ct.name/]Impl implements [rt.name/]{
 }
 [/template]
 
-[template private ntRelationsshipGen(rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
+[template private privateAttributeOfRelationships(rt : RoleType,relationships:OrderedSet(Relationship))]
+[let newRelationships:Set(Relationship)=getRelationships(rt,relationships)]
+[for(aRelationship:Relationship|newRelationships)]
+private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirst()/]=new [aRelationship.name.toUpperFirst()/]Impl();
+[/for]
+[/let]
+[/template]
+
+
+
+
+[comment][template private ntRelationsshipGen(rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
 [for(relationship:Relationship|relationships)]
 [if(relationship.first.holder=rt)]
 [if(relationship.second.lower=1 and relationship.second.upper=1 )]
@@ -268,7 +281,7 @@ if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/if]
 [/for]
 [/if]
-[/template]
+[/template][/comment]
 
 
 [comment][template private ctIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]

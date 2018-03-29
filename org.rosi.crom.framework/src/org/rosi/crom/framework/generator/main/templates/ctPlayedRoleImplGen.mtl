@@ -17,12 +17,14 @@ package [getPackagePath()/].impl;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.HashMap;
 import java.util.Iterator;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
+
 import [getPackagePath()/].*;
 [comment][ctImportBlock(ct,model.relations)/][/comment]
 [comment][let roles : Set(AbstractRole) = getRoles(ct,getAllFulfillment(model.relations))]

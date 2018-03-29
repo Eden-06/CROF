@@ -41,15 +41,6 @@ interface [rt.name/]{
 [/let]
 [/template]
 
-[template public roleGroupIsSameGen(rg : RoleGroup,relations:Set(Relation))]
-[for(t:Type|getPlayers(rg,relations))]
-[if(t.oclIsKindOf(NaturalType))]
-boolean isSame([t.oclAsType(NaturalType).name.toUpperFirst()/] [t.oclAsType(NaturalType).name.toLowerFirst()/]);
-[else]
-boolean isSame([t.oclAsType(CompartmentType).name.toUpperFirst()/] [t.oclAsType(CompartmentType).name.toLowerFirst()/]);
-[/if]
-[/for]
-[/template]
 [template public roleTypeIsSameGen(rt : RoleType,relations:Set(Relation))]
 [for(t:Type|getPlayers(rt,relations))]
 [if(t.oclIsKindOf(NaturalType))]

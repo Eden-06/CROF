@@ -5,6 +5,7 @@
 [module ctUniversalImplGen('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::main::templates::util/]
 [import org::rosi::crom::framework::generator::main::templates::rtImplGen/]
+[import org::rosi::crom::framework::generator::main::templates::relationshipImplGen/]
 
 [**
  * The documentation of the template generateCompartmentType.
@@ -39,6 +40,8 @@ import [getPackagePath()/].[t.oclAsType(CompartmentType).name/];
 [/template]
 [template public ctContextBlock(aCompartmentType : CompartmentType,aModel:Model)]
 [ctRoleBlock(aCompartmentType,aModel.relations)/]
+
+[relationshipAttributes(aCompartmentType.relationships)/]
 	
 [ctConstructorGen(aCompartmentType,aModel.relations)/]
 
@@ -49,6 +52,8 @@ import [getPackagePath()/].[t.oclAsType(CompartmentType).name/];
 [operation(aCompartmentType.operations)/]
 
 [rtImplGen(aCompartmentType,aModel.relations)/]
+
+[relationshipImplGen(aCompartmentType)/]
 
 [bindFunktionGen(aCompartmentType,aModel)/]
 
@@ -337,7 +342,11 @@ this.[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.put([aType.na
 
 
 
-
+[template private relationshipAttributes(relationships:OrderedSet(Relationship))]
+[for(aRelationship:Relationship|relationships)]
+private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirst()/]Instance=new [aRelationship.name.toUpperFirst()/]Impl();
+[/for]
+[/template]
 
 
 

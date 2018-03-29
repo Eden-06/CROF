@@ -17,6 +17,8 @@ package [getPackagePath()/].impl;
 import java.util.Map;
 import java.util.HashMap;
 
+import [getPackagePath()/].*;
+
 
 
 public class [nt.name.toUpperFirst()/]State{

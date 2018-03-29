@@ -5,6 +5,7 @@
 [module ctUniversalInterfaceGen('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::main::templates::util/]
 [import org::rosi::crom::framework::generator::main::templates::rtInterfaceGen/]
+[import org::rosi::crom::framework::generator::main::templates::relationshipInterfaceGen/]
 
 [**
  * The documentation of the template generateCompartmentType.
@@ -15,6 +16,7 @@
 [attributeMethodForInterface(aCompartmentType.attributes)/]
 [operationForInterface(aCompartmentType.operations)/]
 [rtInterfaceGen(aCompartmentType, aModel.relations)/]
+[relationshipInterfaceGen(aCompartmentType)/]
 [bindFunktionGenForInterface(aCompartmentType, aModel)/]
 [/template]
 [template private bindFunktionGenForInterface(aCompartmentType : CompartmentType, aModel : Model)]
