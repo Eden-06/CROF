@@ -18,17 +18,17 @@
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
-      <category
-            id="org.rosi.crom.framework.generator.category"
-            name="CROM Project">
-      </category>
       <wizard
-            category="org.rosi.crom.framework.generator.category"
+            category="org.framed.orm.wizard.category"
             class="org.rosi.crom.framework.ui.wizard.newCROMProjectWizard"
             icon="icons/ref-10.png"
             id="org.rosi.crom.frameworkgenerator.newCROMProjectWizard"
             name="Create New CROM Project">
       </wizard>
+      <category
+            id="org.framed.orm.wizard.category"
+            name="Role Modeling">
+      </category>
    </extension>
 
 </plugin>
