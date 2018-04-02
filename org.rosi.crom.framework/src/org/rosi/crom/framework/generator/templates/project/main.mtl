@@ -1,0 +1,76 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ */]
+[module main('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::project::util/]
+[**
+ * The documentation of the template main.
+ * @param aModel
+ */]
+[template public generateProject(aModel : Model)]
+[comment @main/]
+
+[file ('.classpath', false, 'UTF-8')]
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/json-20140107.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+
+[/file]
+
+[file ('META-INF/MANIFEST.MF', false, 'UTF-8')]
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: [getBundleName().toUpperFirst()/]
+Bundle-SymbolicName: [getBundleSymbolicName()/]
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ com.google.guava
+Import-Package: com.google.gson,
+ com.google.gson.reflect;version="2.7.0"
+Bundle-ClassPath: lib/json-20140107.jar
+
+[/file]
+
+[file ('.setting/org.eclipse.jdt.core.prefs', false, 'UTF-8')]
+eclipse.preferences.version=1
+org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
+org.eclipse.jdt.core.compiler.compliance=1.8
+org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.compiler.source=1.8
+
+[/file]
+
+[file ('build.properties', false, 'UTF-8')]
+source.. = src/
+output.. = bin/
+bin.includes = plugin.xml,\
+               META-INF/,\
+               .
+
+[/file]
+[/template]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

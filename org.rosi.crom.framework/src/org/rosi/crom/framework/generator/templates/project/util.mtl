@@ -1,0 +1,25 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module globalGenerator.
+ */]
+[module util('platform:/resource/org.rosi.crom.metamodel/')]
+
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[query public getBundleSymbolicName(traceabilityContext : OclAny) : String =invoke('org.rosi.crom.framework.generator.templates.project.Util', 'getBundleSymbolicName()', Sequence{}) /]
+[query public getBundleName(traceabilityContext : OclAny) : String =invoke('org.rosi.crom.framework.generator.templates.project.Util', 'getBundleName()', Sequence{}) /]
+
+
+
+
+
+
+
+
+
+
+
+

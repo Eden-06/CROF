@@ -1,0 +1,87 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module ntImplGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::util/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+
+[template public ntImplGen(aNaturalType : NaturalType,aModel:Model)]
+[file (getFolderPath() +'/impl/'+ aNaturalType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.Map;
+
+import [getPackagePath()/].*;
+
+[comment]
+[let roles : Set(AbstractRole) = getRoleTypeByNaturalType(nt,getAllFulfillment(model.relations))]
+[if(not roles->isEmpty())]
+[for(ar:AbstractRole | roles)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(t:Type|getPlayerByRoleType(aRoleType,model.relations))]
+import [getPackagePath()/].[getOwner(aRoleType).name/];
+[/for]
+[else]
+[for(t:Type|getPlayerByRoleGroup(ar.oclAsType(RoleGroup),model.relations))]
+import [getPackagePath()/].[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup),model)/];
+[/for]
+[/if]
+[/for]
+[/if]
+[/let]
+[/comment]
+
+public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
+	protected [aNaturalType.name/]State state=new [aNaturalType.name/]State();
+	[attributeMethodForState(aNaturalType.attributes)/]
+	[operation(aNaturalType.operations)/]
+	[ntEditRoleBlock(aNaturalType,aModel)/]
+	[playerFunctionGen(aNaturalType,aModel)/]
+}
+
+[/file]
+[/template]
+
+[template private ntEditRoleBlock(aNaturalType : NaturalType,aModel : Model)]
+[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+public Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aNaturalType.name/][aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s() {
+	return state.[aRoleType.name.toLowerFirst()/]s;
+}
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+[/for]
+[/if]
+[/let]
+[/template]
+
+[template public playerFunctionGen(aNaturalType : NaturalType,aModel : Model)]
+@Override
+public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	
+	return this.state.equals((([aNaturalType.name.toUpperFirst()/]Impl)[aNaturalType.name.toLowerFirst()/]).state);
+}
+[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey(this);
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(this);
+}
+[/for]
+[/let]
+[/template]
+
+

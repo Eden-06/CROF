@@ -80,8 +80,8 @@ public class GenerateAll {
 		//String targetPath=filePathOfMain.substring(filePathOfMain.lastIndexOf("/")+1);
 		String filePath=targetFolderOfProject.getLocation().toFile().toString();
 		String targetPath=filePath.substring(filePath.lastIndexOf("/")+1);
-		org.rosi.crom.framework.generator.main.templates.Util.setPackagePath(targetPath);
-		org.rosi.crom.framework.generator.main.templates.Util.setFolderPath(targetPath.replace(".", "/"));
+		org.rosi.crom.framework.generator.templates.main.Util.setPackagePath(targetPath);
+		org.rosi.crom.framework.generator.templates.main.Util.setFolderPath(targetPath.replace(".", "/"));
 		
 		String bundleName=targetPath;
 		if (targetPath.indexOf(".")!=-1) {
@@ -89,8 +89,8 @@ public class GenerateAll {
 			
 		}
 		
-		org.rosi.crom.framework.generator.project.templates.Util.setBundleName(bundleName);
-		org.rosi.crom.framework.generator.project.templates.Util.setBundleSymbolicName(targetPath);
+		org.rosi.crom.framework.generator.templates.project.Util.setBundleName(bundleName);
+		org.rosi.crom.framework.generator.templates.project.Util.setBundleSymbolicName(targetPath);
 	
 		
 		
@@ -99,13 +99,13 @@ public class GenerateAll {
 			deleteAllFolder(targetFolderOfMain.getLocation().toFile());
 		}
 		monitor.subTask("Loading...");
-		org.rosi.crom.framework.generator.main.templates.Main main = new org.rosi.crom.framework.generator.main.templates.Main(modelURI, targetFolderOfMain.getLocation().toFile(), arguments);
-		org.rosi.crom.framework.generator.project.templates.Main project = new org.rosi.crom.framework.generator.project.templates.Main(modelURI, targetFolderOfProject.getLocation().toFile(), arguments);
+		org.rosi.crom.framework.generator.templates.main.Main main = new org.rosi.crom.framework.generator.templates.main.Main(modelURI, targetFolderOfMain.getLocation().toFile(), arguments);
+		org.rosi.crom.framework.generator.templates.project.Main project = new org.rosi.crom.framework.generator.templates.project.Main(modelURI, targetFolderOfProject.getLocation().toFile(), arguments);
 		
 		
 		monitor.worked(1);
-		String generationID0 = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("org.rosi.crom.framework", "org.rosi.crom.framework.generator.main.templates.Generate", modelURI.toString(), targetFolderOfMain.getFullPath().toString(), new ArrayList<String>());
-		String generationID1 = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("org.rosi.crom.framework", "org.rosi.crom.framework.generator.project.templates.Generate", modelURI.toString(), targetFolderOfProject.getFullPath().toString(), new ArrayList<String>());
+		String generationID0 = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("org.rosi.crom.framework", "org.rosi.crom.framework.generator.templates.main.Generate", modelURI.toString(), targetFolderOfMain.getFullPath().toString(), new ArrayList<String>());
+		String generationID1 = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("org.rosi.crom.framework", "org.rosi.crom.framework.generator.templates.project.Generate", modelURI.toString(), targetFolderOfProject.getFullPath().toString(), new ArrayList<String>());
 		main.setGenerationID(generationID0);
 		main.doGenerate(BasicMonitor.toMonitor(monitor));
 		project.setGenerationID(generationID1);

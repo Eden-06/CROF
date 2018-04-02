@@ -1,0 +1,429 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateEnum.
+ */]
+[module testGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::util/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public testGen(aModel:Model)]
+
+[file (getFolderPath() +'/impl/Test.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import [getPackagePath()/].*;
+//import org.croi.code.BankPackage;
+import [getPackagePath()/].util.ObjToJson;
+import com.google.gson.reflect.TypeToken;
+
+public class Test {
+
+	public static void main(String[ '[' /][ ']' /] args) {
+		// TODO Auto-generated method stub
+		System.out.println(Enum.NATURALONE);
+		ObjToJson otj =new ObjToJson();
+		Gson gson=new Gson();
+		
+		Map<String, Object> m1=new HashMap<String, Object>();
+		Map<String, CompartmentImpl> m2=new HashMap<String, CompartmentImpl>();
+		Map<CompartmentImpl, CompartmentImpl> m3=new HashMap<CompartmentImpl, CompartmentImpl>();
+		Map<String, Object> m4=new HashMap<String, Object>();
+		
+		
+		
+		
+		
+		
+		List<CompartmentImpl> c=new ArrayList<CompartmentImpl>();
+		List<NaturalOneImpl> persons=new ArrayList<NaturalOneImpl>();
+		
+		
+		
+		
+		FactoryImpl factory=new FactoryImpl();
+		CompartmentImpl c1=(CompartmentImpl)factory.createCompartment();
+		c1.setName("C1");
+		CompartmentImpl c2=(CompartmentImpl)factory.createCompartment();
+		c2.setName("C2");
+		
+		NaturalOneImpl n11=(NaturalOneImpl)factory.createNaturalOne();
+		NaturalOneImpl n12=(NaturalOneImpl)factory.createNaturalOne();
+		NaturalTwoImpl n21=(NaturalTwoImpl)factory.createNaturalTwo();
+		NaturalTwoImpl n22=(NaturalTwoImpl)factory.createNaturalTwo();
+		n11.setName("n11");
+		n12.setName("n12");
+		n21.setName("n21");
+		n22.setName("n22");
+		
+		
+		
+		
+		
+		
+		CompartmentImpl.NaturalOneRoleOne r11=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(n11);
+		CompartmentImpl.NaturalOneRoleOne r12=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(n12);
+		CompartmentImpl.NaturalTwoRoleTwo r21=(CompartmentImpl.NaturalTwoRoleTwo)c1.bindRoleTwo(n21);
+		CompartmentImpl.NaturalTwoRoleTwo r22=(CompartmentImpl.NaturalTwoRoleTwo)c1.bindRoleTwo(n22);
+		
+		r11.setName("r11");
+		r12.setName("r12");
+		r21.setName("r21");
+		r22.setName("r22");
+		
+		
+		
+		m1.put(c1.getName(), c1);
+		m1.put(c2.getName(), c2);
+		
+		
+		
+		
+		otj.toJson(m1, "./json/test.croj");
+
+
+		/*
+		
+		
+		Map<String, Object> m=new HashMap<String, Object>();
+		
+		List<BankImpl> banks=new ArrayList<BankImpl>();
+		List<PersonImpl> persons=new ArrayList<PersonImpl>();
+		BankImpl bank1=new BankImpl();
+		bank1.setName("DB");
+		BankImpl bank2=new BankImpl();
+		bank2.setName("CB");
+		
+		PersonImpl p1=new PersonImpl();
+		p1.setFirstName("f1");
+		p1.setLastName("l1");
+		p1.setTitle("t1");
+		p1.setAddress("a1");
+		PersonImpl p2=new PersonImpl();
+		p2.setFirstName("f2");
+		p2.setLastName("l2");
+		p2.setTitle("t2");
+		p2.setAddress("a2");
+		
+		
+		
+		BankImpl.PersonCustomer r1=bank1.new PersonCustomer();
+		r1.setName("111");
+		BankImpl.PersonCustomer r2=bank1.new PersonCustomer();
+		r2.setName("222");
+		//Customer c = bank1.bindCustomer(p1);
+		//c.setName("123");
+		//bank2.bindCustomer(p1, r1);
+		//bank1.bindCustomer(p2, r2);
+		
+		
+		//bank1.addPersonCustomers(p1);
+		//bank2.addPersonCustomers(p1);
+		//bank1.addPersonCustomers(p2);
+		banks.add(bank1);
+		banks.add(bank2);
+		//m.put(Integer.valueOf(BankPackage.BANK), banks);
+		//m.put(p.getClass(), p);
+		//m.put(p.state.getClass(), p.state);
+		//m.put(r.getClass(), p.getRole().get(0));
+		
+		m.put(bank1.getName(), bank1);
+		//m.put(bank2.getName(), bank2);
+		//m.put(p1.getFirstName()+p1.getLastName(),p1);
+		
+		ObjToJson json =new ObjToJson();
+		//JSONObject jo = new JSONObject(m);
+		//System.out.println(jo.toString());
+		
+		json.toJson(m, "./json/test.croj");
+
+
+
+		// 2. Java object to JSON, and assign to a String
+		
+		
+		
+		
+		//JSONArray ja = new JSONArray(m);
+		//System.out.println(ja.toString());
+		*/
+		/*
+		Iterator<String> nameItr = jo.keys();
+		Map<String, Object> outMap = new HashMap<String, Object>();
+		while(nameItr.hasNext()) {
+		    String name = nameItr.next();
+		    outMap.put(name,jo.get(name));
+		    
+		}
+		
+		
+		Set<String> nameSet=outMap.keySet();
+		Iterator<String> name=nameSet.iterator();
+		while (name.hasNext()) {
+			String key=name.next();
+
+				Object c = outMap.get(key);
+				
+			
+			
+		}
+		*/
+		//Gson gson=new Gson();
+		
+		
+		/*
+		try {
+			Class<?> class1 = Class.forName("org.croi.code.impl.Bank");
+			org.croi.code.impl.BankImpl bank2=(org.croi.code.impl.BankImpl) class1.newInstance();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+/*
+		BankImpl bk1=new BankImpl();
+		//Map<Class, Object> mm=new HashMap<Class, Object>();
+		//Map<Class, Object> class1=gson.fromJson(gson.toJson(m), class1);
+		
+		Map<String, BankImpl> mm = gson.fromJson(gson.toJson(m), new TypeToken<HashMap<String, BankImpl>>(){}.getType());
+		String string="";
+		Iterator iterator = mm.keySet().iterator();
+		while (iterator.hasNext()) {
+			BankImpl o=mm.get(iterator.next());
+			string=gson.toJson(o)+"\n";
+			System.out.println(o.getClass().toString());
+			System.out.println(string);
+			
+		}	
+*/
+	}
+}
+[/file]
+[file (getFolderPath() +'/util/ObjToJson.java', false, 'UTF-8')]
+package [getPackagePath()/].util;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+
+/**
+ * 
+ * 1:将JavaBean转换成Map、JSONObject 2:将Map转换成Javabean 3:将JSONObject转换成Map、Javabean
+ * 
+ * @author Alexia
+ */
+
+public class ObjToJson {
+
+	/**
+	 * 将Javabean转换为Map
+	 * 
+	 * @param javaBean
+	 *            javaBean
+	 * @return Map对象
+	 */
+	public static Map toMap(Object javaBean) {
+
+		Map result = new HashMap();
+		Method['['/][']'/] methods = javaBean.getClass().getDeclaredMethods();
+
+		for (Method method : methods) {
+
+			try {
+
+				if (method.getName().startsWith("get")) {
+
+					String field = method.getName();
+					field = field.substring(field.indexOf("get") + 3);
+					field = field.toLowerCase().charAt(0) + field.substring(1);
+
+					Object value = method.invoke(javaBean, (Object['['/][']'/]) null);
+					result.put(field, null == value ? "" : value.toString());
+
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * 将Json对象转换成Map
+	 * 
+	 * @param jsonObject
+	 *            json对象
+	 * @return Map对象
+	 * @throws JSONException
+	 */
+	public static Map toMap(String jsonString) throws JSONException {
+
+		JSONObject jsonObject = new JSONObject(jsonString);
+
+		Map result = new HashMap();
+		Iterator iterator = jsonObject.keys();
+		String key = null;
+		String value = null;
+
+		while (iterator.hasNext()) {
+
+			key = (String) iterator.next();
+			value = jsonObject.getString(key);
+			result.put(key, value);
+
+		}
+		return result;
+
+	}
+
+	/**
+	 * 将JavaBean转换成JSONObject（通过Map中转）
+	 * 
+	 * @param bean
+	 *            javaBean
+	 * @return json对象
+	 */
+	public static JSONObject toJSON(Object bean) {
+
+		return new JSONObject(toMap(bean));
+
+	}
+
+	/**
+	 * 将Map转换成Javabean
+	 * 
+	 * @param javabean
+	 *            javaBean
+	 * @param data
+	 *            Map数据
+	 */
+	public static Object toJavaBean(Object javabean, Map data) {
+
+		Method['['/][']'/] methods = javabean.getClass().getDeclaredMethods();
+		for (Method method : methods) {
+
+			try {
+				if (method.getName().startsWith("set")) {
+
+					String field = method.getName();
+					field = field.substring(field.indexOf("set") + 3);
+					field = field.toLowerCase().charAt(0) + field.substring(1);
+					method.invoke(javabean, new Object['['/][']'/] {
+
+							data.get(field)
+
+					});
+
+				}
+			} catch (Exception e) {
+			}
+
+		}
+
+		return javabean;
+
+	}
+
+	/**
+	 * JSONObject到JavaBean
+	 * 
+	 * @param bean
+	 *            javaBean
+	 * @return json对象
+	 * @throws ParseException
+	 *             json解析异常
+	 * @throws JSONException
+	 */
+	public static void toJavaBean(Object javabean, String jsonString) throws ParseException, JSONException {
+
+		JSONObject jsonObject = new JSONObject(jsonString);
+
+		Map map = toMap(jsonObject.toString());
+
+		toJavaBean(javabean, map);
+
+	}
+	
+	public void toJson(Object obj,String filePath) {  
+        
+		
+		Gson gson = new Gson();
+		String jsonInString = gson.toJson(obj);
+		System.out.println(jsonInString);
+		
+		
+		BufferedWriter writer = null;  
+        
+        File file = new File(filePath);  
+        System.out.println(file.getPath());
+        //如果文件不存在，则新建一个  
+        if(!file.exists()){  
+            try {  
+                file.createNewFile();  
+            } catch (IOException e) {  
+               System.out.println(e);
+            }  
+        }  
+        //写入  
+        try {  
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));  
+            writer.write(jsonInString);  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }finally {  
+            try {  
+                if(writer != null){  
+                    writer.close();  
+                }  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+
+}
+
+[/file]
+
+[/template]
+
+
+
