@@ -6,26 +6,26 @@
 [import org::rosi::crom::framework::generator::templates::main::util/]
 
 [**
- * The documentation of the template rtImplGen.
+ * The documentation of the template aRoleTypeImplGen.
  * @param aNaturalType
  */]
-[template public rtImplGen(ct : CompartmentType,relations:Set(Relation))]
-[comment][for(ar:AbstractRole | ct.parts.role)]
+[template public rtImplGen(aCompartmentType : CompartmentType,relations:Set(Relation))]
+[comment][for(ar:AbstractRole | aCompartmentType.parts.role)]
 [if(ar.oclIsKindOf(RoleType))]
 [roleTypeGen(ar.oclAsType(RoleType),relations)/]
 [else]
 [roleGroupGen(ar.oclAsType(RoleGroup),relations)/]
 [/if]
 [/for][/comment]
-[for(ar:AbstractRole|ct.parts.role)]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
 [if(ar.oclIsKindOf(RoleType))]
 [for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
 [if(aType.oclIsKindOf(NaturalType))]
-[ntRoleTypeImplGen(aType.oclAsType(NaturalType),ar.oclAsType(RoleType),ct.relationships,ct.constraints,relations)/]
+[ntRoleTypeImplGen(aType.oclAsType(NaturalType),ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [elseif(aType.oclIsKindOf(CompartmentType))]
-[ctRoleTypeImplGen(aType.oclAsType(CompartmentType),ar.oclAsType(RoleType),ct.relationships,ct.constraints,relations)/]
+[ctRoleTypeImplGen(aType.oclAsType(CompartmentType),ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [else]
-something wrong in rtImplGen.mtl line 23.
+something wrong in aRoleTypeImplGen.mtl line 23.
 [/if]
 [/for]
 [elseif(ar.oclIsKindOf(RoleGroup))]
@@ -33,26 +33,26 @@ something wrong in rtImplGen.mtl line 23.
 [for(aRoleType:RoleType|roleTypes)]
 [for(aType:Type|getPlayers(aRoleType,relations))]
 [if(aType.oclIsKindOf(NaturalType))]
-[ntRoleTypeImplGen(aType.oclAsType(NaturalType),aRoleType,ct.relationships,ct.constraints,relations)/]
+[ntRoleTypeImplGen(aType.oclAsType(NaturalType),aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [elseif(aType.oclIsKindOf(CompartmentType))]
-[ctRoleTypeImplGen(aType.oclAsType(CompartmentType),aRoleType,ct.relationships,ct.constraints,relations)/]
+[ctRoleTypeImplGen(aType.oclAsType(CompartmentType),aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [else]
-something wrong in rtImplGen.mtl line 35.
+something wrong in aRoleTypeImplGen.mtl line 35.
 [/if]
 [/for]
 [/for]
 [/let]
 [else]
-something wrong in rtImplGen.mtl line 21.
+something wrong in aRoleTypeImplGen.mtl line 21.
 [/if]
 [/for]
 [/template]
 
-[comment][template private roleTypeGen(rt : RoleType,relations:Set(Relation))]
-[let nts : Bag(NaturalType) = getNaturalTypeByNameOfRoleType(rt,getAllFulfillment(relations))]
+[comment][template private roleTypeGen(aRoleType : RoleType,relations:Set(Relation))]
+[let nts : Bag(NaturalType) = getNaturalTypeByNameOfRoleType(aRoleType,getAllFulfillment(relations))]
 [if(not nts->isEmpty())]
 [for(nt:NaturalType | nts)]
-[rtGenerator(rt,nt)/]
+[aRoleTypeGenerator(aRoleType,nt)/]
 [/for]
 [/if]
 [/let]
@@ -62,37 +62,59 @@ something wrong in rtImplGen.mtl line 21.
 [let nts : Bag(NaturalType) = getNaturalTypeByNameOfRoleGroup(rg,getAllFulfillment(relations))]
 [if(not nts->isEmpty())]
 [for(nt:NaturalType | nts)]
-[for(rt:RoleType|rg.elements)]
-[rtGenerator(rt,nt)/]
+[for(aRoleType:RoleType|rg.elements)]
+[aRoleTypeGenerator(aRoleType,nt)/]
 [/for]
 [/for]
 [/if]
 [/let]
 [/template]
 
-[template private rtuniversalGen(rt : RoleType,relations:Set(Relation))]
-[let nts : Bag(NaturalType) = getNaturalTypeByNameOfRoleType(rt,getAllFulfillment(relations))]
+[template private aRoleTypeuniversalGen(aRoleType : RoleType,relations:Set(Relation))]
+[let nts : Bag(NaturalType) = getNaturalTypeByNameOfRoleType(aRoleType,getAllFulfillment(relations))]
 [if(not nts->isEmpty())]
 [for(nt:NaturalType | nts)]
-[rtGenerator(rt,nt)/]
+[aRoleTypeGenerator(aRoleType,nt)/]
 [/for]
 [/if]
 [/let]
 [/template][/comment]
 
-[template private ntRoleTypeImplGen(nt:NaturalType,rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
-public class [nt.name/][rt.name/] extends [nt.name/]Impl implements [rt.name/]{
-	[privateAttributeValue(rt.attributes)/]
-[comment]	[privateAttributeOfRelationships(rt,relationships)/][/comment]
-	public [nt.name/][rt.name/]([nt.name/]Impl [nt.name.toLowerFirst()/]Impl){
+[template private ntRoleTypeImplGen(nt:NaturalType,aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
+public class [nt.name/][aRoleType.name/] extends [nt.name/]Impl implements [aRoleType.name/]{
+	[privateAttributeValue(aRoleType.attributes)/]
+[comment]	[privateAttributeOfRelationships(aRoleType,relationships)/][/comment]
+	public [nt.name/][aRoleType.name/]([nt.name/]Impl [nt.name.toLowerFirst()/]Impl){
 			this.state=[nt.name.toLowerFirst()/]Impl.state;
 	}
-[comment]	[ntRelationsshipGen(rt,relationships,constraints,nt,relations)/][/comment]
-	[attributeMethod(rt.attributes)/]
-	[operation(rt.operations)/]
+[comment]	[ntRelationsshipGen(aRoleType,relationships,constraints,nt,relations)/][/comment]
+	[attributeMethod(aRoleType.attributes)/]
+	[operation(aRoleType.operations)/]
 	@Override
 	public [nt.name/] getPlayer() {
-		for(Map.Entry<[nt.name/],[rt.name/]> entry:[nt.name.toLowerFirst()/][rt.name/]s.entrySet()) {
+		for(Map.Entry<[nt.name/],[aRoleType.name/]> entry:[nt.name.toLowerFirst()/][aRoleType.name/]s.entrySet()) {
+			if (Objects.equals(this, entry.getValue())) {
+				return entry.getKey();
+			}
+		}
+		return null;
+	}
+	[relationshipRoleTypeImpl(aRoleType,relationships,constraints)/]
+	
+}
+[/template]
+[template private ctRoleTypeImplGen(aCompartmentType:CompartmentType,aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
+class [aCompartmentType.name/][aRoleType.name/] extends [aCompartmentType.name/]Impl implements [aRoleType.name/]{
+	[privateAttributeValue(aRoleType.attributes)/]
+	public [aCompartmentType.name/][aRoleType.name/]([aCompartmentType.name/]Impl [aCompartmentType.name.toLowerFirst()/]Impl){
+			this.state=[aCompartmentType.name.toLowerFirst()/]Impl.state;
+		}
+[comment]	[aCompartmentTypeRelationsshipGen(aRoleType,relationships,constraints,aCompartmentType,relations)/][/comment]
+	[attributeMethod(aRoleType.attributes)/]
+	[operation(aRoleType.operations)/]
+	@Override
+	public [aCompartmentType.name/] getPlayer() {
+		for(Map.Entry<[aCompartmentType.name/],[aRoleType.name/]> entry:[aCompartmentType.name.toLowerFirst()/][aRoleType.name/]s.entrySet()) {
 			if (Objects.equals(this, entry.getValue())) {
 				return entry.getKey();
 			}
@@ -100,31 +122,39 @@ public class [nt.name/][rt.name/] extends [nt.name/]Impl implements [rt.name/]{
 		return null;
 	}
 	
-}
-[/template]
-[template private ctRoleTypeImplGen(ct:CompartmentType,rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
-class [ct.name/][rt.name/] extends [ct.name/]Impl implements [rt.name/]{
-	[privateAttributeValue(rt.attributes)/]
-	public [ct.name/][rt.name/]([ct.name/]Impl [ct.name.toLowerFirst()/]Impl){
-			this.state=[ct.name.toLowerFirst()/]Impl.state;
-		}
-[comment]	[ctRelationsshipGen(rt,relationships,constraints,ct,relations)/][/comment]
-	[attributeMethod(rt.attributes)/]
-	[operation(rt.operations)/]
-	@Override
-	public [ct.name/] getPlayer() {
-		for(Map.Entry<[ct.name/],[rt.name/]> entry:[ct.name.toLowerFirst()/][rt.name/]s.entrySet()) {
-			if (Objects.equals(this, entry.getValue())) {
-				return entry.getKey();
-			}
-		}
-		return null;
-	}
+[comment]	[relationshipRoleTypeImpl(aRoleType,relationships,constraints)/][/comment]
 }
 [/template]
 
-[template private privateAttributeOfRelationships(rt : RoleType,relationships:OrderedSet(Relationship))]
-[let newRelationships:Set(Relationship)=getRelationships(rt,relationships)]
+
+[template private relationshipRoleTypeImpl(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint))]
+[for(aRelationship:Relationship|getRelationships(aRoleType,relationships))]
+[relationshipOptionsImplGen(aRoleType,aRelationship)/]
+[/for]
+[/template]
+
+
+
+
+[template private relationshipOptionsImplGen(aRoleType : RoleType,aRelationship : Relationship) ]
+[let partnerRoleType:RoleType=getPartner(aRoleType,aRelationship)]
+
+public List<[partnerRoleType.name.toUpperFirst()/]> [aRelationship.name.toLowerFirst()/](){
+	return [aRelationship.name.toLowerFirst()/]Instance.get[partnerRoleType.name.toUpperFirst()/]s(this);
+}
+
+public boolean add[aRelationship.name.toUpperFirst()/]([partnerRoleType.name.toUpperFirst()/] [partnerRoleType.name.toLowerFirst()/]){
+[if(aRelationship.first.holder=aRoleType)]
+	return [aRelationship.name.toLowerFirst()/]Instance.add(this,[partnerRoleType.name.toLowerFirst()/]);
+[else]
+	return [aRelationship.name.toLowerFirst()/]Instance.add([partnerRoleType.name.toLowerFirst()/],this);
+[/if]
+}
+[/let]
+[/template]
+
+[template private privateAttributeOfRelationships(aRoleType : RoleType,relationships:OrderedSet(Relationship))]
+[let newRelationships:Set(Relationship)=getRelationships(aRoleType,relationships)]
 [for(aRelationship:Relationship|newRelationships)]
 private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirst()/]=new [aRelationship.name.toUpperFirst()/]Impl();
 [/for]
@@ -134,95 +164,95 @@ private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirs
 
 
 
-[comment][template private ntRelationsshipGen(rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
+[comment][template private ntRelationsshipGen(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
 [for(relationship:Relationship|relationships)]
-[if(relationship.first.holder=rt)]
+[if(relationship.first.holder=aRoleType)]
 [if(relationship.second.lower=1 and relationship.second.upper=1 )]
 [relationship.second.holder.name/] [relationship.name/];
 public boolean set[relationship.second.holder.name/]([relationship.second.holder.name/] [relationship.second.holder.name.toLowerFirst()/]){
-	[ntIrreflexiveFirstGen(rt,relationship,constraints,nt,relations)/]
+	[ntIrreflexiveFirstGen(aRoleType,relationship,constraints,nt,relations)/]
 	this.[relationship.name/]=[relationship.second.holder.name.toLowerFirst()/];
 	return true;
 }
 [else]
 List<[relationship.second.holder.name/]> [relationship.name/]=new ArrayList<[relationship.second.holder.name/]>();
 public boolean add[relationship.name.toUpperFirst()/]([relationship.second.holder.name.toUpperFirst()/] [relationship.second.holder.name.toLowerFirst()/]){
-	[ntIrreflexiveFirstGen(rt,relationship,constraints,nt,relations)/]
+	[ntIrreflexiveFirstGen(aRoleType,relationship,constraints,nt,relations)/]
 	return this.[relationship.name/].add([relationship.second.holder.name.toLowerFirst()/]);
 }
 [/if]
-[elseif(relationship.second.holder=rt)]
+[elseif(relationship.second.holder=aRoleType)]
 [if(relationship.first.lower=1 and relationship.first.upper=1 )]
 [relationship.first.holder.name/] [relationship.name/];
 public boolean set[relationship.first.holder.name.toUpperFirst()/]([relationship.first.holder.name/] [relationship.first.holder.name.toLowerFirst()/]){
-	[ntIrreflexiveSecondGen(rt,relationship,constraints,nt,relations)/]
+	[ntIrreflexiveSecondGen(aRoleType,relationship,constraints,nt,relations)/]
 	this.[relationship.name/]=[relationship.first.holder.name.toLowerFirst()/];
 	return true;
 }
 [else]
 List<[relationship.first.holder.name/]> [relationship.name/]=new ArrayList<[relationship.first.holder.name/]>();
 public boolean add[relationship.name.toUpperFirst()/]([relationship.first.holder.name.toUpperFirst()/] [relationship.first.holder.name.toLowerFirst()/]){
-	[ntIrreflexiveSecondGen(rt,relationship,constraints,nt,relations)/]
+	[ntIrreflexiveSecondGen(aRoleType,relationship,constraints,nt,relations)/]
 	return this.[relationship.name/].add([relationship.first.holder.name.toLowerFirst()/]);
 }
 [/if]
 [/if]
 [/for]
 [/template]
-[template private ctRelationsshipGen(rt : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
+[template private aCompartmentTypeRelationsshipGen(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),aCompartmentType:CompartmentType,relations:Set(Relation))]
 [for(relationship:Relationship|relationships)]
-[if(relationship.first.holder=rt)]
+[if(relationship.first.holder=aRoleType)]
 [if(relationship.second.lower=1 and relationship.second.upper=1 )]
 [relationship.second.holder.name/] [relationship.name/];
 public boolean set[relationship.second.holder.name/]([relationship.second.holder.name/] [relationship.second.holder.name.toLowerFirst()/]){
-	[ctIrreflexiveFirstGen(rt,relationship,constraints,ct,relations)/]
+	[aCompartmentTypeIrreflexiveFirstGen(aRoleType,relationship,constraints,aCompartmentType,relations)/]
 	this.[relationship.name/]=[relationship.second.holder.name.toLowerFirst()/];
 	return true;
 }
 [else]
 List<[relationship.second.holder.name/]> [relationship.name/]=new ArrayList<[relationship.second.holder.name/]>();
 public boolean add[relationship.name.toUpperFirst()/]([relationship.second.holder.name.toUpperFirst()/] [relationship.second.holder.name.toLowerFirst()/]){
-	[ctIrreflexiveFirstGen(rt,relationship,constraints,ct,relations)/]
+	[aCompartmentTypeIrreflexiveFirstGen(aRoleType,relationship,constraints,aCompartmentType,relations)/]
 	return this.[relationship.name/].add([relationship.second.holder.name.toLowerFirst()/]);
 }
 [/if]
-[elseif(relationship.second.holder=rt)]
+[elseif(relationship.second.holder=aRoleType)]
 [if(relationship.first.lower=1 and relationship.first.upper=1 )]
 [relationship.first.holder.name/] [relationship.name/];
 public boolean set[relationship.first.holder.name.toUpperFirst()/]([relationship.first.holder.name/] [relationship.first.holder.name.toLowerFirst()/]){
-	[ctIrreflexiveSecondGen(rt,relationship,constraints,ct,relations)/]
+	[aCompartmentTypeIrreflexiveSecondGen(aRoleType,relationship,constraints,aCompartmentType,relations)/]
 	this.[relationship.name/]=[relationship.first.holder.name.toLowerFirst()/];
 	return true;
 }
 [else]
 List<[relationship.first.holder.name/]> [relationship.name/]=new ArrayList<[relationship.first.holder.name/]>();
 public boolean add[relationship.name.toUpperFirst()/]([relationship.first.holder.name.toUpperFirst()/] [relationship.first.holder.name.toLowerFirst()/]){
-	[ctIrreflexiveSecondGen(rt,relationship,constraints,ct,relations)/]
+	[aCompartmentTypeIrreflexiveSecondGen(aRoleType,relationship,constraints,aCompartmentType,relations)/]
 	return this.[relationship.name/].add([relationship.first.holder.name.toLowerFirst()/]);
 }
 [/if]
 [/if]
 [/for]
 [/template]
-[template private ctIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
+[template private aCompartmentTypeIrreflexiveFirstGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),aCompartmentType:CompartmentType,relations:Set(Relation))]
 [if(relationship.second.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
-if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(aCompartmentType,getAllFulfillments(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.second.holder))]
-if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(aCompartmentType,getAllFulfillments(relations)),relationship.second.holder))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [/if]
-[/template][template private ntIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
+[/template][template private ntIrreflexiveFirstGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
 [if(relationship.second.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
 [if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillments(relations)),relationship.second.holder.eContainer().oclAsType(RoleGroup)))]
@@ -243,19 +273,19 @@ if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/template]
 
 
-[template private ctIrreflexiveSecondGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
+[template private aCompartmentTypeIrreflexiveSecondGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),aCompartmentType:CompartmentType,relations:Set(Relation))]
 [if(relationship.first.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
-if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(aCompartmentType,getAllFulfillments(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(ct,getAllFulfillments(relations)),relationship.first.holder))]
-if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(aCompartmentType,getAllFulfillments(relations)),relationship.first.holder))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][relationship.first.holder.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
@@ -263,7 +293,7 @@ if(this.state==(([ct.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/if]
 [/template]
 
-[template private ntIrreflexiveSecondGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
+[template private ntIrreflexiveSecondGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
 [if(relationship.first.holder.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
 [if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoles(nt,getAllFulfillments(relations)),relationship.first.holder.eContainer().oclAsType(RoleGroup)))]
@@ -284,37 +314,37 @@ if(this.state==(([nt.name.toUpperFirst()/][relationship.first.holder.name.toUppe
 [/template][/comment]
 
 
-[comment][template private ctIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
-[if(rt.eContainer().oclIsKindOf(RoleGroup))]
+[comment][template private aCompartmentTypeIrreflexiveFirstGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),aCompartmentType:CompartmentType,relations:Set(Relation))]
+[if(aRoleType.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(ct,getAllFulfillment(relations)),rt.eContainer().oclAsType(RoleGroup)))]
-if(this.state==(([ct.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(aCompartmentType,getAllFulfillment(relations)),aRoleType.eContainer().oclAsType(RoleGroup)))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(ct,getAllFulfillment(relations)),rt))]
-if(this.state==(([ct.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(aCompartmentType,getAllFulfillment(relations)),aRoleType))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [/if]
-[/template][template private ntIrreflexiveFirstGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
-[if(rt.eContainer().oclIsKindOf(RoleGroup))]
+[/template][template private ntIrreflexiveFirstGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
+[if(aRoleType.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),rt.eContainer().oclAsType(RoleGroup)))]
-if(this.state==(([nt.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),aRoleType.eContainer().oclAsType(RoleGroup)))]
+if(this.state==(([nt.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),rt))]
-if(this.state==(([nt.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),aRoleType))]
+if(this.state==(([nt.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.second.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
@@ -323,37 +353,37 @@ if(this.state==(([nt.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationshi
 [/template]
 
 
-[template private ctIrreflexiveSecondGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),ct:CompartmentType,relations:Set(Relation))]
-[if(rt.eContainer().oclIsKindOf(RoleGroup))]
+[template private aCompartmentTypeIrreflexiveSecondGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),aCompartmentType:CompartmentType,relations:Set(Relation))]
+[if(aRoleType.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(ct,getAllFulfillment(relations)),rt.eContainer().oclAsType(RoleGroup)))]
-if(this.state==(([ct.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(aCompartmentType,getAllFulfillment(relations)),aRoleType.eContainer().oclAsType(RoleGroup)))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(ct,getAllFulfillment(relations)),rt))]
-if(this.state==(([ct.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByCompartmentType(aCompartmentType,getAllFulfillment(relations)),aRoleType))]
+if(this.state==(([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [/if]
-[/template][template private ntIrreflexiveSecondGen(rt : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
-[if(rt.eContainer().oclIsKindOf(RoleGroup))]
+[/template][template private ntIrreflexiveSecondGen(aRoleType : RoleType,relationship:Relationship,constraints:OrderedSet(Constraint),nt:NaturalType,relations:Set(Relation))]
+[if(aRoleType.eContainer().oclIsKindOf(RoleGroup))]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),rt.eContainer().oclAsType(RoleGroup)))]
-if(this.state==(([nt.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),aRoleType.eContainer().oclAsType(RoleGroup)))]
+if(this.state==(([nt.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]
 [/for]
 [else]
 [for(constraint:Constraint|constraints)]
-[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),rt))]
-if(this.state==(([nt.name.toUpperFirst()/][rt.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
+[if(constraint.oclIsKindOf(Irreflexive) and constraint.oclAsType(IntraRelationshipConstraint).relation=relationship and hasRole(getRoleTypeByNaturalType(nt,getAllFulfillment(relations)),aRoleType))]
+if(this.state==(([nt.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[relationship.first.holder.name.toLowerFirst()/]).state){
 	return false;
 }
 [/if]

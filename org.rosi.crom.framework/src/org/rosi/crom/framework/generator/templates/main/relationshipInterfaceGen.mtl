@@ -25,7 +25,7 @@
 [/if]
 [/for]
 
-[let relationsships:Set(Relationship)=getRelationshipsWithoutConstraint(aCompartmentType)-getRelationshipsWithConstraint(aCompartmentType)]
+[let relationsships:Set(Relationship)=getRelationshipsWithoutConstraint(aCompartmentType.relationships,aCompartmentType.constraints)]
 [for(aRelationship:Relationship|relationsships)]
 [relationshipInterfaceGen(aRelationship)/]
 [/for]

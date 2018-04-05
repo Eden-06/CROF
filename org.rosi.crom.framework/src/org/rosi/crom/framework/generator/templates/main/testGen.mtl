@@ -37,7 +37,41 @@ public class Test {
 
 	public static void main(String[ '[' /][ ']' /] args) {
 		// TODO Auto-generated method stub
-		System.out.println(Enum.NATURALONE);
+		ObjToJson otj =new ObjToJson();
+		Gson gson=new Gson();
+		
+		Map<String, Object> m1=new HashMap<String, Object>();
+		
+		
+		
+		
+		FactoryImpl factory=new FactoryImpl();
+		
+		CaImpl c1=(CaImpl)factory.createCa();
+		NaImpl na1=(NaImpl)factory.createNa();
+		NaImpl na2=(NaImpl)factory.createNa();
+		NbImpl nb1=(NbImpl)factory.createNb();
+		NbImpl nb2=(NbImpl)factory.createNb();
+		na1.setName("na1");
+		na2.setName("na2");
+		nb1.setName("nb1");
+		nb2.setName("nb2");
+		System.out.println(na1.getName());
+		System.out.println(na2.getName());
+		System.out.println(nb1.getName());
+		System.out.println(nb2.getName());
+		
+		CaImpl.NaRa nb1ra=(CaImpl.NaRa)c1.bindRa(nb1);
+		CaImpl.NaRa nb2ra=(CaImpl.NaRa)c1.bindRa(nb2);
+		CaImpl.NaRc nb1rc=(CaImpl.NaRc)c1.bindRc(nb1);
+		
+		
+		System.out.println(nb1ra.getPlayer().getClass());
+		System.out.println(nb2ra.getPlayer().getClass());
+		System.out.println(nb1rc.getPlayer().getClass());
+		System.out.println(nb1rc.isSame(nb1ra));
+		System.out.println(nb1rc.isSame(nb2ra));
+[comment]		System.out.println(Enum.NATURALONE);
 		ObjToJson otj =new ObjToJson();
 		Gson gson=new Gson();
 		
@@ -216,8 +250,12 @@ public class Test {
 			System.out.println(o.getClass().toString());
 			System.out.println(string);
 			
-		}	
+		}
+
 */
+
+	[/comment]
+
 	}
 }
 [/file]

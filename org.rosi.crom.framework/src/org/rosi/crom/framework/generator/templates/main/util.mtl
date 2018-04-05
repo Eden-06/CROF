@@ -26,7 +26,7 @@ state.[a.name/]=[a.name/];
 private [typeof(a.type)/] [a.name/];
 [/for]	
 [/template]
-[template public publicAttributeValue(attributes : Set(Attribute))]
+[template public attributesState(attributes : Set(Attribute))]
 [for (a : Attribute | attributes)]
 public [typeof(a.type)/] [a.name/];
 [/for]	
@@ -261,9 +261,9 @@ void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
 [query public palyerCollection(types1:Set(Type),types2:Set(Type)):Set(Type)=Sequence{types1,types2}->flatten()->excluding(null)->asSet()/]
 [query public palyerCollection(types:Set(Type)):Set(Type)=types->flatten()->excluding(null)->asSet()/]
 [query public palyerCollection(aType:Type):Set(Type)=Sequence{aType}->flatten()->excluding(null)->asSet()/]
-[query public getRelationshipsWithoutConstraint(aCompartmentType:CompartmentType):Set(Relationship)=aCompartmentType.relationships->asSet()/]
-[query public getRelationshipsWithConstraint(aCompartmentType:CompartmentType):Set(Relationship)=
-	aCompartmentType.constraints->iterate(aConstraint : Constraint; relationships:OrderedSet(Relationship) = OrderedSet{} | 
+[query public getRelationshipsWithoutConstraint(relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint)):Set(Relationship)=(relationships->asSet())-getRelationshipsWithConstraint(constraints)/]
+[query public getRelationshipsWithConstraint(constraints:OrderedSet(Constraint)):Set(Relationship)=
+	constraints->iterate(aConstraint : Constraint; relationships:OrderedSet(Relationship) = OrderedSet{} | 
 	if (aConstraint.oclIsKindOf(Irreflexive))
 	then relationships->append(aConstraint.oclAsType(Irreflexive).relation)
 	else if(aConstraint.oclIsKindOf(Reflexive))
@@ -296,8 +296,25 @@ void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
 	else newRelationships
 	endif)->asSet()/][/comment]
 
+[query public getSuper(aNaturalType:NaturalType,relations:Set(Relation)):NaturalType=
+	if(relations->selectByType(NaturalInheritance)->select(sub=aNaturalType).super->notEmpty())
+	then relations->selectByType(NaturalInheritance)->select(sub=aNaturalType).super->asOrderedSet()->first()
+	else null
+	endif/]
+[query public getSuper(aDataType:DataType,relations:Set(Relation)):DataType=
+	if(relations->selectByType(DataInheritance)->select(sub=aDataType).super->notEmpty())
+	then relations->selectByType(DataInheritance)->select(sub=aDataType).super->asOrderedSet()->first()
+	else null
+	endif/]
+[query public getSuper(aCompartmentType:CompartmentType,relations:Set(Relation)):CompartmentType=relations->selectByType(CompartmentInheritance)->select(sub=aCompartmentType).super/]
 
+[query public hasSuper(aNaturalType:NaturalType,relations:Set(Relation)):Boolean=getSuper(aNaturalType,relations)<>null/]
+[query public hasSuper(aDataType:DataType,relations:Set(Relation)):Boolean=getSuper(aDataType,relations)<>null/]
+[query public hasSuper(aCompartmentType:CompartmentType,relations:Set(Relation)):Boolean=not getSuper(aCompartmentType,relations)->isEmpty()/]
 
-
-
+[query public getPartner(aRoleType:RoleType,aRelationship:Relationship):RoleType=
+	if(aRelationship.first.holder=aRoleType)
+	then aRelationship.second.holder
+	else aRelationship.first.holder
+	endif/]
 

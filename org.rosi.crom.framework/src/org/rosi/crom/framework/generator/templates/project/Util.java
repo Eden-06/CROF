@@ -4,14 +4,6 @@
 package org.rosi.crom.framework.generator.templates.project;
 
 
-import java.io.File;
-import java.util.Iterator;
-
-import org.eclipse.emf.common.util.URI;
-
-import crom_l1_composed.Model;
-import crom_l1_composed.NamedElement;
-import crom_l1_composed.RoleType;
 
 /**
  * This is a simple utility class to store and retrieve the modelURI of the

@@ -10,8 +10,8 @@
  * @param aNaturalType
  */]
 
-[template public ntStateClassGen(nt : NaturalType,model : Model)]
-[file (getFolderPath() +'/impl/'+ nt.name.toUpperFirst()+'State.java', false, 'UTF-8')]
+[template public ntStateClassGen(aNaturalType : NaturalType,aModel : Model)]
+[file (getFolderPath() +'/impl/'+ aNaturalType.name.toUpperFirst()+'State.java', false, 'UTF-8')]
 package [getPackagePath()/].impl;
 
 import java.util.Map;
@@ -21,14 +21,34 @@ import [getPackagePath()/].*;
 
 
 
-public class [nt.name.toUpperFirst()/]State{
-	[publicAttributeValue(nt.attributes)/]
-	[ntStateRoleBlock(nt,model)/]
-
+public class [aNaturalType.name.toUpperFirst()/]State[superNaturalTypeState(aNaturalType,aModel.relations)/]{
+	[attributesNaturalTypeState(aNaturalType,aModel.relations)/]
+[comment]	[superAttributeNaturalTypeState(aNaturalType,aModel.relations)/][/comment]
 }
 [/file]
 [/template]
 
+[template private attributesNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation))]
+[attributesState(aNaturalType.attributes)/]
+[roleAttributeNaturalTypeState(aNaturalType,relations)/]
+[/template]
+
+[template private superNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+[if(not superNaturalType->isEmpty())]
+ extends [superNaturalType.name.toUpperFirst()/]State
+[/if]
+[/let]
+[/template]
+
+[template private superAttributeNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation))]
+[if(hasSuper(aNaturalType,relations))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+[superAttributeNaturalTypeState(superNaturalType,relations)/]
+[/let]
+[/if]
+[attributesState(aNaturalType.attributes)/]
+[/template]
 
 [comment][template private ntStateImpoertBlock(nt : NaturalType,model : Model) post (replaceAll('\t', '').trim())]
 [let roles : Set(AbstractRole) = getRoles(nt,getAllFulfillment(model.relations))]
@@ -48,11 +68,12 @@ import [getPackagePath()/].impl.[getCompartmentNameByRoleGroup(ar.oclAsType(Role
 [/let]
 [/template][/comment]
 
-[template private ntStateRoleBlock(aNaturalType : NaturalType,aModel : Model) post (replaceAll('\t', '').trim())]
-[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[template private roleAttributeNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post (replaceAll('\t', '').trim())]
+[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
-Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
+Map<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>();
+[comment]List<[aNaturalType.name.toUpperFirst()/]> roles=new ArrayList<[aNaturalType.name.toUpperFirst()/]>();[/comment]
 [/for]
 [/if]
 [/let]

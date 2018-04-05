@@ -18,33 +18,24 @@ import java.util.Map;
 
 import [getPackagePath()/].*;
 
-[comment]
-[let roles : Set(AbstractRole) = getRoleTypeByNaturalType(nt,getAllFulfillment(model.relations))]
-[if(not roles->isEmpty())]
-[for(ar:AbstractRole | roles)]
-[if(ar.oclIsKindOf(RoleType))]
-[for(t:Type|getPlayerByRoleType(aRoleType,model.relations))]
-import [getPackagePath()/].[getOwner(aRoleType).name/];
-[/for]
-[else]
-[for(t:Type|getPlayerByRoleGroup(ar.oclAsType(RoleGroup),model.relations))]
-import [getPackagePath()/].[getCompartmentNameByRoleGroup(ar.oclAsType(RoleGroup),model)/];
-[/for]
-[/if]
-[/for]
-[/if]
-[/let]
-[/comment]
 
-public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
+public class [aNaturalType.name/]Impl[superNaturalTypeImpl(aNaturalType,aModel.relations)/] implements [aNaturalType.name/]{
 	protected [aNaturalType.name/]State state=new [aNaturalType.name/]State();
 	[attributeMethodForState(aNaturalType.attributes)/]
 	[operation(aNaturalType.operations)/]
-	[ntEditRoleBlock(aNaturalType,aModel)/]
+[comment]	[ntEditRoleBlock(aNaturalType,aModel)/][/comment]
 	[playerFunctionGen(aNaturalType,aModel)/]
 }
 
 [/file]
+[/template]
+
+[template private superNaturalTypeImpl(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aNaturalType,relations))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+ extends [superNaturalType.name.toUpperFirst()/]Impl
+[/let]
+[/if]
 [/template]
 
 [template private ntEditRoleBlock(aNaturalType : NaturalType,aModel : Model)]
@@ -67,8 +58,15 @@ public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRole
 
 [template public playerFunctionGen(aNaturalType : NaturalType,aModel : Model)]
 @Override
-public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	
-	return this.state.equals((([aNaturalType.name.toUpperFirst()/]Impl)[aNaturalType.name.toLowerFirst()/]).state);
+[comment]public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	[/comment]
+public boolean isSame(Object object){
+[let roles:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roles)]
+	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
+		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
+[/for]
+[/let]
+	return false;
 }
 [let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
 [for(aRoleType:RoleType|roleTypes)]
@@ -79,6 +77,19 @@ public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUp
 @Override
 public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
 	return (([getOwner(aRoleType).name.toUpperFirst()/]Impl)[getOwner(aRoleType).name.toLowerFirst()/]).[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(this);
+}
+
+@Override
+public Map<[getOwner(aRoleType).name.toUpperFirst()/],[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s(){
+	return state.[aRoleType.name.toLowerFirst()/]s;
+}
+@Override
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	return state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+@Override
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
 }
 [/for]
 [/let]

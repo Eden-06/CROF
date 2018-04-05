@@ -38,7 +38,7 @@
 
 [for (aModelElement : ModelElement | aModel.elements)]
 [if(aModelElement.oclIsKindOf(DataType))]
-[dtGen(aModelElement.oclAsType(DataType))/]
+[dtGen(aModelElement.oclAsType(DataType),aModel)/]
 [elseif(aModelElement.oclIsKindOf(CompartmentType))]
 [ctGen(aModelElement.oclAsType(CompartmentType),aModel)/]
 [elseif(aModelElement.oclIsKindOf(NaturalType))]
@@ -47,7 +47,7 @@
 [/for]
 [factoryGen(aModel)/]
 [enumGen()/]
-[comment][testGen()/][/comment]
+[testGen()/]
 
 
 

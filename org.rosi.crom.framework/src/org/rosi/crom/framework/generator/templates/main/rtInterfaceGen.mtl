@@ -26,6 +26,7 @@ interface [rt.name/]{
 	[attributeMethodForInterface(rt.attributes)/]
 	[operationForInterface(rt.operations)/]
 	Object getPlayer();
+	boolean isSame(Object object);
 }
 [/template]
 
@@ -36,6 +37,7 @@ interface [rt.name/]{
 	[attributeMethodForInterface(rt.attributes)/]
 	[operationForInterface(rt.operations)/][comment][roleGroupIsSameGen(rg,relations)/][/comment]
 	Object getPlayer();
+	boolean isSame(Object object);
 }
 [/for]
 [/let]

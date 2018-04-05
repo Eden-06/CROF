@@ -14,22 +14,52 @@
 [file (getFolderPath() +'/'+ aNaturalType.name.toUpperFirst()+'.java', false, 'UTF-8')]
 package [getPackagePath()/];
 
+import java.util.Map;
 
-
-public interface [aNaturalType.name.toUpperFirst()/]{
+public interface [aNaturalType.name.toUpperFirst()/][comment][superNaturalTypeInterface(aNaturalType,aModel.relations)/][/comment]{
 	[attributeMethodForInterface(aNaturalType.attributes)/]
 	[operationForInterface(aNaturalType.operations)/]
-	[playerFunctionGen(aNaturalType,aModel)/]
+	[playerOperationsNaturalTypeInterface(aNaturalType,aModel.relations)/]
 }
 [/file]
 [/template]
 
-[template private playerFunctionGen(aNaturalType : NaturalType,aModel : Model)]
-boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]);
-[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[template private superNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aNaturalType,relations))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+ extends [superNaturalType.name.toUpperFirst()/]
+[/let]
+[/if]
+[/template]
+
+
+[comment][template private superOperationsNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aNaturalType,relations))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+[operationsNaturalTypeInterface(superNaturalType,relations)/]
+[/let]
+[/if]
+[attributesState(aNaturalType.attributes)/]
+[/template]
+
+
+[template private operationsNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation))]
+[if(not hasSuper(aNaturalType,relations))]
+[playerOperationsNaturalTypeInterface(aNaturalType,relations)/]
+[/if]
+[attributesState(aNaturalType.attributes)/]
+[/template][/comment]
+
+[template private playerOperationsNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation))]
+[comment]boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]);[/comment]
+boolean isSame(Object object);
+[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(relations))]
 [for(aRoleType:RoleType|roleTypes)]
 boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
 [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+Map<[getOwner(aRoleType).name.toUpperFirst()/],[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s();
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
 [/for]
 [/let]
 [/template]
