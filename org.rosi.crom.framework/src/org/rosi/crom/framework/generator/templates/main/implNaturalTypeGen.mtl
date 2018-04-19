@@ -16,6 +16,7 @@
 package [getPackagePath()/].impl;
 
 import java.util.List;
+import java.util.Collections;
 
 import [getPackagePath()/].*;
 
@@ -140,10 +141,10 @@ public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()
 	}
 	return null;
 }
-//是否需要这个？
+
 @Override
 public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s(){
-	return this.state.[aRoleType.name.toLowerFirst()/]s;
+	return Collections.unmodifiableList(this.state.[aRoleType.name.toLowerFirst()/]s);
 }
 @Override
 public boolean add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
