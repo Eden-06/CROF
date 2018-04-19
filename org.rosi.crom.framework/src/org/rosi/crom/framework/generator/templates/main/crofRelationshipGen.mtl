@@ -1,0 +1,61 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module crofRelationshipGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+
+[**
+ * The documentation of the template aRoleTypeImplGen.
+ * @param aNaturalType
+ */]
+
+[template public crofRelationshipGen(aRelationship:Relationship)]
+[file (getFolderPath() +'/model/Crof'+ aRelationship.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].model;
+
+
+import org.rosi.crom.framework.core.model.CromRelationship;
+
+
+
+
+import [getPackagePath()/].*;
+
+
+public class Crof[aRelationship.name.toUpperFirst()/] implements CromRelationship{
+
+	private String first;
+	private String second;
+	
+	public int getFirstPosition() {
+		return Integer.parseInt(first.substring(first.indexOf("@")+1));
+	}
+	public String getFirst() {
+		return first.substring(0,first.indexOf("@"));
+	}
+	public void setFirst(String first) {
+		this.first = first;
+	}
+	public int getSecondPosition() {
+		return Integer.parseInt(second.substring(second.indexOf("@")+1));
+	}
+	public String getSecond() {
+		return second.substring(0,second.indexOf("@"));
+	}
+	public void setSecond(String second) {
+		this.second = second;
+	}
+}
+[/file]
+[/template]
+
+
+
+
+
+
+
+
+

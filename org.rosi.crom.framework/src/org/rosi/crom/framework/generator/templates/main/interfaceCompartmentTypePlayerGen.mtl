@@ -1,0 +1,40 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module interfaceCompartmentTypePlayerGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceCompartmentTypeGeneralGen/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public interfaceCompartmentTypePlayerGen(aCompartmentType : CompartmentType, aModel : Model)]
+
+[file (getFolderPath() +'/'+ aCompartmentType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+import java.util.List;
+
+public interface [aCompartmentType.name/]{
+	[interfaceCompartmentTypeGeneralGen(aCompartmentType,aModel)/]
+	[playerOperationsCompartmentTypeInterface(aCompartmentType,aModel.relations)/]
+	[aCompartmentType.name/] getCompoundObject();
+}
+[/file]
+[/template]
+
+[template private playerOperationsCompartmentTypeInterface(aCompartmentType : CompartmentType,relations : Set(Relation))]
+boolean isSame(Object object);
+[let roleTypes:Set(RoleType)=getRoles(aCompartmentType,getAllFulfillments(relations))]
+[for(aRoleType:RoleType|roleTypes)]
+boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s();
+boolean add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
+boolean delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+[/for]
+[/let]
+[/template]

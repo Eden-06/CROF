@@ -3,7 +3,7 @@
  * The documentation of the module generateEnum.
  */]
 [module testGen('platform:/resource/org.rosi.crom.metamodel/')]
-[import org::rosi::crom::framework::generator::templates::main::util/]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
 
 [**
  * The documentation of the template generateDataType.
@@ -14,40 +14,62 @@
 [file (getFolderPath() +'/impl/Test.java', false, 'UTF-8')]
 package [getPackagePath()/].impl;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import [getPackagePath()/].*;
-//import org.croi.code.BankPackage;
-import [getPackagePath()/].util.ObjToJson;
-import com.google.gson.reflect.TypeToken;
+
 
 public class Test {
 
 	public static void main(String[ '[' /][ ']' /] args) {
-		// TODO Auto-generated method stub
-		ObjToJson otj =new ObjToJson();
-		Gson gson=new Gson();
-		
-		Map<String, Object> m1=new HashMap<String, Object>();
+		Factory factory=Factory.INSTANCE;
 		
 		
+		/*
+		CompartmentImpl c1=(CompartmentImpl)factory.createCompartment();
+		c1.setName("Compartment_1");
+		CompartmentImpl c2=(CompartmentImpl)factory.createCompartment();
+		c2.setName("Compartment_2");
 		
 		
-		FactoryImpl factory=new FactoryImpl();
+		NaturalOneImpl none1=(NaturalOneImpl)factory.createNaturalOne();
+		NaturalOneImpl none2=(NaturalOneImpl)factory.createNaturalOne();
+		none1.setName("none1");
+		none2.setName("none2");
+		CompartmentImpl.NaturalOneRoleOne nonerone1=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(none1);
+		CompartmentImpl.NaturalOneRoleOne nonerone2=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(none2);
+		nonerone1.setName("n1r11");
+		nonerone2.setName("n1r12");		
+		*/
 		
-		CaImpl c1=(CaImpl)factory.createCa();
+/*
+		Ct ct=factory.createCt();
+		ct.setName("ct");
+		Na na1=factory.createNa();
+		na1.setName("na1");
+		Na na2=factory.createNa();
+		na2.setName("na2");	
+		Nb nb1=factory.createNb();
+		nb1.setName("nb1");
+		Ct.Ra ra1=factory.bindRa(ct, na1);
+		ra1.setName("na1ra1");
+		Ct.Rb rb1=factory.bindRb(ct, na1);
+		rb1.setName("na1rb1");
+		Ct.Rb rb2=factory.bindRb(ct, na2);
+		rb2.setName("na2rb1");
+		Ct.Rb rb3=factory.bindRb(ct, nb1);
+		rb3.setName("nb1rb3");
+		
+		System.out.println(ra1.addAdvices(rb1));
+		System.out.println(rb2.addAdvices(ra1));
+		System.out.println(ra1.addAdvices(rb3));
+*/	
+		
+		//factory.storeJson();
+		
+		
+		factory.loadJson("");
+		
+[comment]		CaImpl c1=(CaImpl)factory.createCa();
 		NaImpl na1=(NaImpl)factory.createNa();
 		NaImpl na2=(NaImpl)factory.createNa();
 		NbImpl nb1=(NbImpl)factory.createNb();
@@ -70,7 +92,7 @@ public class Test {
 		System.out.println(nb2ra.getPlayer().getClass());
 		System.out.println(nb1rc.getPlayer().getClass());
 		System.out.println(nb1rc.isSame(nb1ra));
-		System.out.println(nb1rc.isSame(nb2ra));
+		System.out.println(nb1rc.isSame(nb2ra));[/comment]
 [comment]		System.out.println(Enum.NATURALONE);
 		ObjToJson otj =new ObjToJson();
 		Gson gson=new Gson();
@@ -259,7 +281,8 @@ public class Test {
 	}
 }
 [/file]
-[file (getFolderPath() +'/util/ObjToJson.java', false, 'UTF-8')]
+
+[comment][file (getFolderPath() +'/util/ObjToJson.java', false, 'UTF-8')]
 package [getPackagePath()/].util;
 
 import java.io.BufferedWriter;
@@ -459,7 +482,7 @@ public class ObjToJson {
 
 }
 
-[/file]
+[/file][/comment]
 
 [/template]
 

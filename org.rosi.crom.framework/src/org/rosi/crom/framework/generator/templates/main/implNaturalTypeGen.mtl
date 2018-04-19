@@ -1,0 +1,171 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module implNaturalTypeGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+
+[template public implNaturalTypeGen(aNaturalType : NaturalType,aModel:Model)]
+[file (getFolderPath() +'/impl/'+ aNaturalType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+
+import [getPackagePath()/].*;
+
+
+public class [aNaturalType.name/]Impl[superNaturalTypeImpl(aNaturalType,aModel.relations)/] implements [aNaturalType.name/]{
+	protected [aNaturalType.name/]State state;
+
+	public [aNaturalType.name/]Impl() {
+		this.state=new [aNaturalType.name/]State();
+		this.state.compoundObject=this;
+	}
+
+	@Override
+	public [aNaturalType.name/] getCompoundObject() {
+		return this.state.compoundObject;
+	}
+
+	[attributeMethodForState(aNaturalType.attributes)/]
+	[operation(aNaturalType.operations)/]
+[comment]	[ntEditRoleBlock(aNaturalType,aModel)/][/comment]
+[comment]	[playerFunctionGen(aNaturalType,aModel)/][/comment]
+	[playerFunctionGen_new(aNaturalType,aModel)/]
+}
+
+[/file]
+[/template]
+
+[template private superNaturalTypeImpl(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aNaturalType,relations))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+ extends [superNaturalType.name.toUpperFirst()/]Impl
+[/let]
+[/if]
+[/template]
+
+[template private ntEditRoleBlock(aNaturalType : NaturalType,aModel : Model)]
+[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	this.state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+public Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aNaturalType.name/][aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s() {
+	return this.state.[aRoleType.name.toLowerFirst()/]s;
+}
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return this.state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+[/for]
+[/if]
+[/let]
+[/template]
+
+[template public playerFunctionGen(aNaturalType : NaturalType,aModel : Model)]
+@Override
+[comment]public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	[/comment]
+public boolean isSame(Object object){
+[let roles:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roles)]
+	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
+		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
+[/for]
+[/let]
+	return false;
+}
+[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return this.state.[aRoleType.name.toLowerFirst()/]s.containsKey([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	return this.state.[aRoleType.name.toLowerFirst()/]s.get([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+//是否需要这个getList
+@Override
+public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s(){
+	return new ArrayList<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]>(state.[aRoleType.name.toLowerFirst()/]s.values());
+}
+@Override
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	return this.state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+@Override
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return this.state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+[/for]
+[/let]
+[/template]
+
+[template public playerFunctionGen_new(aNaturalType : NaturalType,aModel : Model)]
+@Override
+[comment]public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	[/comment]
+public boolean isSame(Object object){
+[let roles:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roles)]
+	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
+		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
+[/for]
+[/let]
+	return false;
+}
+[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
+		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return true;
+		}
+	}
+	return false;
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
+		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return this.state.[aRoleType.name.toLowerFirst()/]s.get(i);
+		}
+	}
+	return null;
+}
+//是否需要这个？
+@Override
+public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s(){
+	return this.state.[aRoleType.name.toLowerFirst()/]s;
+}
+@Override
+public boolean add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	if(state.[aRoleType.name.toLowerFirst()/]s.contains([aRoleType.name.toLowerFirst()/]))
+			return false;
+		return this.state.[aRoleType.name.toLowerFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
+}
+@Override
+public boolean delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++) {
+			if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
+				this.state.[aRoleType.name.toLowerFirst()/]s.remove(i);
+				return true;
+			}
+		}
+		return false;
+}
+[/for]
+[/let]
+[comment]public NaturalOneImpl getPlayer() {
+	return NaturalOneImpl.this;
+}[/comment]
+[/template]
+
+

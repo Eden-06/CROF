@@ -1,0 +1,70 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module crofRelationGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+
+[**
+ * The documentation of the template aRoleTypeImplGen.
+ * @param aNaturalType
+ */]
+
+[template public crofRelationGen(aType:Type,aRoleType : RoleType)]
+[file (getFolderPath() +'/model/Crof'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].model;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.HashMap;
+import java.util.Iterator;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
+
+import org.rosi.crom.framework.core.model.CromRelation;
+
+
+
+
+import [getPackagePath()/].*;
+
+
+public class Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] implements CromRelation{
+
+	private String player;
+	private String played;
+	
+	public int getPlayerPosition() {
+		return Integer.parseInt(player.substring(player.indexOf("@")+1));
+	}
+	public String getPlayer() {
+		return player;
+	}
+	public void setPlayer(String player) {
+		this.player = player;
+	}
+	public int getPlayedPosition() {
+		return Integer.parseInt(played.substring(played.indexOf("@")+1));
+	}
+	public String getPlayed() {
+		return played;
+	}
+	public void setPlayed(String played) {
+		this.played = played;
+	}
+}
+[/file]
+[/template]
+
+
+
+
+
+
+
+
+

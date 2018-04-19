@@ -1,0 +1,83 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateTypes.
+ */]
+[module interfaceFactoryGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public interfaceFactoryGen(aModel:Model)]
+
+[file (getFolderPath()+'/Factory.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+import java.util.Map;
+import java.util.List;
+
+
+public interface Factory{
+	Map<Types, List> getInstances();
+	void setInstances(Map<Types, List> instances);
+	Factory INSTANCE = [getPackagePath()/].impl.FactoryImpl.init();
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	[aCompartmentType.name/] create[aCompartmentType.name/]();
+	int getIndex([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+	[rtFactoryInterfaceGen(aCompartmentType,aModel.relations)/]
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	[aNaturalType.name/] create[aNaturalType.name/]();
+	int getIndex([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]);
+[/let]
+[elseif(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(filtJavaType(aDataType))]
+	[aDataType.name/] create[aDataType.name/]();
+	int getIndex([aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]);
+[/if]
+[/let]
+[/if]
+[/for]
+	void reset();
+	void storeXML();
+	void storeJson();
+	void loadXML();
+	void loadJson(String filePath);
+}
+[/file]
+[/template]
+
+
+
+[template private rtFactoryInterfaceGen(aCompartmentType : CompartmentType,relations:Set(Relation))]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+[relationFactoryInterfaceGen(aType,ar.oclAsType(RoleType))/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+[relationFactoryInterfaceGen(aType,aRoleType)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in rtModelGen.mtl line 21.
+[/if]
+[/for]
+[/template]
+
+[template private relationFactoryInterfaceGen(aType:Type,aRoleType : RoleType)]
+
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[aType.name.toUpperFirst()/] [aType.name.toLowerFirst()/]);
+
+boolean unbind[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[aType.name.toUpperFirst()/] [aType.name.toLowerFirst()/]);
+
+[/template]

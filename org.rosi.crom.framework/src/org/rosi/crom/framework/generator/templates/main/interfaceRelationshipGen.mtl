@@ -1,0 +1,66 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module relationshipInterfaceGen.
+ */]
+[module interfaceRelationshipGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+
+[**
+ * The documentation of the template relationshipInterfaceGen.
+ * @param aNaturalType
+ */]
+[template public interfaceRelationshipGen(aCompartmentType : CompartmentType) ]
+[for(aConstraint:Constraint|aCompartmentType.constraints)]
+[if(aConstraint.oclIsKindOf(Irreflexive))]
+[irreflexiveInterfaceGen(aConstraint.oclAsType(Irreflexive))/]
+[elseif(aConstraint.oclIsKindOf(Reflexive))]
+[reflexiveInterfaceGen(aConstraint.oclAsType(Reflexive))/]
+[elseif(aConstraint.oclIsKindOf(Total))]
+[totalInterfaceGen(aConstraint.oclAsType(Total))/]
+[elseif(aConstraint.oclIsKindOf(Cyclic))]
+[cyclicInterfaceGen(aConstraint.oclAsType(Cyclic))/]
+[elseif(aConstraint.oclIsKindOf(Acyclic))]
+[acyclicInterfaceGen(aConstraint.oclAsType(Acyclic))/]
+[else]
+[/if]
+[/for]
+
+[let relationsships:Set(Relationship)=getRelationshipsWithoutConstraint(aCompartmentType.relationships,aCompartmentType.constraints)]
+[for(aRelationship:Relationship|relationsships)]
+[relationshipInterfaceGen(aRelationship)/]
+[/for]
+[/let]
+[/template]
+
+[template private relationshipInterfaceGen(aRelationship : Relationship) ]
+interface [aRelationship.name.toUpperFirst()/]{
+	[relationshipOptionsInterfaceGen(aRelationship)/]
+}
+[/template]
+
+[template private irreflexiveInterfaceGen(aIrreflexive : Irreflexive) ]
+interface [aIrreflexive.relation.name.toUpperFirst()/]{
+	[relationshipOptionsInterfaceGen(aIrreflexive.relation)/]
+}
+[/template]
+[template private reflexiveInterfaceGen(aReflexive : Reflexive) ]
+//TODO reflexivInterfaceGen
+[/template]
+[template private totalInterfaceGen(aTotal : Total) ]
+//TODO totalInterfaceGen
+[/template]
+[template private cyclicInterfaceGen(aCyclic : Cyclic) ]
+//TODO cyclicInterfaceGen
+[/template]
+[template private acyclicInterfaceGen(aAcyclic : Acyclic) ]
+//TODO acyclicInterfaceGen
+[/template]
+
+
+
+[template private relationshipOptionsInterfaceGen(aRelationship : Relationship) ]
+boolean add([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/], [aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]);
+boolean remove([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/], [aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]);
+List<[aRelationship.second.holder.name.toUpperFirst()/]> get[aRelationship.second.holder.name.toUpperFirst()/]s([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/]);
+List<[aRelationship.first.holder.name.toUpperFirst()/]> get[aRelationship.first.holder.name.toUpperFirst()/]s([aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]);
+[/template]

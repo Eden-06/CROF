@@ -1,0 +1,17 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateTypes.
+ */]
+[module mainEnumGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceEnumGen/]
+[import org::rosi::crom::framework::generator::templates::main::implEnumGen/]
+
+[**
+ * The documentation of the template TypesGen.
+ * @param aModel
+ */]
+[template public mainEnumGen(aModel:Model)]
+[interfaceEnumGen()/]
+[implEnumGen()/]
+[/template]

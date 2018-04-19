@@ -1,0 +1,50 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module crofRoleTypeGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+[import org::rosi::crom::framework::generator::templates::main::crofRelationGen/]
+
+[**
+ * The documentation of the template aRoleTypeImplGen.
+ * @param aNaturalType
+ */]
+[template public crofRoleTypeGen(aCompartmentType : CompartmentType, relations : Set(Relation))]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[roleTypeModelGen(ar.oclAsType(RoleType))/]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+[crofRelationGen(aType,ar.oclAsType(RoleType))/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[roleTypeModelGen(aRoleType)/]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+[crofRelationGen(aType,aRoleType)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in rtModelGen.mtl line 21.
+[/if]
+[/for]
+[/template]
+
+[template private roleTypeModelGen(aRoleType : RoleType)]
+[file (getFolderPath() +'/model/Crof'+ aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].model;
+
+import org.rosi.crom.framework.core.model.CromRoleType;
+
+import [getPackagePath()/].*;
+
+
+public class Crof[aRoleType.name.toUpperFirst()/] implements CromRoleType{
+	[privateAttributeValue(aRoleType.attributes)/]
+	[attributeMethodBasic(aRoleType.attributes)/]
+}
+[/file]
+[/template]

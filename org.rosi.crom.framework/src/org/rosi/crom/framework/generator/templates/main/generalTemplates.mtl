@@ -1,0 +1,167 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module globalGenerator.
+ */]
+[module generalTemplates('platform:/resource/org.rosi.crom.metamodel/')]
+
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public generateParametersForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
+[for (a : Attribute  | attributes) separator (', ')]
+[typeof(a.type)/] [a.name/]
+[/for]
+[/template]
+
+[template public generateOperationsForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
+[for (a : Attribute  | attributes)]
+state.[a.name/]=[a.name/]; 
+[/for]
+[/template]
+
+[template public privateAttributeValue(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+private [typeof(a.type)/] [a.name/];
+[/for]	
+[/template]
+[template public attributesState(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+public [typeof(a.type)/] [a.name/];
+[/for]	
+[/template]
+[template public attributeValueWithoutPrivate(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+[typeof(a.type)/] [a.name/];
+[/for]
+[/template]
+[template public attributeMethod(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+@Override
+public [typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/](){
+	return [a.name/];
+}
+
+@Override
+public void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]){
+	this.[a.name/] = [a.name/];
+}
+[/for]
+[/template]
+
+[template public attributeMethodBasic(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+public [typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/](){
+	return [a.name/];
+}
+
+public void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]){
+	this.[a.name/] = [a.name/];
+}
+[/for]
+[/template]
+
+
+[template public attributeMethodForState(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+@Override
+public [typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/](){
+	return state.[a.name/];
+}
+
+@Override
+public void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]){
+	state.[a.name/] = [a.name/];
+}
+[/for]
+[/template]
+[template public operation(operations : Set(Operation))]
+[for (o : Operation | operations)]
+@Override
+public [typeof(o.type)/] [o.name/]([parameter(o)/]){
+	throw new UnsupportedOperationException("Invalid operation for sorted list.");
+}
+[/for]
+[/template]
+
+[template public attributeValueForInterface(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+private [typeof(a.type)/] [a.name/];	
+[/for]
+[/template]
+[template public attributeMethodForInterface(attributes : Set(Attribute))]
+[for (a : Attribute | attributes)]
+[typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/]();
+void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
+[/for]
+[/template]
+
+[template public operationForInterface(operations : Set(Operation))]
+[for (o : Operation | operations)]
+[typeof(o.type)/] [o.name/]([parameter(o)/]);
+[/for]
+[/template]
+
+[template public parameter(o : Operation) post (replaceAll('\n', '').trim())]
+[for (p : Parameter  | o.params) separator (', ')]
+[typeof(p.type)/] [p.name/]
+[/for]
+[/template]
+
+
+[template public typeof(t : Type) post (replaceAll('\n', '').trim())]
+[if (t<>null)]
+	[if (t.name='Boolean')]
+		boolean
+	[elseif (t.name='Char')]
+		char
+	[elseif (t.name='Date')]
+		Date
+	[elseif (t.name='Double')]
+		double
+	[elseif (t.name='Float')]
+		float
+	[elseif (t.name='Integer')]
+		int
+	[elseif (t.name='String')]
+		String
+	[else][t.name/]
+	[/if]
+[else]void
+[/if]
+[/template]
+
+[template public getCompartmentNameByRoleType(aRoleType : RoleType, aModel : Model) post (replaceAll('\n', '').trim())]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType : CompartmentType = aModelElement.oclAsType(CompartmentType)]
+[for(aPart : Part | aCompartmentType.parts)]
+[if(aPart.role.oclIsKindOf(RoleType))]
+[if(aPart.role.oclAsType(RoleType).name=aRoleType.name)]
+[aCompartmentType.name/]
+[/if]
+[else]
+[/if]
+[/for]
+[/let]
+[/if]
+[/for]
+[/template]
+
+[template public getCompartmentNameByRoleGroup(aRoleGroup:RoleGroup,aModel:Model) post (replaceAll('\n', '').trim())]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType : CompartmentType = aModelElement.oclAsType(CompartmentType)]
+[for(aPart : Part | aCompartmentType.parts)]
+[if(aPart.role.oclIsKindOf(RoleGroup))]
+[if(aPart.role.oclAsType(RoleGroup).name=aRoleGroup.name)]
+[aCompartmentType.name/]
+[/if]
+[else]
+[/if]
+[/for]
+[/let]
+[/if]
+[/for]
+[/template]

@@ -1,0 +1,77 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ */]
+[module crofModelGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::mainDataTypeGen/]
+[import org::rosi::crom::framework::generator::templates::main::mainNaturalTypeGen/]
+[import org::rosi::crom::framework::generator::templates::main::mainCompartmentTypeGen/]
+[import org::rosi::crom::framework::generator::templates::main::mainFactoryGen/]
+[import org::rosi::crom::framework::generator::templates::main::packageGen/]
+[import org::rosi::crom::framework::generator::templates::main::testGen/]
+[import org::rosi::crom::framework::generator::templates::main::implEnumGen/]
+
+
+[**
+ * The documentation of the template main.
+ * @param aModel
+ */]
+
+
+[template public crofModelGen(aModel:Model)]
+[file (getFolderPath() +'/model/CrofModel.java', false, 'UTF-8')]
+package [getPackagePath()/].model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.rosi.crom.framework.core.model.CromModel;
+
+import [getPackagePath()/].*;
+
+public class CrofModel implements CromModel{
+	public String model="[getPackagePath()/]";
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	List<Crof[aCompartmentType.name/]> crof[aCompartmentType.name.toUpperFirst()/]s=new ArrayList<Crof[aCompartmentType.name/]>();
+	public List<Crof[aCompartmentType.name/]> getCrof[aCompartmentType.name.toUpperFirst()/]s() {
+		return crof[aCompartmentType.name.toUpperFirst()/]s;
+	}
+
+	public void setCrof[aCompartmentType.name.toUpperFirst()/]s(List<Crof[aCompartmentType.name.toUpperFirst()/]> crof[aCompartmentType.name.toUpperFirst()/]s) {
+		this.crof[aCompartmentType.name.toUpperFirst()/]s = crof[aCompartmentType.name.toUpperFirst()/]s;
+	}
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	List<Crof[aNaturalType.name/]> crof[aNaturalType.name.toUpperFirst()/]s=new ArrayList<Crof[aNaturalType.name/]>();
+	public List<Crof[aNaturalType.name.toUpperFirst()/]> getCrof[aNaturalType.name.toUpperFirst()/]s() {
+		return crof[aNaturalType.name.toUpperFirst()/]s;
+	}
+
+	public void setCrof[aNaturalType.name.toUpperFirst()/]s(List<Crof[aNaturalType.name.toUpperFirst()/]> crof[aNaturalType.name.toUpperFirst()/]s) {
+		this.crof[aNaturalType.name.toUpperFirst()/]s = crof[aNaturalType.name.toUpperFirst()/]s;
+	}
+[/let]
+[elseif(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(filtJavaType(aDataType))]
+	List<Crof[aDataType.name/]> crof[aDataType.name.toUpperFirst()/]s=new ArrayList<Crof[aDataType.name/]>();
+	public List<Crof[aDataType.name.toUpperFirst()/]> getCrof[aDataType.name.toUpperFirst()/]s() {
+		return crof[aDataType.name.toUpperFirst()/]s;
+	}
+
+	public void setCrof[aDataType.name.toUpperFirst()/]s(List<Crof[aDataType.name.toUpperFirst()/]> crof[aDataType.name.toUpperFirst()/]s) {
+		this.crof[aDataType.name.toUpperFirst()/]s = crof[aDataType.name.toUpperFirst()/]s;
+	}
+[/if]
+[/let]
+[/if]
+[/for]
+
+
+}
+[/file]
+[/template]

@@ -1,0 +1,63 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateTypes.
+ */]
+[module implEnumGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+
+[**
+ * The documentation of the template TypesGen.
+ * @param aModel
+ */]
+[template public implEnumGen(aModel:Model)]
+[file (getFolderPath() +'/impl/TypesImpl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import [getPackagePath()/].Types;
+
+public enum TypesImpl{
+	[typesImpl(aModel)/]
+}
+[/file]
+
+[/template]
+
+[template public typesImpl(aModel:Model) post (replaceAll('\n', ' ').trim())]
+[for(aModelElement:ModelElement|aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(filtJavaType(aDataType))]
+[aDataType.name.toUpper()/]IMPL,
+[/if]
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[aModelElement.oclAsType(NaturalType).name.toUpper()/]IMPL,
+[elseif(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+[aCompartmentType.name.toUpper()/]IMPL,
+[for(aRoleGroupElement:RoleGroupElement|aCompartmentType.parts.role)]
+[if(aRoleGroupElement.oclIsKindOf(RoleType))]
+[let aRoleType:RoleType=aRoleGroupElement.oclAsType(RoleType)]
+[roleTypeGen(aRoleType,aModel)/]
+[/let]
+[elseif(aRoleGroupElement.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getRole(aRoleGroupElement.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[roleTypeGen(aRoleType,aModel)/]
+[/for]
+[/let]
+[/if]
+[/for]
+[/let]
+[/if]
+[/for]
+[/template]
+
+[template private roleTypeGen(aRoleType:RoleType, aModel:Model) post (replaceAll('\n', ' ').trim())]
+[let types:Set(Type)=getPlayers(aRoleType,aModel.relations)]
+[for(aType:Type|types)]
+[aType.name.toUpper()/][aRoleType.name.toUpper()/],
+[/for]
+[/let]
+[/template]
+

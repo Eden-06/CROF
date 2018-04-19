@@ -90,9 +90,7 @@ public class newCROMProjectWizard extends Wizard implements INewWizard, IExecuta
 		desc.setBuildSpec(new ICommand[] { jbuilder,manifestbuilder,schemabuilder });
 
 		desc.setNatureIds(new String[] { "org.eclipse.jdt.core.javanature","org.eclipse.pde.PluginNature" });
-
 		desc.setLocationURI(projectURI);
-
 		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
 			protected void execute(IProgressMonitor monitor) throws CoreException {
 				createProject(desc, projectHandle, monitor);
@@ -162,8 +160,12 @@ public class newCROMProjectWizard extends Wizard implements INewWizard, IExecuta
 			srcFolder.create(true, true, monitor);
 			final IFolder binFolder = container.getFolder(new Path("bin"));
 			binFolder.create(true, true, monitor);
+			final IFolder jsonFolder = container.getFolder(new Path("json"));
+			jsonFolder.create(true, true, monitor);
 			final IFolder libFolder = container.getFolder(new Path("lib"));
 			libFolder.create(true, true, monitor);
+			final IFolder METAFolder = container.getFolder(new Path("META-INF"));
+			METAFolder.create(true, true, monitor);
 			
 			InputStream classpath = this.getClass().getResourceAsStream("templates/classpath.resource");
 			addFileToProject(container, new Path(".classpath"), classpath, monitor);
@@ -174,12 +176,34 @@ public class newCROMProjectWizard extends Wizard implements INewWizard, IExecuta
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			InputStream jsonJar = this.getClass().getResourceAsStream("templates/json-20140107.jar");
-			addFileToProject(container, new Path("lib/json-20140107.jar"), jsonJar, monitor);
+			
+			InputStream build = this.getClass().getResourceAsStream("templates/build.properties.resource");
+			addFileToProject(container, new Path("build.properties"), build, monitor);
 
 			try {
-				classpath.close();
+				build.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			InputStream manifest = this.getClass().getResourceAsStream("templates/MANIFEST.MF.resource");
+			addFileToProject(container, new Path("META-INF/MANIFEST.MF"), manifest, monitor);
+
+			try {
+				manifest.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			
+
+			InputStream gsonJar = this.getClass().getResourceAsStream("templates/gson-2.6.2.jar");
+			addFileToProject(container, new Path("lib/gson-2.6.2.jar"), gsonJar, monitor);
+			try {
+				gsonJar.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

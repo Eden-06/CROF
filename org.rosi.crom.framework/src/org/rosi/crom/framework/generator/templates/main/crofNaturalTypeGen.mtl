@@ -1,0 +1,35 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module crofNaturalTypeGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+
+[template public crofNaturalTypeGen(aNaturalType : NaturalType,aModel:Model)]
+[file (getFolderPath() +'/model/Crof'+ aNaturalType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].model;
+
+import org.rosi.crom.framework.core.model.CromNaturalType;
+
+import [getPackagePath()/].*;
+
+public class Crof[aNaturalType.name/][superCrofNaturalType(aNaturalType,aModel.relations)/] implements CromNaturalType {
+	[privateAttributeValue(aNaturalType.attributes)/]
+	[attributeMethodBasic(aNaturalType.attributes)/]
+}
+[/file]
+[/template]
+
+[template private superCrofNaturalType(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aNaturalType,relations))]
+[let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+ extends Crof[superNaturalType.name.toUpperFirst()/]
+[/let]
+[/if]
+[/template]

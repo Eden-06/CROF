@@ -1,0 +1,117 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module implCompartmentTypePlayerGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::implCompartmentTypeGeneralGen/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public implCompartmentTypePlayerGen(aCompartmentType : CompartmentType, model : Model)]
+[file (getFolderPath() +'/impl/'+ aCompartmentType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
+
+import [getPackagePath()/].*;
+
+public class [aCompartmentType.name.toUpperFirst()/]Impl implements [aCompartmentType.name.toUpperFirst()/]{
+	[aCompartmentType.name/]State state;
+	public [aCompartmentType.name/]Impl() {
+		state=new [aCompartmentType.name/]State();
+		state.compoundObject=this;
+	}
+
+	@Override
+	public [aCompartmentType.name/] getCompoundObject() {
+		return this.state.compoundObject;
+	}
+
+	[implCompartmentTypeGeneralGen(aCompartmentType,model)/]
+[comment]	[playerFunctionGen(aCompartmentType,model)/][/comment]
+	[playerFunctionGen(aCompartmentType,model)/]
+}
+[/file]
+[/template]
+
+[template private ctEditRoleBlock(aCompartmentType : CompartmentType,aModel : Model)]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,getAllFulfillments(aModel.relations))]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	state.[aRoleType.name.toLowerFirst()/]s.put([getOwner(aRoleType).name.toLowerFirst()/],[aRoleType.name.toLowerFirst()/]);
+}
+public Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aCompartmentType.name/][aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s() {
+	return state.[aRoleType.name.toLowerFirst()/]s;
+}
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+	return state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
+}
+[/for]
+[/if]
+[/let]
+[/template]
+
+[template public playerFunctionGen(aCompartmentType : CompartmentType,aModel : Model)]
+@Override
+public boolean isSame(Object object){
+[let roles:Set(RoleType)=getRoles(aCompartmentType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roles)]
+	if(object instanceof [getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
+		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
+[/for]
+[/let]
+	return false;
+}
+[let roleTypes:Set(RoleType)=getRoles(aCompartmentType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
+		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return true;
+		}
+	}
+	return false;
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
+		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return state.[aRoleType.name.toLowerFirst()/]s.get(i);
+		}
+	}
+	return null;
+}
+@Override
+public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s(){
+	return state.[aRoleType.name.toLowerFirst()/]s;
+}
+@Override
+public boolean add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	if(state.[aRoleType.name.toLowerFirst()/]s.contains([aRoleType.name.toLowerFirst()/]))
+			return false;
+		return state.[aRoleType.name.toLowerFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
+}
+@Override
+public boolean delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++) {
+			if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
+				state.[aRoleType.name.toLowerFirst()/]s.remove(i);
+				return true;
+			}
+		}
+		return false;
+}
+[/for]
+[/let]
+[/template]

@@ -1,0 +1,36 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateDataType.
+ */]
+[module implDataTypeGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public implDataTypeGen(aDataType : DataType,aModel:Model)]
+[file (getFolderPath() +'/impl/'+ aDataType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import [getPackagePath()/].[aDataType.name/];
+
+public class [aDataType.name/]Impl[superDataTypeImpl(aDataType,aModel.relations)/] implements [aDataType.name/]{
+	[privateAttributeValue(aDataType.attributes)/]
+	[attributeMethod(aDataType.attributes)/]
+	[operation(aDataType.operations)/]
+}
+[/file]
+[/template]
+
+[template private superDataTypeImpl(aDataType : DataType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aDataType,relations))]
+[let superDataType:DataType=getSuper(aDataType,relations)]
+ extends [superDataType.name.toUpperFirst()/]Impl
+[/let]
+[/if]
+[/template]
+
+
+

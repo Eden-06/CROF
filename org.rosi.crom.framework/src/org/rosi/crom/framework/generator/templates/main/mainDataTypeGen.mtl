@@ -1,0 +1,25 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateDataType.
+ */]
+[module mainDataTypeGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceDataTypeGen/]
+[import org::rosi::crom::framework::generator::templates::main::implDataTypeGen/]
+[import org::rosi::crom::framework::generator::templates::main::crofDataTypeGen/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public mainDataTypeGen(aDataType : DataType,aModel:Model)]
+[if (aDataType.name<>'Boolean' and aDataType.name<>'Char' and aDataType.name<>'Date' 
+     and aDataType.name<>'Double' and aDataType.name<>'Float' and aDataType.name<>'Integer' 
+and aDataType.name<>'String')]	
+[interfaceDataTypeGen(aDataType)/]
+[implDataTypeGen(aDataType,aModel)/]
+[crofDataTypeGen(aDataType,aModel)/]
+[/if]
+[/template]
+
+
