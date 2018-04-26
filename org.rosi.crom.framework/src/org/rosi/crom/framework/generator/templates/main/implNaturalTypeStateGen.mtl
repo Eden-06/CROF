@@ -73,7 +73,7 @@ import [getPackagePath()/].impl.[getCompartmentNameByRoleGroup(ar.oclAsType(Role
 [/template][/comment]
 
 [template private roleAttributeNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post (replaceAll('\t', '').trim())]
-[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(relations))]
+[let roleTypes : Set(RoleType) = getRoleTypes(aNaturalType,getAllFulfillments(relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 [comment]Map<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>();[/comment]

@@ -3,76 +3,101 @@
  * The documentation of the module globalGenerator.
  */]
 [module generalTemplates('platform:/resource/org.rosi.crom.metamodel/')]
-
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
 
 [**
  * The documentation of the template generateDataType.
  * @param aDataType
  */]
+
+
 [template public generateParametersForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
-[for (a : Attribute  | attributes) separator (', ')]
-[typeof(a.type)/] [a.name/]
+[for (aAttribute : Attribute  | attributes) separator (', ')]
+[typeof(aAttribute.type)/] [aAttribute.name/]
 [/for]
 [/template]
 
 [template public generateOperationsForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
-[for (a : Attribute  | attributes)]
-state.[a.name/]=[a.name/]; 
+[for (aAttribute : Attribute  | attributes)]
+state.[aAttribute.name/]=[aAttribute.name/]; 
 [/for]
 [/template]
 
 [template public privateAttributeValue(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
-private [typeof(a.type)/] [a.name/];
+[for (aAttribute : Attribute | attributes)]
+private [typeof(aAttribute.type)/] [aAttribute.name/];
 [/for]	
 [/template]
+
 [template public attributesState(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
-public [typeof(a.type)/] [a.name/];
+[for (aAttribute : Attribute | attributes)]
+public [typeof(aAttribute.type)/] [aAttribute.name/];
 [/for]	
 [/template]
 [template public attributeValueWithoutPrivate(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
-[typeof(a.type)/] [a.name/];
+[for (aAttribute : Attribute | attributes)]
+[typeof(aAttribute.type)/] [aAttribute.name/];
 [/for]
 [/template]
-[template public attributeMethod(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
+[template public attributeMethodWithOverride(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
 @Override
-public [typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/](){
-	return [a.name/];
+public [typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return [aAttribute.name/];
 }
 
 @Override
-public void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]){
-	this.[a.name/] = [a.name/];
-}
-[/for]
-[/template]
-
-[template public attributeMethodBasic(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
-public [typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/](){
-	return [a.name/];
-}
-
-public void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]){
-	this.[a.name/] = [a.name/];
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]){
+	this.[aAttribute.name/] = [aAttribute.name/];
 }
 [/for]
 [/template]
+[template public crofAttributeValue(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[if(filtJavaType(aAttribute.type))]
+private String [aAttribute.name.toLowerFirst()/];
+[else]
+private [typeof(aAttribute.type)/] [aAttribute.name/];
+[/if]
+[/for]	
+[/template]
+
+[template public crofAttributeMethod(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[if(filtJavaType(aAttribute.type))]
+public int get[aAttribute.name.toUpperFirst()/]Position() {
+	return Integer.parseInt([aAttribute.name.toLowerFirst()/].substring([aAttribute.name.toLowerFirst()/].indexOf("@")+1));
+}
+public String get[aAttribute.name.toUpperFirst()/]() {
+	return [aAttribute.name.toLowerFirst()/].substring(0,[aAttribute.name.toLowerFirst()/].indexOf("@"));
+}
+public void set[aAttribute.name.toUpperFirst()/](String [aAttribute.name.toLowerFirst()/]) {
+	this.[aAttribute.name.toLowerFirst()/] = [aAttribute.name.toLowerFirst()/];
+}
+
+[else]
+public [typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return [aAttribute.name/];
+}
+
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]){
+	this.[aAttribute.name/] = [aAttribute.name/];
+}
+[/if]
+[/for]
+[/template]
 
 
-[template public attributeMethodForState(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
+[template public attributeMethodOfPlayer(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
 @Override
-public [typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/](){
-	return state.[a.name/];
+public [typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return this.state.[aAttribute.name/];
 }
 
 @Override
-public void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]){
-	state.[a.name/] = [a.name/];
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]){
+	this.state.[aAttribute.name/] = [aAttribute.name/];
 }
 [/for]
 [/template]
@@ -86,14 +111,14 @@ public [typeof(o.type)/] [o.name/]([parameter(o)/]){
 [/template]
 
 [template public attributeValueForInterface(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
-private [typeof(a.type)/] [a.name/];	
+[for (aAttribute : Attribute | attributes)]
+private [typeof(aAttribute.type)/] [aAttribute.name/];	
 [/for]
 [/template]
 [template public attributeMethodForInterface(attributes : Set(Attribute))]
-[for (a : Attribute | attributes)]
-[typeof(a.type)/] [a.name.toUpperFirst().prefix('get')/]();
-void [a.name.toUpperFirst().prefix('set')/]([typeof(a.type)/] [a.name/]);
+[for (aAttribute : Attribute | attributes)]
+[typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/]();
+void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]);
 [/for]
 [/template]
 

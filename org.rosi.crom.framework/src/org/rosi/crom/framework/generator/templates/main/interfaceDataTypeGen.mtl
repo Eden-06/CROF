@@ -10,15 +10,23 @@
  * The documentation of the template generateDataType.
  * @param aDataType
  */]
-[template public interfaceDataTypeGen(aDataType : DataType)]
+[template public interfaceDataTypeGen(aDataType : DataType,aModel:Model)]
 [file (getFolderPath() +'/'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
 package [getPackagePath()/];
 
-public interface [aDataType.name/]{
+public interface [aDataType.name/][superDataTypeInterface(aDataType,aModel.relations)/]{
 	[attributeMethodForInterface(aDataType.attributes)/]
 	[operationForInterface(aDataType.operations)/]
 }
 [/file]
+[/template]
+
+[template private superDataTypeInterface(aDataType : DataType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aDataType,relations))]
+[let superDataType:DataType=getSuper(aDataType,relations)]
+ extends [superDataType.name.toUpperFirst()/]
+[/let]
+[/if]
 [/template]
 
 

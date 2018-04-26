@@ -26,8 +26,8 @@ import org.rosi.crom.framework.core.model.CromCompartmentType;
 import [getPackagePath()/].*;
 
 public class Crof[aCompartmentType.name.toUpperFirst()/] implements CromCompartmentType{	
-	[privateAttributeValue(aCompartmentType.attributes)/]
-	[attributeMethodBasic(aCompartmentType.attributes)/]	
+	[crofAttributeValue(aCompartmentType.attributes)/]
+	[crofAttributeMethod(aCompartmentType.attributes)/]	
 	[roleTypeAttributes(aCompartmentType, aModel.relations)/]
 	[relationAttributes(aCompartmentType, aModel.relations)/]
 	[for(aRelationship:Relationship|aCompartmentType.relationships)]

@@ -13,10 +13,8 @@
  * @param aDataType
  */]
 [template public mainDataTypeGen(aDataType : DataType,aModel:Model)]
-[if (aDataType.name<>'Boolean' and aDataType.name<>'Char' and aDataType.name<>'Date' 
-     and aDataType.name<>'Double' and aDataType.name<>'Float' and aDataType.name<>'Integer' 
-and aDataType.name<>'String')]	
-[interfaceDataTypeGen(aDataType)/]
+[if(filtJavaType(aDataType))]
+[interfaceDataTypeGen(aDataType,aModel)/]
 [implDataTypeGen(aDataType,aModel)/]
 [crofDataTypeGen(aDataType,aModel)/]
 [/if]

@@ -18,8 +18,8 @@ import [getPackagePath()/].[aDataType.name/];
 import org.rosi.crom.framework.core.model.CromDataType;
 
 public class Crof[aDataType.name/][superCrofDataType(aDataType,aModel.relations)/] implements CromDataType{
-	[privateAttributeValue(aDataType.attributes)/]
-	[attributeMethod(aDataType.attributes)/]
+	[crofAttributeValue(aDataType.attributes)/]
+	[crofAttributeMethod(aDataType.attributes)/]
 }
 [/file]
 [/template]

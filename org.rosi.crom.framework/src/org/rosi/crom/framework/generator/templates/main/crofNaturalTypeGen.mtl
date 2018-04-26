@@ -20,8 +20,8 @@ import org.rosi.crom.framework.core.model.CromNaturalType;
 import [getPackagePath()/].*;
 
 public class Crof[aNaturalType.name/][superCrofNaturalType(aNaturalType,aModel.relations)/] implements CromNaturalType {
-	[privateAttributeValue(aNaturalType.attributes)/]
-	[attributeMethodBasic(aNaturalType.attributes)/]
+	[crofAttributeValue(aNaturalType.attributes)/]
+	[crofAttributeMethod(aNaturalType.attributes)/]
 }
 [/file]
 [/template]

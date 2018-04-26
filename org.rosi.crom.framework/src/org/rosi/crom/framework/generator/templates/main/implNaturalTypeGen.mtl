@@ -34,7 +34,8 @@ public class [aNaturalType.name/]Impl[superNaturalTypeImpl(aNaturalType,aModel.r
 		return this.state.compoundObject;
 	}
 
-	[attributeMethodForState(aNaturalType.attributes)/]
+	[attributeMethodOfPlayer(aNaturalType.attributes)/]
+	[superAttributeMethodOfPlayer(aNaturalType,aModel.relations)/]
 	[operation(aNaturalType.operations)/]
 [comment]	[ntEditRoleBlock(aNaturalType,aModel)/][/comment]
 [comment]	[playerFunctionGen(aNaturalType,aModel)/][/comment]
@@ -52,8 +53,16 @@ public class [aNaturalType.name/]Impl[superNaturalTypeImpl(aNaturalType,aModel.r
 [/if]
 [/template]
 
+[template private superAttributeMethodOfPlayer(aNaturalType : NaturalType,relations : Set(Relation))]
+[if(hasSuper(aNaturalType,relations))]
+[let attributes:Set(Attribute)=getAllSuperAttributes(aNaturalType,relations)]
+[attributeMethodOfPlayer(attributes)/]
+[/let]
+[/if]
+[/template]
+
 [template private ntEditRoleBlock(aNaturalType : NaturalType,aModel : Model)]
-[let roleTypes : Set(RoleType) = getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[let roleTypes : Set(RoleType) = getRoleTypes(aNaturalType,getAllFulfillments(aModel.relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
@@ -74,7 +83,7 @@ public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRole
 @Override
 [comment]public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	[/comment]
 public boolean isSame(Object object){
-[let roles:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[let roles:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(aModel.relations))]
 [for(aRoleType:RoleType|roles)]
 	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
 		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
@@ -82,7 +91,7 @@ public boolean isSame(Object object){
 [/let]
 	return false;
 }
-[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[let roleTypes:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(aModel.relations))]
 [for(aRoleType:RoleType|roleTypes)]
 @Override
 public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
@@ -112,7 +121,7 @@ public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRole
 [template public playerFunctionGen_new(aNaturalType : NaturalType,aModel : Model)]
 @Override
 [comment]public boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {	[/comment]
-public boolean isSame(Object object){
+[comment]public boolean isSame(Object object){
 [let roles:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
 [for(aRoleType:RoleType|roles)]
 	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
@@ -120,8 +129,17 @@ public boolean isSame(Object object){
 [/for]
 [/let]
 	return false;
+}[/comment]
+public boolean isSame(Object object){
+[let roleTypes:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(aModel.relations))]
+[for(aRoleType:RoleType|roleTypes)]
+	if(object instanceof [getOwner(aRoleType).name/].[aRoleType.name/])
+		return this.getCompoundObject().equals((([getOwner(aRoleType).name/].[aRoleType.name/])object).getPlayer());
+[/for]
+	return false;
 }
-[let roleTypes:Set(RoleType)=getRoles(aNaturalType,getAllFulfillments(aModel.relations))]
+[/let]
+[let roleTypes:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(aModel.relations))]
 [for(aRoleType:RoleType|roleTypes)]
 @Override
 public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){

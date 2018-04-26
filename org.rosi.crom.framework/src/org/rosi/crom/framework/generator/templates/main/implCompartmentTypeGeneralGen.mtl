@@ -21,7 +21,7 @@
 
 [privateAttributeValue(aCompartmentType.attributes)/]
 
-[attributeMethod(aCompartmentType.attributes)/]
+[attributeMethodWithOverride(aCompartmentType.attributes)/]
 
 [operation(aCompartmentType.operations)/]
 
@@ -40,22 +40,22 @@
 [for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
 [if(aType.oclIsKindOf(NaturalType))]
 [let aNturalTypePlayer:NaturalType=aType.oclAsType(NaturalType)]
-//使用HashMap还是直接用Map
-transient ArrayList<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
-public ArrayList<[aRoleType.name.toUpperFirst()/]> get[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s() {
+
+transient List<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
+public List<[aRoleType.name.toUpperFirst()/]> get[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s() {
 	return [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
-public void set[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(ArrayList<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+public void set[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(List<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
 	this.[aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s = [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
 [/let]
 [else]
 [let aCompartmentTypePlayer:CompartmentType=aType.oclAsType(CompartmentType)]
-transient ArrayList<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
-public ArrayList<[aRoleType.name.toUpperFirst()/]> get[aCompartmentTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s() {
+transient List<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
+public List<[aRoleType.name.toUpperFirst()/]> get[aCompartmentTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s() {
 	return [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
-public void set[aCompartmentTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(ArrayList<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+public void set[aCompartmentTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(List<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
 	this.[aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s = [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
 [/let]
@@ -68,21 +68,21 @@ public void set[aCompartmentTypePlayer.name.toUpperFirst()/][aRoleType.name.toUp
 [for(aType:Type|getPlayers(aRoleType,relations))]
 [if(aType.oclIsKindOf(NaturalType))]
 [let aNturalTypePlayer:NaturalType=aType.oclAsType(NaturalType)]
-transient ArrayList<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
-public ArrayList<[aRoleType.name.toUpperFirst()/]> get[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s() {
+transient List<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
+public List<[aRoleType.name.toUpperFirst()/]> get[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s() {
 	return [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
-public void set[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(ArrayList<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+public void set[aNturalTypePlayer.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(List<[aRoleType.name.toUpperFirst()/]> [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
 	this.[aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s = [aNturalTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
 [/let]
 [else]
 [let aCompartmentTypePlayer:CompartmentType=aType.oclAsType(CompartmentType)]
-transient ArrayList<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
-public ArrayList<[aRoleType.name.toUpperFirst()/]> get[aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s() {
+transient List<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aRoleType.name.toUpperFirst()/]>();
+public List<[aRoleType.name.toUpperFirst()/]> get[aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s() {
 	return [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
-public void set[aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s(ArrayList<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+public void set[aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s(List<[aRoleType.name.toUpperFirst()/]> [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
 	this.[aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s = [aCompartmentTypePlayer.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
 [/let]
@@ -133,7 +133,7 @@ something wrong in ctUniversalImplGen.mtl line 93.
 [for(aNamedElement:NamedElement|aModel.elements)]
 [if(aNamedElement.oclIsKindOf(NaturalType))]
 [let aNaturalTypePlayer:NaturalType=aNamedElement.oclAsType(NaturalType)]
-[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoles(aNaturalTypePlayer, getAllFulfillments(aModel.relations)),getAllRoleTypes(aCompartmentType))]
+[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoleTypes(aNaturalTypePlayer, getAllFulfillments(aModel.relations)),getAllRoleTypes(aCompartmentType))]
 [if(roleTypes<>Set{})]
 [if((roleTypes->size())=1)]
 [let aRoleType : RoleType = roleTypes->asOrderedSet()->first()]
@@ -148,7 +148,7 @@ something wrong in ctUniversalImplGen.mtl line 93.
 [elseif(aNamedElement.oclIsKindOf(CompartmentType))]
 [let aCompartmentTypePlayer:CompartmentType=aNamedElement.oclAsType(CompartmentType)]
 [if(isCompartmentTypePlayedRole(aCompartmentTypePlayer,aModel.relations))]
-[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoles(aCompartmentTypePlayer, getAllFulfillments(aModel.relations)), getAllRoleTypes(aCompartmentType))]
+[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoleTypes(aCompartmentTypePlayer, getAllFulfillments(aModel.relations)), getAllRoleTypes(aCompartmentType))]
 [if(roleTypes<>Set{})]
 [if((roleTypes->size())=1)]
 [let aRoleType : RoleType = roleTypes->asOrderedSet()->first()]

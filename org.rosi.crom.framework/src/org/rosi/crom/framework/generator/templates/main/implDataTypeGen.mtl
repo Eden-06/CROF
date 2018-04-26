@@ -18,7 +18,7 @@ import [getPackagePath()/].[aDataType.name/];
 
 public class [aDataType.name/]Impl[superDataTypeImpl(aDataType,aModel.relations)/] implements [aDataType.name/]{
 	[privateAttributeValue(aDataType.attributes)/]
-	[attributeMethod(aDataType.attributes)/]
+	[attributeMethodWithOverride(aDataType.attributes)/]
 	[operation(aDataType.operations)/]
 }
 [/file]

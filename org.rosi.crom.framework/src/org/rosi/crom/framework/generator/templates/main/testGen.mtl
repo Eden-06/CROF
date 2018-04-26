@@ -22,9 +22,73 @@ public class Test {
 
 	public static void main(String[ '[' /][ ']' /] args) {
 		Factory factory=Factory.INSTANCE;
+
 		
 		
+		//inheritance
 		/*
+		Ca ca=factory.createCa();
+		ca.setName("ca");
+		Na na=factory.createNa();
+		na.setAttr("na");
+		Nb nb=factory.createNb();
+		nb.setBttr("nb");
+		nb.setAttr("nbna");
+		Ca.Rb rb=factory.bindRb(ca, nb);
+		rb.setName("nbrb");
+		Ca.Ra ra=factory.bindRa(ca, nb);
+		ra.setName("nbra");
+		System.out.println(rb.getPlayer());
+		System.out.println(ra.getPlayer());
+		*/
+		/*
+		//DataType
+		Da da1=factory.createDa();
+		da1.setName("da1");
+		Da da2=factory.createDa();
+		da2.setName("da2");
+		
+		
+		Ct ct=factory.createCt();
+		ct.setName("ct");
+		Na na1=factory.createNa();
+		na1.setName("na1");
+		na1.setAttr(da1);
+		
+		Na na2=factory.createNa();
+		na2.setName("na2");
+		na2.setAttr(da2);
+		
+		Ct.Ra ra1=factory.bindRa(ct, na1);
+		ra1.setName("na1ra1");
+		Ct.Ra ra2=factory.bindRa(ct, na2);
+		ra2.setName("na2ra2");
+		*/
+/*
+		//my.crom test unbind
+		CompartmentImpl c1=(CompartmentImpl)factory.createCompartment();
+		c1.setName("Compartment_1");
+		CompartmentImpl c2=(CompartmentImpl)factory.createCompartment();
+		c2.setName("Compartment_2");
+		
+		
+		NaturalOneImpl none1=(NaturalOneImpl)factory.createNaturalOne();
+		NaturalOneImpl none2=(NaturalOneImpl)factory.createNaturalOne();
+		NaturalOneImpl none3=(NaturalOneImpl)factory.createNaturalOne();
+		none1.setName("none1");
+		none2.setName("none2");
+		none3.setName("none3");
+		CompartmentImpl.NaturalOneRoleOne nonerone1=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(none1);
+		CompartmentImpl.NaturalOneRoleOne nonerone2=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(none2);
+		CompartmentImpl.NaturalOneRoleOne nonerone3=(CompartmentImpl.NaturalOneRoleOne)c1.bindRoleOne(none3);
+		nonerone1.setName("n1r11");
+		nonerone2.setName("n1r12");	
+		nonerone3.setName("n1r13");
+		c1.unbindRoleOne(none3);
+		System.out.print(nonerone3);
+*/		
+		/*
+		//my.crom
 		CompartmentImpl c1=(CompartmentImpl)factory.createCompartment();
 		c1.setName("Compartment_1");
 		CompartmentImpl c2=(CompartmentImpl)factory.createCompartment();
@@ -42,6 +106,7 @@ public class Test {
 		*/
 		
 /*
+		//irreflexive
 		Ct ct=factory.createCt();
 		ct.setName("ct");
 		Na na1=factory.createNa();

@@ -14,7 +14,7 @@
 [import org::rosi::crom::framework::generator::templates::main::crofModelGen/]
 [import org::rosi::crom::framework::generator::templates::main::serializerGen/]
 [import org::rosi::crom::framework::generator::templates::main::deserializerGen/]
-
+[import org::rosi::crom::framework::generator::templates::main::queryTest/]
 
 [**
  * The documentation of the template main.
@@ -38,6 +38,7 @@
 [mainFactoryGen()/]
 [mainEnumGen()/]
 [testGen()/]
+[comment][queryTest()/][/comment]
 [/template]
 
 

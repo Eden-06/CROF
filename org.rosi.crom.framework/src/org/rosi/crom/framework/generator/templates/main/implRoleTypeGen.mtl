@@ -41,7 +41,7 @@ public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements
 [comment]		super();[/comment]
 		this.state=[aType.name.toLowerFirst()/]Impl.state;
 	}
-	[attributeMethod(aRoleType.attributes)/]
+	[attributeMethodWithOverride(aRoleType.attributes)/]
 	[operation(aRoleType.operations)/]
 	
 	@Override

@@ -43,8 +43,8 @@ import [getPackagePath()/].*;
 
 
 public class Crof[aRoleType.name.toUpperFirst()/] implements CromRoleType{
-	[privateAttributeValue(aRoleType.attributes)/]
-	[attributeMethodBasic(aRoleType.attributes)/]
+	[crofAttributeValue(aRoleType.attributes)/]
+	[crofAttributeMethod(aRoleType.attributes)/]
 }
 [/file]
 [/template]
