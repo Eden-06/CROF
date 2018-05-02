@@ -24,7 +24,7 @@ public enum Types {
 [for(aModelElement:ModelElement|aModel.elements)]
 [if(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 [aDataType.name.toUpper()/],
 [/if]
 [/let]
@@ -52,6 +52,6 @@ public enum Types {
 [/template]
 
 [template private roleTypeTypesInterface(aRoleType:RoleType, aModel:Model) post (replaceAll('\n', ' ').trim())]
-[aRoleType.name.toUpper()/],
+[getOwner(aRoleType).name.toUpper()/][aRoleType.name.toUpper()/],
 [/template]
 

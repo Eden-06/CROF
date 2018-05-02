@@ -15,8 +15,8 @@
 package [getPackagePath()/];
 
 public interface [aDataType.name/][superDataTypeInterface(aDataType,aModel.relations)/]{
-	[attributeMethodForInterface(aDataType.attributes)/]
-	[operationForInterface(aDataType.operations)/]
+	[interfaceProperties(aDataType.attributes)/]
+	[interFaceOperations(aDataType.operations)/]
 }
 [/file]
 [/template]

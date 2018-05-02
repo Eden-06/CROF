@@ -1,0 +1,114 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateEnum.
+ */]
+[module queryTest('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+
+[template public queryTest(aModel : Model)]
+[file (getFolderPath() +'/impl/QueryTest.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+
+public class QueryTest{
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[if(hasSuper(aModelElement.oclAsType(DataType),aModel.relations))]
+this : [aModelElement.name/]
+super:[getSuper(aModelElement.oclAsType(DataType),aModel.relations).name/]
+attributesOf[aModelElement.name/]:
+[let attributes:Set(Attribute)=getAllSuperAttributes(aModelElement.oclAsType(DataType),aModel.relations)]
+[for(superAttribute:Attribute|attributes)]
+[for(aa:Attribute|aModelElement.oclAsType(DataType).attributes)]
+[superAttribute.name/] [aa.name/] [superAttribute=aa/]
+[/for]
+[/for]
+[/let]
+[/if]
+[/if]
+[/for]
+
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[if(hasSuper(aModelElement.oclAsType(CompartmentType),aModel.relations))]
+this : [aModelElement.name/]
+super : [getSuper(aModelElement.oclAsType(CompartmentType),aModel.relations).name/]
+attributesOf[aModelElement.name/]:
+[let attributes:Set(Attribute)=getAllSuperAttributes(aModelElement.oclAsType(CompartmentType),aModel.relations)]
+[for(aAttribute:Attribute|attributes)]
+[aAttribute.name/]
+[/for]
+[/let]
+[/if]
+[/if]
+[/for]
+
+
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[if(hasSuper(aModelElement.oclAsType(DataType),aModel.relations))]
+this : [aModelElement.name/]
+super:[getSuper(aModelElement.oclAsType(DataType),aModel.relations).name/]
+attributesOf[aModelElement.name/]:
+[let attributes:Set(Attribute)=getAllSuperAttributes(aModelElement.oclAsType(DataType),aModel.relations)]
+[for(superAttribute:Attribute|attributes)]
+[superAttribute.name/]
+[/for]
+[/let]
+[/if]
+[/if]
+[/for]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(NaturalType))]
+[if(hasSuper(aModelElement.oclAsType(NaturalType),aModel.relations))]
+this : [aModelElement.name/]
+super: [getSuper(aModelElement.oclAsType(NaturalType),aModel.relations).name/]
+attributesOf[aModelElement.name/]:
+[let attributes:Set(Attribute)=getAllSuperAttributes(aModelElement.oclAsType(NaturalType),aModel.relations)]
+[for(aAttribute:Attribute|attributes)]
+[aAttribute.name/]
+[/for]
+[/let]
+[/if]
+[/if]
+[/for]
+
+
+
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[if(hasSuper(aModelElement.oclAsType(DataType),aModel.relations))]
+this : [aModelElement.name/]
+super:[getSuper(aModelElement.oclAsType(DataType),aModel.relations).name/]
+attributesOf[aModelElement.name/]:
+
+[let attributes:Set(Attribute)=getAllSuperAttributes(getAllSuperAttributes(aModelElement.oclAsType(DataType),aModel.relations))]
+[for(superAttribute:Attribute|attributes)]
+[hasAttribute(superAttribute,aModelElement.oclAsType(DataType).attributes)/] [superAttribute.name/] 
+[/for]
+thisAttributes:[let subAttributes:Set(Attribute)=getSubAttributes(aModelElement.oclAsType(DataType).attributes,attributes)][for(sub:Attribute|subAttributes)][sub.name/][/for][/let]
+[/let]
+[/if]
+[/if]
+[/for]
+
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(NaturalType))]
+[if(hasSub(aModelElement.oclAsType(NaturalType),aModel.relations))]
+this:[aModelElement.oclAsType(NaturalType).name/]
+sub:[getLastSub(aModelElement.oclAsType(NaturalType),aModel.relations).name/]
+[/if]
+[/if]
+[/for]
+
+
+
+
+
+[/file]
+[/template]

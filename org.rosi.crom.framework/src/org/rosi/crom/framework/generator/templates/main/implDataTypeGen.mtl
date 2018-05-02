@@ -14,12 +14,12 @@
 [file (getFolderPath() +'/impl/'+ aDataType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
 package [getPackagePath()/].impl;
 
-import [getPackagePath()/].[aDataType.name/];
+import [getPackagePath()/].*;
 
 public class [aDataType.name/]Impl[superDataTypeImpl(aDataType,aModel.relations)/] implements [aDataType.name/]{
-	[privateAttributeValue(aDataType.attributes)/]
-	[attributeMethodWithOverride(aDataType.attributes)/]
-	[operation(aDataType.operations)/]
+	[privateFields(aDataType.attributes)/]
+	[overrideProperties(aDataType.attributes)/]
+	[implOperations(aDataType.operations)/]
 }
 [/file]
 [/template]

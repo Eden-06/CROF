@@ -13,8 +13,8 @@
  * @param aDataType
  */]
 [template public interfaceCompartmentTypeGeneralGen(aCompartmentType : CompartmentType, aModel : Model)]
-[attributeMethodForInterface(aCompartmentType.attributes)/]
-[operationForInterface(aCompartmentType.operations)/]
+[interfaceProperties(aCompartmentType.attributes)/]
+[interFaceOperations(aCompartmentType.operations)/]
 [interfaceRoleTypeGen(aCompartmentType, aModel.relations)/]
 [interfaceRelationshipGen(aCompartmentType)/]
 [bindFunktionInterfaceGen(aCompartmentType, aModel)/]

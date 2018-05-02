@@ -36,7 +36,7 @@ public interface Factory{
 [/let]
 [elseif(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 	[aDataType.name/] create[aDataType.name/]();
 	int getIndex([aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]);
 [/if]

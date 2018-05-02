@@ -1,70 +1,24 @@
 [comment encoding = UTF-8 /]
 [**
- * The documentation of the module globalGenerator.
+ * The documentation of the templates generalTemplates.
  */]
 [module generalTemplates('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::generalQueries/]
 
-[**
- * The documentation of the template generateDataType.
- * @param aDataType
- */]
 
-
-[template public generateParametersForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
-[for (aAttribute : Attribute  | attributes) separator (', ')]
-[typeof(aAttribute.type)/] [aAttribute.name/]
-[/for]
-[/template]
-
-[template public generateOperationsForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
-[for (aAttribute : Attribute  | attributes)]
-state.[aAttribute.name/]=[aAttribute.name/]; 
-[/for]
-[/template]
-
-[template public privateAttributeValue(attributes : Set(Attribute))]
+[template public crofFields(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-private [typeof(aAttribute.type)/] [aAttribute.name/];
-[/for]	
-[/template]
-
-[template public attributesState(attributes : Set(Attribute))]
-[for (aAttribute : Attribute | attributes)]
-public [typeof(aAttribute.type)/] [aAttribute.name/];
-[/for]	
-[/template]
-[template public attributeValueWithoutPrivate(attributes : Set(Attribute))]
-[for (aAttribute : Attribute | attributes)]
-[typeof(aAttribute.type)/] [aAttribute.name/];
-[/for]
-[/template]
-[template public attributeMethodWithOverride(attributes : Set(Attribute))]
-[for (aAttribute : Attribute | attributes)]
-@Override
-public [typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
-	return [aAttribute.name/];
-}
-
-@Override
-public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]){
-	this.[aAttribute.name/] = [aAttribute.name/];
-}
-[/for]
-[/template]
-[template public crofAttributeValue(attributes : Set(Attribute))]
-[for (aAttribute : Attribute | attributes)]
-[if(filtJavaType(aAttribute.type))]
+[if(notJavaType(aAttribute.type))]
 private String [aAttribute.name.toLowerFirst()/];
 [else]
-private [typeof(aAttribute.type)/] [aAttribute.name/];
+private [typeFilter(aAttribute.type)/] [aAttribute.name/];
 [/if]
 [/for]	
 [/template]
 
-[template public crofAttributeMethod(attributes : Set(Attribute))]
+[template public crofProperties(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-[if(filtJavaType(aAttribute.type))]
+[if(notJavaType(aAttribute.type))]
 public int get[aAttribute.name.toUpperFirst()/]Position() {
 	return Integer.parseInt([aAttribute.name.toLowerFirst()/].substring([aAttribute.name.toLowerFirst()/].indexOf("@")+1));
 }
@@ -76,117 +30,139 @@ public void set[aAttribute.name.toUpperFirst()/](String [aAttribute.name.toLower
 }
 
 [else]
-public [typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+public [typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
 	return [aAttribute.name/];
 }
 
-public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]){
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]){
 	this.[aAttribute.name/] = [aAttribute.name/];
 }
 [/if]
 [/for]
 [/template]
 
-
-[template public attributeMethodOfPlayer(attributes : Set(Attribute))]
+[**
+ * The documentation of the template publicFields.
+ * create fields without access specifiers in class.
+ * @param Set(Attribute)
+ */]
+[template public defaultFields(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-@Override
-public [typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
-	return this.state.[aAttribute.name/];
-}
-
-@Override
-public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]){
-	this.state.[aAttribute.name/] = [aAttribute.name/];
-}
+[typeFilter(aAttribute.type)/] [aAttribute.name/];
 [/for]
 [/template]
-[template public operation(operations : Set(Operation))]
+
+[template public implOperations(operations : Set(Operation))]
 [for (o : Operation | operations)]
 @Override
-public [typeof(o.type)/] [o.name/]([parameter(o)/]){
+public [typeFilter(o.type)/] [o.name/]([parameters(o)/]){
 	throw new UnsupportedOperationException("Invalid operation for sorted list.");
 }
 [/for]
 [/template]
 
-[template public attributeValueForInterface(attributes : Set(Attribute))]
-[for (aAttribute : Attribute | attributes)]
-private [typeof(aAttribute.type)/] [aAttribute.name/];	
-[/for]
-[/template]
-[template public attributeMethodForInterface(attributes : Set(Attribute))]
-[for (aAttribute : Attribute | attributes)]
-[typeof(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/]();
-void [aAttribute.name.toUpperFirst().prefix('set')/]([typeof(aAttribute.type)/] [aAttribute.name/]);
-[/for]
-[/template]
-
-[template public operationForInterface(operations : Set(Operation))]
+[template public interFaceOperations(operations : Set(Operation))]
 [for (o : Operation | operations)]
-[typeof(o.type)/] [o.name/]([parameter(o)/]);
+[typeFilter(o.type)/] [o.name/]([parameters(o)/]);
 [/for]
 [/template]
 
-[template public parameter(o : Operation) post (replaceAll('\n', '').trim())]
+[template public interfaceProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/]();
+void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]);
+[/for]
+[/template]
+
+[**
+ * The documentation of the template overrideProperties.
+ * create properties with @Override annotation in class.
+ * @param Set(Attribute)
+ */]
+[template public overrideProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+@Override
+public [typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return [aAttribute.name/];
+}
+
+@Override
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]){
+	this.[aAttribute.name/] = [aAttribute.name/];
+}
+[/for]
+[/template]
+
+[template private parameters(o : Operation) post (replaceAll('\n', '').trim())]
 [for (p : Parameter  | o.params) separator (', ')]
-[typeof(p.type)/] [p.name/]
+[typeFilter(p.type)/] [p.name/]
 [/for]
 [/template]
 
+[**
+ * The documentation of the template privateFields.
+ * create private fields in nonplayer class.
+ * @param Set(Attribute)
+ */]
+[template public privateFields(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+private [typeFilter(aAttribute.type)/] [aAttribute.name/];
+[/for]	
+[/template]
 
-[template public typeof(t : Type) post (replaceAll('\n', '').trim())]
+[template public playerProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+@Override
+public [typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return this.state.[aAttribute.name/];
+}
+
+@Override
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]){
+	this.state.[aAttribute.name/] = [aAttribute.name/];
+}
+[/for]
+[/template]
+
+[**
+ * The documentation of the template publicFields.
+ * create public fields in state class.
+ * @param Set(Attribute)
+ */]
+[template public publicFields(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+public [typeFilter(aAttribute.type)/] [aAttribute.name/];
+[/for]	
+[/template]
+
+[template public typeFilter(t : Type) post (replaceAll('\n', '').trim())]
 [if (t<>null)]
 	[if (t.name='Boolean')]
 		boolean
-	[elseif (t.name='Char')]
+	[elseif (t.name='Byte')]
+		byte
+	[elseif (t.name='Char' or t.name='Character')]
 		char
-	[elseif (t.name='Date')]
-		Date
 	[elseif (t.name='Double')]
 		double
 	[elseif (t.name='Float')]
 		float
 	[elseif (t.name='Integer')]
 		int
-	[elseif (t.name='String')]
-		String
-	[else][t.name/]
+	[elseif (t.name='Long')]
+		long
+	[elseif (t.name='Short')]
+		short
+	[else]
+		[t.name/]
 	[/if]
-[else]void
+[else]
+	void
 [/if]
 [/template]
 
-[template public getCompartmentNameByRoleType(aRoleType : RoleType, aModel : Model) post (replaceAll('\n', '').trim())]
-[for (aModelElement : ModelElement | aModel.elements)]
-[if(aModelElement.oclIsKindOf(CompartmentType))]
-[let aCompartmentType : CompartmentType = aModelElement.oclAsType(CompartmentType)]
-[for(aPart : Part | aCompartmentType.parts)]
-[if(aPart.role.oclIsKindOf(RoleType))]
-[if(aPart.role.oclAsType(RoleType).name=aRoleType.name)]
-[aCompartmentType.name/]
-[/if]
-[else]
-[/if]
+[comment][template public generateParametersForConstructor(attributes : Set(Attribute)) post (replaceAll('\n', '').trim())]
+[for (aAttribute : Attribute  | attributes) separator (', ')]
+[typeFilter(aAttribute.type)/] [aAttribute.name/]
 [/for]
-[/let]
-[/if]
-[/for]
-[/template]
-
-[template public getCompartmentNameByRoleGroup(aRoleGroup:RoleGroup,aModel:Model) post (replaceAll('\n', '').trim())]
-[for (aModelElement : ModelElement | aModel.elements)]
-[if(aModelElement.oclIsKindOf(CompartmentType))]
-[let aCompartmentType : CompartmentType = aModelElement.oclAsType(CompartmentType)]
-[for(aPart : Part | aCompartmentType.parts)]
-[if(aPart.role.oclIsKindOf(RoleGroup))]
-[if(aPart.role.oclAsType(RoleGroup).name=aRoleGroup.name)]
-[aCompartmentType.name/]
-[/if]
-[else]
-[/if]
-[/for]
-[/let]
-[/if]
-[/for]
-[/template]
+[/template][/comment]

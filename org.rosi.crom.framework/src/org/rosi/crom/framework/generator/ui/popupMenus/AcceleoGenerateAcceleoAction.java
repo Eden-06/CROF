@@ -70,8 +70,11 @@ public class AcceleoGenerateAcceleoAction extends ActionDelegate implements IAct
 						while (filesIt.hasNext()) {
 							IFile model = (IFile)filesIt.next();
 							URI modelURI = URI.createPlatformResourceURI(model.getFullPath().toString(), true);
+							//文件夹名字
+							String folderName=modelURI.path().substring(modelURI.path().lastIndexOf("/")+1,modelURI.path().indexOf(".crom")).toLowerCase();
+							org.rosi.crom.framework.generator.templates.main.Util.setFolderName(folderName);
 							try {
-								IContainer targetOfMain = model.getProject().getFolder("src");
+								IContainer targetOfMain = model.getProject().getFolder("src/"+folderName);
 								IContainer targetOfProject = model.getProject();
 								GenerateAll generator = new GenerateAll(modelURI, targetOfMain,targetOfProject, getArguments());
 								generator.doGenerate(monitor);

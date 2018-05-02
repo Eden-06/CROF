@@ -15,8 +15,8 @@
  */]
 
 [template public crofCompartmentTypeGen(aCompartmentType : CompartmentType, aModel : Model)]
-[file (getFolderPath() +'/model/Crof'+ aCompartmentType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].model;
+[file (getFolderPath() +'/crof/Crof'+ aCompartmentType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import org.rosi.crom.framework.core.model.CromCompartmentType;
 import [getPackagePath()/].*;
 
 public class Crof[aCompartmentType.name.toUpperFirst()/] implements CromCompartmentType{	
-	[crofAttributeValue(aCompartmentType.attributes)/]
-	[crofAttributeMethod(aCompartmentType.attributes)/]	
+	[crofFields(aCompartmentType.attributes)/]
+	[crofProperties(aCompartmentType.attributes)/]	
 	[roleTypeAttributes(aCompartmentType, aModel.relations)/]
 	[relationAttributes(aCompartmentType, aModel.relations)/]
 	[for(aRelationship:Relationship|aCompartmentType.relationships)]

@@ -33,15 +33,15 @@
 [query public isCompartmentTypePlayedRole(ct:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(Fulfillment).filler->selectByType(CompartmentType)->includes(ct) /]
 [query public getNaturalTypeByNameOfRoleType(rt:RoleType,fulfillments:Set(Fulfillment)):Set(NaturalType)=fulfillments -> select(fulfillments | fulfillments.filled=rt).filler->asSet()/]
 [query public getNaturalTypeByNameOfRoleGroup(rg:RoleGroup,fulfillments:Set(Fulfillment)):Set(NaturalType)=fulfillments -> select(fulfillments | fulfillments.filled=rg).filler->asSet()/]
-[query public getTypeNameInNaturalType(nt:NaturalType) : 
+[comment][query public ogetTypeNameInNaturalType(nt:NaturalType) : 
 	Bag(String) = Sequence{nt.attributes.type, nt.operations.params.type,nt.operations.type}
 					->flatten()->excluding(null)->asSet().name
-					->excluding('Boolean')->excluding('Char')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('String')/]
-[query public getTypeNameInRoleType(rt:RoleType) : 
+					->excluding('Boolean')->excluding('Char')->excluding('Character')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('Long')->excluding('Short')->excluding('String')/]
+[query public ogetTypeNameInRoleType(rt:RoleType) : 
 	Bag(String) = Sequence{rt.attributes.type, rt.operations.params.type,rt.operations.type}
 					->flatten()->excluding(null)->asSet().name
-					->excluding('Boolean')->excluding('Char')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('String')/]
-[query public getTypeNameInCompartmentType(ct:CompartmentType) : 
+					->excluding('Boolean')->excluding('Char')->excluding('Character')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('Long')->excluding('Short')->excluding('String')/]
+[query public ogetTypeNameInCompartmentType(ct:CompartmentType) : 
 	Bag(String) = Sequence{ct.parts.role->selectByType(RoleGroup).elements->selectByType(RoleType).attributes.type,
 				ct.parts.role->selectByType(RoleGroup).elements->selectByType(RoleType).operations.type,
 				ct.parts.role->selectByType(RoleGroup).elements->selectByType(RoleType).operations.params.type,
@@ -51,10 +51,11 @@
 				ct.attributes.type, 
 				ct.operations.params.type,
 				ct.operations.type}
-			->flatten()->excluding(null)->asSet().name/]
-[query public filtJavaType(strBag:Bag(String)):Bag(String)=strBag->excluding('Boolean')->excluding('Char')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('String')/]
-[query public filtJavaType(aDataType:DataType):Boolean= aDataType.name<>'Boolean' and aDataType.name<>'Char' and aDataType.name<>'Date' and aDataType.name<>'Double' and aDataType.name<>'Float' and aDataType.name<>'Integer' and aDataType.name<>'String'/]
-[query public filtJavaType(aType:Type):Boolean= aType.name<>'Boolean' and aType.name<>'Char' and aType.name<>'Date' and aType.name<>'Double' and aType.name<>'Float' and aType.name<>'Integer' and aType.name<>'String'/]
+			->flatten()->excluding(null)->asSet().name/][/comment]
+[comment][query public filtBasicType(strBag:Bag(String)):Bag(String)=strBag->excluding('Boolean')->excluding('Char')->excluding('Character')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('Long')->excluding('Short')->excluding('String')/][/comment]
+[comment][query public notJavaType(aDataType:DataType):Boolean= aDataType.name<>'Boolean' and aDataType.name<>'Char' and aDataType.name<>'Date' and aDataType.name<>'Double' and aDataType.name<>'Float' and aDataType.name<>'Integer' and aDataType.name<>'String'/][/comment]
+[query public notJavaType(aType:Type):Boolean=aType.name<>'Boolean' and aType.name<>'Char' and aType.name<>'Character' and aType.name<>'Date' and aType.name<>'Double' and aType.name<>'Float' and aType.name<>'Integer' and aType.name<>'Long' and aType.name<>'Short' and aType.name<>'String'/]
+
 
 [comment]invoke methode[/comment] 
 [query public getFolderPath(traceabilityContext : OclAny) : String =invoke('org.rosi.crom.framework.generator.templates.main.Util', 'getFolderPath()', Sequence{}) /]
@@ -285,12 +286,19 @@
 	else newSubAttributes
 	endif)/]
 
+[query public getSuperAttributes(subAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
+	superAttributes->iterate(superAttribute : Attribute; newSuperAttributes:Set(Attribute) = Set{} | 
+	if(not hasAttribute(superAttribute,subAttributes))
+	then newSuperAttributes->union(Set{superAttribute})
+	else newSuperAttributes
+	endif)/]
+
 [query public hasSuperRoleType(aRoleType:RoleType,aCompartmentType:CompartmentType):Boolean=getAllRoleTypes(aCompartmentType)->includes(aRoleType)/]
 [query public hasSuperRoleGroup(aRoleGroup:RoleGroup,aCompartmentType:CompartmentType):Boolean=getAllRoleGroups(aCompartmentType)->includes(aRoleGroup)/]
 
 
 
-
+[comment][query public getAllType(aDataType:DataType):Set(Type)=aDataType.attributes/][/comment]
 
 
 

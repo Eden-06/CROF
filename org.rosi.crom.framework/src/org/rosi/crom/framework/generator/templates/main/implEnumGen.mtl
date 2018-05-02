@@ -26,7 +26,7 @@ public enum TypesImpl{
 [for(aModelElement:ModelElement|aModel.elements)]
 [if(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 [aDataType.name.toUpper()/]IMPL,
 [/if]
 [/let]
@@ -56,7 +56,7 @@ public enum TypesImpl{
 [template private roleTypeGen(aRoleType:RoleType, aModel:Model) post (replaceAll('\n', ' ').trim())]
 [let types:Set(Type)=getPlayers(aRoleType,aModel.relations)]
 [for(aType:Type|types)]
-[aType.name.toUpper()/][aRoleType.name.toUpper()/],
+[getOwner(aRoleType).name.toUpper()/][aType.name.toUpper()/][aRoleType.name.toUpper()/],
 [/for]
 [/let]
 [/template]

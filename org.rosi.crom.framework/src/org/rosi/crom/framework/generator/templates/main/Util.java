@@ -25,6 +25,7 @@ public class Util {
 	public static URI modeluri = null;
 	public static File filePath = null;
 	public static String folderPath = "";
+	public static String folderName = "";
 	public static String packagePath = "";
 	public static Set<RoleType> thisset = new HashSet<RoleType>();
 
@@ -41,8 +42,6 @@ public class Util {
 	 */
 	public static void setModelUri(URI m) {
 		modeluri = m;
-		if (m != null)
-			System.err.println("modelpath: " + m.toString());
 	}
 
 	/**
@@ -53,15 +52,11 @@ public class Util {
 	 *         if no modeluri was set.
 	 */
 	public String getModelUri() {
-		if (modeluri == null)
-			return "model";
 		return modeluri.toString();
 	}
 
 	public static void setFilePath(File m) {
 		filePath = m;
-		if (m != null)
-			System.err.println("modelpath: " + m.toString());
 	}
 
 	/**
@@ -72,45 +67,40 @@ public class Util {
 	 *         if no modeluri was set.
 	 */
 	public String getFilePath() {
-		if (filePath == null)
-			return "model";
 		return filePath.toString();
 	}
 
 	public static void setPackagePath(String str) {
 		packagePath = str;
-		// if (str != null)
-		// System.err.println("modelpath: " + str.toString());
+	}
+	public String getPackagePath() {
+		return packagePath;
 	}
 
 	public static void setFolderPath(String str) {
 		folderPath = str;
-		// if (str != null)
-		// System.err.println("modelpath: " + str.toString());
 	}
-
-	public String getPackagePath() {
-		if (packagePath == "")
-			return "package";
-		return packagePath;
-	}
-
 	public String getFolderPath() {
-		if (folderPath == "")
-			return "folder";
 		return folderPath;
 	}
 
+	public static void setFolderName(String str) {
+		folderName = str;
+	}
+
+	public String getFolderName() {
+		return folderName;
+	}
+
+
+
+
 	public boolean setRole(RoleTypeImpl role) {
-
 		return thisset.add((RoleType) role);
-
 	}
 
 	public Set<RoleType> getRole() {
-
 		return thisset;
-
 	}
 
 }

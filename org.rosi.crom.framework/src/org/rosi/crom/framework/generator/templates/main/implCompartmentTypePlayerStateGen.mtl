@@ -31,7 +31,7 @@ public class [aCompartmentType.name.toUpperFirst()/]State{
 
 
 [template private attributesStateCompartmentType(aCompartmentType : CompartmentType,relations : Set(Relation))]
-[attributesState(aCompartmentType.attributes)/]
+[publicFields(aCompartmentType.attributes)/]
 [roleAttributeCompartmentTypeState(aCompartmentType,relations)/]
 [/template]
 

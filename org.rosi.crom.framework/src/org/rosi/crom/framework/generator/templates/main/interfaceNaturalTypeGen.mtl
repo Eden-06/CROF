@@ -18,8 +18,8 @@ package [getPackagePath()/];
 import java.util.List;
 
 public interface [aNaturalType.name.toUpperFirst()/][superNaturalTypeInterface(aNaturalType,aModel.relations)/]{
-	[attributeMethodForInterface(aNaturalType.attributes)/]
-	[operationForInterface(aNaturalType.operations)/]
+	[interfaceProperties(aNaturalType.attributes)/]
+	[interFaceOperations(aNaturalType.operations)/]
 [comment]	[playerOperationsNaturalTypeInterface(aNaturalType,aModel.relations)/][/comment]
 	[playerOperationsNaturalTypeInterface_new(aNaturalType,aModel.relations)/]
 [if(not hasSuper(aNaturalType,aModel.relations))]

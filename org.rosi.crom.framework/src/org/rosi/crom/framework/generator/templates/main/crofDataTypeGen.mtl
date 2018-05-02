@@ -11,15 +11,15 @@
  * @param aDataType
  */]
 [template public crofDataTypeGen(aDataType : DataType,aModel:Model)]
-[file (getFolderPath() +'/model/Crof'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].model;
+[file (getFolderPath() +'/crof/Crof'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 import [getPackagePath()/].[aDataType.name/];
 import org.rosi.crom.framework.core.model.CromDataType;
 
 public class Crof[aDataType.name/][superCrofDataType(aDataType,aModel.relations)/] implements CromDataType{
-	[crofAttributeValue(aDataType.attributes)/]
-	[crofAttributeMethod(aDataType.attributes)/]
+	[crofFields(aDataType.attributes)/]
+	[crofProperties(aDataType.attributes)/]
 }
 [/file]
 [/template]

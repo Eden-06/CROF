@@ -34,8 +34,8 @@ something wrong in rtModelGen.mtl line 21.
 [/template]
 
 [template private roleTypeModelGen(aRoleType : RoleType)]
-[file (getFolderPath() +'/model/Crof'+ aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].model;
+[file (getFolderPath() +'/crof/Crof'+ aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 import org.rosi.crom.framework.core.model.CromRoleType;
 
@@ -43,8 +43,8 @@ import [getPackagePath()/].*;
 
 
 public class Crof[aRoleType.name.toUpperFirst()/] implements CromRoleType{
-	[crofAttributeValue(aRoleType.attributes)/]
-	[crofAttributeMethod(aRoleType.attributes)/]
+	[crofFields(aRoleType.attributes)/]
+	[crofProperties(aRoleType.attributes)/]
 }
 [/file]
 [/template]

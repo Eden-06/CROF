@@ -12,8 +12,8 @@
  */]
 
 [template public crofRelationGen(aType:Type,aRoleType : RoleType)]
-[file (getFolderPath() +'/model/Crof'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].model;
+[file (getFolderPath() +'/crof/Crof'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 import java.util.List;
 import java.util.ArrayList;

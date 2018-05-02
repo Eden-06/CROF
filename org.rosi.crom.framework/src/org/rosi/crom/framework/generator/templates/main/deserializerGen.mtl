@@ -26,7 +26,7 @@ import com.google.gson.Gson;
 
 import [getPackagePath()/].*;
 import [getPackagePath()/].impl.*;
-import [getPackagePath()/].model.*;
+import [getPackagePath()/].crof.*;
 
 public class Deserializer{
 	private String filePath="./json/model.croj";
@@ -40,12 +40,12 @@ public class Deserializer{
 	[for (aModelElement : ModelElement | aModel.elements)]
 [if(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 	public void exchange[aDataType.name.toUpperFirst()/](List<Crof[aDataType.name.toUpperFirst()/]> crof[aDataType.name.toUpperFirst()/]s){
 		for(int i=0;i<crof[aDataType.name.toUpperFirst()/]s.size();i++) {
 			[aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]=factory.create[aDataType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aDataType.attributes)]
-[if(filtJavaType(aAttribute.type))]
+[if(notJavaType(aAttribute.type))]
 			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[aDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
 			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
@@ -62,7 +62,7 @@ public class Deserializer{
 		for(int i=0;i<crof[aNaturalType.name.toUpperFirst()/]s.size();i++) {
 			[aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]=factory.create[aNaturalType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aNaturalType.attributes)]
-[if(filtJavaType(aAttribute.type))]
+[if(notJavaType(aAttribute.type))]
 			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[aNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
 			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
@@ -78,7 +78,7 @@ public class Deserializer{
 		for(int i=0;i<crof[aCompartmentType.name.toUpperFirst()/]s.size();i++) {
 			[aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]=factory.create[aCompartmentType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aCompartmentType.attributes)]
-[if(filtJavaType(aAttribute.type))]
+[if(notJavaType(aAttribute.type))]
 			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[aCompartmentType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
 			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
@@ -121,7 +121,7 @@ public class Deserializer{
 [for (aModelElement : ModelElement | aModel.elements)]
 [if(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 		List<Crof[aDataType.name.toUpperFirst()/]> crof[aDataType.name.toUpperFirst()/]s=model.getCrof[aDataType.name.toUpperFirst()/]s();
 		exchange[aDataType.name.toUpperFirst()/](crof[aDataType.name.toUpperFirst()/]s);
 [/if]
@@ -195,8 +195,8 @@ for(int i=0;i<crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.
 [else]
 [/if]
 [for(aAttribute:Attribute|aRoleType.attributes)]
-[if(filtJavaType(aAttribute.type))]
-	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+[if(notJavaType(aAttribute.type))]
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get([aType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
 	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get(crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]());
 [/if]
@@ -208,11 +208,15 @@ for(int i=0;i<crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.
 [template private findLastSubNaturalPlayer(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, superType:NaturalType,relations:Set(Relation))]
 [if(hasSub(superType,relations))]
 [ifNaturalPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getLastSub(superType,relations),relations)/]
+[else]
+[playerExchangeRelation(aCompartmentType, aRoleType,targetType, superType)/]
 [/if]
 [/template]
 [template private findLastSubCompartmentTypePlayer(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, superType:CompartmentType,relations:Set(Relation))]
 [if(hasSub(superType,relations))]
 [ifCompartmentPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getLastSub(superType,relations),relations)/]
+[else]
+[playerExchangeRelation(aCompartmentType, aRoleType,targetType, superType)/]
 [/if]
 [/template]
 
@@ -266,30 +270,28 @@ else if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPla
 
 [template private superType(targetDataType : DataType,thisDataType : DataType, relations : Set(Relation))]
 [if(hasSuper(thisDataType,relations))]
-[let superDataType:DataType=getSuper(thisDataType,relations)]
-[for(aAttribute:Attribute|superDataType.attributes)]
-[if(filtJavaType(aAttribute.type))]
+[let attributes:Set(Attribute)=getSuperAttributes(targetDataType.attributes,getAllSuperAttributes(targetDataType,relations))]
+[for(aAttribute:Attribute|attributes)]
+[if(notJavaType(aAttribute.type))]
 [targetDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[targetDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
 [targetDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[targetDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
 [/if]
 [/for]
-[superType(targetDataType,superDataType,relations)/]
 [/let]
 [/if]
 [/template]
 
 [template private superType(targetNaturalType : NaturalType,thisNaturalType : NaturalType, relations : Set(Relation))]
 [if(hasSuper(thisNaturalType,relations))]
-[let superNaturalType:NaturalType=getSuper(thisNaturalType,relations)]
-[for(aAttribute:Attribute|superNaturalType.attributes)]
-[if(filtJavaType(aAttribute.type))]
+[let attributes:Set(Attribute)=getSuperAttributes(targetNaturalType.attributes,getAllSuperAttributes(targetNaturalType,relations))]
+[for(aAttribute:Attribute|attributes)]
+[if(notJavaType(aAttribute.type))]
 [targetNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)factory.getInstances().get(Types.[aAttribute.type.name.toUpper()/])).get(crof[targetNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
 [targetNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[targetNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
 [/if]
 [/for]
-[superType(targetNaturalType,superNaturalType,relations)/]
 [/let]
 [/if]
 [/template]

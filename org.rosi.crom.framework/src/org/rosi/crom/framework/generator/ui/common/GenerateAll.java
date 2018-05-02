@@ -76,13 +76,12 @@ public class GenerateAll {
 		//将文件名保存在org.rosi.crom.framework.generator.main.Util.java
 		//String filePathOfMain=targetFolderOfMain.getLocation().toFile().toString().replace("/src", "");
 		//String targetPath=filePathOfMain.substring(filePathOfMain.lastIndexOf("/")+1);
-		String filePath=targetFolderOfProject.getLocation().toFile().toString();
-		String targetPath=filePath.substring(filePath.lastIndexOf("/")+1);
+//		String filePath=targetFolderOfProject.getLocation().toFile().toString();
+//		String targetPath=filePath.substring(filePath.lastIndexOf("/")+1);
+		//String filePath=modelURI.path().substring(modelURI.path().lastIndexOf("/")+1,modelURI.path().indexOf(".crom"));
+		String targetPath=modelURI.path().substring(modelURI.path().lastIndexOf("/")+1,modelURI.path().indexOf(".crom")).toLowerCase();
 		org.rosi.crom.framework.generator.templates.main.Util.setPackagePath(targetPath);
-		org.rosi.crom.framework.generator.templates.main.Util.setFolderPath(targetPath.replace(".", "/"));
-		org.rosi.crom.framework.generator.templates.main.Util.setPackagePath(targetPath);
-		org.rosi.crom.framework.generator.templates.main.Util.setFolderPath(targetPath.replace(".", "/"));
-		
+		org.rosi.crom.framework.generator.templates.main.Util.setFolderPath("");
 		String bundleName=targetPath;
 		if (targetPath.indexOf(".")!=-1) {
 			bundleName=bundleName.substring(bundleName.lastIndexOf(".")+1);
@@ -91,6 +90,15 @@ public class GenerateAll {
 		
 		org.rosi.crom.framework.generator.templates.project.Util.setBundleName(bundleName);
 		org.rosi.crom.framework.generator.templates.project.Util.setBundleSymbolicName(targetPath);
+		
+		//System.out.println("1:"+modelURI.path());
+
+
+		
+		
+		
+		
+
 	
 		
 		

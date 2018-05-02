@@ -20,8 +20,8 @@
 
 
 [template public crofModelGen(aModel:Model)]
-[file (getFolderPath() +'/model/CrofModel.java', false, 'UTF-8')]
-package [getPackagePath()/].model;
+[file (getFolderPath() +'/crof/CrofModel.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class CrofModel implements CromModel{
 [/let]
 [elseif(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 	List<Crof[aDataType.name/]> crof[aDataType.name.toUpperFirst()/]s=new ArrayList<Crof[aDataType.name/]>();
 	public List<Crof[aDataType.name.toUpperFirst()/]> getCrof[aDataType.name.toUpperFirst()/]s() {
 		return crof[aDataType.name.toUpperFirst()/]s;

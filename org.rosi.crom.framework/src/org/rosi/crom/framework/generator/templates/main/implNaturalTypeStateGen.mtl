@@ -22,8 +22,8 @@ import [getPackagePath()/].*;
 
 
 
-public class [aNaturalType.name.toUpperFirst()/]State[superNaturalTypeState(aNaturalType,aModel.relations)/]{
-	[attributesNaturalTypeState(aNaturalType,aModel.relations)/]
+public class [aNaturalType.name.toUpperFirst()/]State[extendsByNaturalTypeState(aNaturalType,aModel.relations)/]{
+	[fieldsByNaturalTypeState(aNaturalType,aModel.relations)/]
 
 	public [aNaturalType.name.toUpperFirst()/]Impl compoundObject;
 
@@ -32,12 +32,12 @@ public class [aNaturalType.name.toUpperFirst()/]State[superNaturalTypeState(aNat
 [/file]
 [/template]
 
-[template private attributesNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation))]
-[attributesState(aNaturalType.attributes)/]
-[roleAttributeNaturalTypeState(aNaturalType,relations)/]
+[template private fieldsByNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation))]
+[publicFields(aNaturalType.attributes)/]
+[roleFieldByNaturalTypeState(aNaturalType,relations)/]
 [/template]
 
-[template private superNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[template private extendsByNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
 [if(not superNaturalType->isEmpty())]
  extends [superNaturalType.name.toUpperFirst()/]State
@@ -45,11 +45,11 @@ public class [aNaturalType.name.toUpperFirst()/]State[superNaturalTypeState(aNat
 [/let]
 [/template]
 
-[template private superAttributeNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation))]
+[template private superFieldsByNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation))]
 [if(hasSuper(aNaturalType,relations))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
-[superAttributeNaturalTypeState(superNaturalType,relations)/]
-[attributesState(superNaturalType.attributes)/]
+[superFieldsByNaturalTypeState(superNaturalType,relations)/]
+[publicFields(superNaturalType.attributes)/]
 [/let]
 [/if]
 [/template]
@@ -72,7 +72,7 @@ import [getPackagePath()/].impl.[getCompartmentNameByRoleGroup(ar.oclAsType(Role
 [/let]
 [/template][/comment]
 
-[template private roleAttributeNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post (replaceAll('\t', '').trim())]
+[template private roleFieldByNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post (replaceAll('\t', '').trim())]
 [let roleTypes : Set(RoleType) = getRoleTypes(aNaturalType,getAllFulfillments(relations))]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]

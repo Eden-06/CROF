@@ -44,7 +44,7 @@ public class FactoryImpl implements Factory{
 [/let]
 [elseif(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 	private List<[aDataType.name.toUpperFirst()/]> [aDataType.name.toLowerFirst()/]s=new ArrayList<[aDataType.name.toUpperFirst()/]>();
 [/if]
 [/let]
@@ -62,7 +62,7 @@ public class FactoryImpl implements Factory{
 [/let]
 [elseif(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 		instances.put(Types.[aDataType.name.toUpper()/],[aDataType.name.toLowerFirst()/]s);
 [/if]
 [/let]
@@ -103,7 +103,7 @@ public class FactoryImpl implements Factory{
 [/let]
 [elseif(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 	@Override
 	public [aDataType.name/] create[aDataType.name/](){
 		[aDataType.name.toUpperFirst()/]Impl [aDataType.name.toLowerFirst()/]=new [aDataType.name.toUpperFirst()/]Impl();
@@ -137,7 +137,7 @@ public class FactoryImpl implements Factory{
 [/let]
 [elseif(aModelElement.oclIsKindOf(DataType))]
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 		[aDataType.name.toLowerFirst()/]s=new ArrayList<[aDataType.name.toUpperFirst()/]>();
 		instances.put(Types.[aDataType.name.toUpper()/],[aDataType.name.toLowerFirst()/]s);
 [/if]

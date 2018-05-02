@@ -19,11 +19,11 @@
 	
 [comment][ctConstructorGen(aCompartmentType,aModel.relations)/][/comment]
 
-[privateAttributeValue(aCompartmentType.attributes)/]
+[privateFields(aCompartmentType.attributes)/]
 
-[attributeMethodWithOverride(aCompartmentType.attributes)/]
+[overrideProperties(aCompartmentType.attributes)/]
 
-[operation(aCompartmentType.operations)/]
+[implOperations(aCompartmentType.operations)/]
 
 [implRoleTypeGen(aCompartmentType,aModel.relations)/]
 

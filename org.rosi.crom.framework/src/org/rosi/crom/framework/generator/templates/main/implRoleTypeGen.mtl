@@ -32,7 +32,7 @@ something wrong in aRoleTypeImplGen.mtl line 15.
 
 [template private roleTypeImplGen(aType:Type,aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
 public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements [aRoleType.name/]{
-	[privateAttributeValue(aRoleType.attributes)/]
+	[privateFields(aRoleType.attributes)/]
 
 	public [aType.name/][aRoleType.name/](){
 [comment]		super();[/comment]
@@ -41,8 +41,8 @@ public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements
 [comment]		super();[/comment]
 		this.state=[aType.name.toLowerFirst()/]Impl.state;
 	}
-	[attributeMethodWithOverride(aRoleType.attributes)/]
-	[operation(aRoleType.operations)/]
+	[overrideProperties(aRoleType.attributes)/]
+	[implOperations(aRoleType.operations)/]
 	
 	@Override
 	public [getOwner(aRoleType).name.toUpperFirst()/] getOwner() {

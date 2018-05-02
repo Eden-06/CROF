@@ -28,8 +28,8 @@ something wrong in aRoleTypeImplGen.mtl line 15.
 
 [template private roleTypeInterfaceGen(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
 interface [aRoleType.name/]{
-	[attributeMethodForInterface(aRoleType.attributes)/]
-	[operationForInterface(aRoleType.operations)/]
+	[interfaceProperties(aRoleType.attributes)/]
+	[interFaceOperations(aRoleType.operations)/]
 	Object getPlayer();
 	boolean isSame(Object object);
 	[getOwner(aRoleType).name.toUpperFirst()/] getOwner();

@@ -34,9 +34,9 @@ public class [aNaturalType.name/]Impl[superNaturalTypeImpl(aNaturalType,aModel.r
 		return this.state.compoundObject;
 	}
 
-	[attributeMethodOfPlayer(aNaturalType.attributes)/]
+	[playerProperties(aNaturalType.attributes)/]
 	[superAttributeMethodOfPlayer(aNaturalType,aModel.relations)/]
-	[operation(aNaturalType.operations)/]
+	[implOperations(aNaturalType.operations)/]
 [comment]	[ntEditRoleBlock(aNaturalType,aModel)/][/comment]
 [comment]	[playerFunctionGen(aNaturalType,aModel)/][/comment]
 	[playerFunctionGen_new(aNaturalType,aModel)/]
@@ -55,8 +55,8 @@ public class [aNaturalType.name/]Impl[superNaturalTypeImpl(aNaturalType,aModel.r
 
 [template private superAttributeMethodOfPlayer(aNaturalType : NaturalType,relations : Set(Relation))]
 [if(hasSuper(aNaturalType,relations))]
-[let attributes:Set(Attribute)=getAllSuperAttributes(aNaturalType,relations)]
-[attributeMethodOfPlayer(attributes)/]
+[let attributes:Set(Attribute)=getSuperAttributes(aNaturalType.attributes,getAllSuperAttributes(aNaturalType,relations))]
+[playerProperties(attributes)/]
 [/let]
 [/if]
 [/template]

@@ -34,10 +34,17 @@ public class Test {
 		Nb nb=factory.createNb();
 		nb.setBttr("nb");
 		nb.setAttr("nbna");
+		Nd nd=factory.createNd();
+		nd.setBttr("ndnb");
+		nd.setAttr("ndna");
 		Ca.Rb rb=factory.bindRb(ca, nb);
 		rb.setName("nbrb");
+		Ca.Rb rd=factory.bindRb(ca, nd);
+		rd.setName("ndrb");
 		Ca.Ra ra=factory.bindRa(ca, nb);
 		ra.setName("nbra");
+		Ca.Ra ra1=factory.bindRa(ca, nd);
+		ra.setName("ndra");
 		System.out.println(rb.getPlayer());
 		System.out.println(ra.getPlayer());
 		*/

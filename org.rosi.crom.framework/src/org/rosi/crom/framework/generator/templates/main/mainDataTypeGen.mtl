@@ -13,7 +13,7 @@
  * @param aDataType
  */]
 [template public mainDataTypeGen(aDataType : DataType,aModel:Model)]
-[if(filtJavaType(aDataType))]
+[if(notJavaType(aDataType))]
 [interfaceDataTypeGen(aDataType,aModel)/]
 [implDataTypeGen(aDataType,aModel)/]
 [crofDataTypeGen(aDataType,aModel)/]
