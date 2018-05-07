@@ -15,7 +15,7 @@
 [if(ar.oclIsKindOf(RoleType))]
 [roleTypeInterfaceGen(ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [elseif(ar.oclIsKindOf(RoleGroup))]
-[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [roleTypeInterfaceGen(aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [/for]

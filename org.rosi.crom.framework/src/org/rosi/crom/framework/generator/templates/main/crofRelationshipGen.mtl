@@ -16,15 +16,7 @@
 package [getPackagePath()/].crof;
 
 
-import org.rosi.crom.framework.core.model.CromRelationship;
-
-
-
-
-import [getPackagePath()/].*;
-
-
-public class Crof[aRelationship.name.toUpperFirst()/] implements CromRelationship{
+public class Crof[aRelationship.name.toUpperFirst()/]{
 
 	private String first;
 	private String second;

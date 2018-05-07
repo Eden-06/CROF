@@ -26,12 +26,12 @@ package [getPackagePath()/].crof;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.rosi.crom.framework.core.model.CromModel;
 
-import [getPackagePath()/].*;
-
-public class CrofModel implements CromModel{
-	public String model="[getPackagePath()/]";
+public class CrofModel{
+	private String model="[getPackagePath()/]";
+	public String getModelName(){
+		return this.model;
+	}
 [for (aModelElement : ModelElement | aModel.elements)]
 [if(aModelElement.oclIsKindOf(CompartmentType))]
 [let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]

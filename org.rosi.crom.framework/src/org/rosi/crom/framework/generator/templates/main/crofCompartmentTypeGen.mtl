@@ -21,11 +21,8 @@ package [getPackagePath()/].crof;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.rosi.crom.framework.core.model.CromCompartmentType;
 
-import [getPackagePath()/].*;
-
-public class Crof[aCompartmentType.name.toUpperFirst()/] implements CromCompartmentType{	
+public class Crof[aCompartmentType.name.toUpperFirst()/][createExtends(aCompartmentType,aModel.relations)/]{	
 	[crofFields(aCompartmentType.attributes)/]
 	[crofProperties(aCompartmentType.attributes)/]	
 	[roleTypeAttributes(aCompartmentType, aModel.relations)/]
@@ -38,12 +35,20 @@ public class Crof[aCompartmentType.name.toUpperFirst()/] implements CromCompartm
 [/file]
 [/template]
 
+[template private createExtends(aCompartmentType : CompartmentType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aCompartmentType,relations))]
+[let superCompartmentType:CompartmentType=getSuper(aCompartmentType,relations)]
+ extends Crof[superCompartmentType.name.toUpperFirst()/]
+[/let]
+[/if]
+[/template]
+
 [template private roleTypeAttributes(aCompartmentType : CompartmentType,relations : Set(Relation))]
 [for(ar:AbstractRole|aCompartmentType.parts.role)]
 [if(ar.oclIsKindOf(RoleType))]
 [roleTypeAttributesFunctions(ar.oclAsType(RoleType))/]
 [elseif(ar.oclIsKindOf(RoleGroup))]
-[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [roleTypeAttributesFunctions(aRoleType)/]
 [/for]
@@ -72,7 +77,7 @@ public List<Crof[aRoleType.name.toUpperFirst()/]> getCrof[aRoleType.name.toUpper
 [relationAttributesFunctions(aType,ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [/for]
 [elseif(ar.oclIsKindOf(RoleGroup))]
-[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [for(aType:Type|getPlayers(aRoleType,relations))]
 [relationAttributesFunctions(aType,aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]

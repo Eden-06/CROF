@@ -11,7 +11,7 @@
 [if(notJavaType(aAttribute.type))]
 private String [aAttribute.name.toLowerFirst()/];
 [else]
-private [typeFilter(aAttribute.type)/] [aAttribute.name/];
+private [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
 [/if]
 [/for]	
 [/template]
@@ -30,11 +30,11 @@ public void set[aAttribute.name.toUpperFirst()/](String [aAttribute.name.toLower
 }
 
 [else]
-public [typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
 	return [aAttribute.name/];
 }
 
-public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]){
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]){
 	this.[aAttribute.name/] = [aAttribute.name/];
 }
 [/if]
@@ -48,7 +48,7 @@ public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribu
  */]
 [template public defaultFields(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-[typeFilter(aAttribute.type)/] [aAttribute.name/];
+[typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
 [/for]
 [/template]
 
@@ -69,8 +69,8 @@ public [typeFilter(o.type)/] [o.name/]([parameters(o)/]){
 
 [template public interfaceProperties(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-[typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/]();
-void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]);
+[typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/]();
+void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]);
 [/for]
 [/template]
 
@@ -82,12 +82,12 @@ void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type
 [template public overrideProperties(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
 @Override
-public [typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
 	return [aAttribute.name/];
 }
 
 @Override
-public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]){
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]){
 	this.[aAttribute.name/] = [aAttribute.name/];
 }
 [/for]
@@ -95,7 +95,7 @@ public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribu
 
 [template private parameters(o : Operation) post (replaceAll('\n', '').trim())]
 [for (p : Parameter  | o.params) separator (', ')]
-[typeFilter(p.type)/] [p.name/]
+[typeFilterAttribute(p.type)/] [p.name/]
 [/for]
 [/template]
 
@@ -106,19 +106,19 @@ public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribu
  */]
 [template public privateFields(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-private [typeFilter(aAttribute.type)/] [aAttribute.name/];
+private [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
 [/for]	
 [/template]
 
 [template public playerProperties(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
 @Override
-public [typeFilter(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
 	return this.state.[aAttribute.name/];
 }
 
 @Override
-public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribute.type)/] [aAttribute.name/]){
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]){
 	this.state.[aAttribute.name/] = [aAttribute.name/];
 }
 [/for]
@@ -131,7 +131,7 @@ public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilter(aAttribu
  */]
 [template public publicFields(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
-public [typeFilter(aAttribute.type)/] [aAttribute.name/];
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
 [/for]	
 [/template]
 
@@ -158,6 +158,32 @@ public [typeFilter(aAttribute.type)/] [aAttribute.name/];
 	[/if]
 [else]
 	void
+[/if]
+[/template]
+
+[template public typeFilterAttribute(t : Type) post (replaceAll('\n', '').trim())]
+[if (t<>null)]
+	[if (t.name='Boolean')]
+		boolean
+	[elseif (t.name='Byte')]
+		byte
+	[elseif (t.name='Char' or t.name='Character')]
+		char
+	[elseif (t.name='Double')]
+		double
+	[elseif (t.name='Float')]
+		float
+	[elseif (t.name='Integer')]
+		int
+	[elseif (t.name='Long')]
+		long
+	[elseif (t.name='Short')]
+		short
+	[else]
+		[t.name/]
+	[/if]
+[else]
+	Object
 [/if]
 [/template]
 

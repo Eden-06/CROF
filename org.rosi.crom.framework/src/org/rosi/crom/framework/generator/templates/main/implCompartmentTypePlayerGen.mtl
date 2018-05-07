@@ -44,7 +44,7 @@ public class [aCompartmentType.name.toUpperFirst()/]Impl implements [aCompartmen
 [/template]
 
 [template private ctEditRoleBlock(aCompartmentType : CompartmentType,aModel : Model)]
-[let roleTypes : Set(RoleType) = getRoleTypes(aCompartmentType,getAllFulfillments(aModel.relations))]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,aModel.relations)]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
@@ -64,7 +64,7 @@ public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRole
 [template public playerFunctionGen(aCompartmentType : CompartmentType,aModel : Model)]
 @Override
 public boolean isSame(Object object){
-[let roles:Set(RoleType)=getRoleTypes(aCompartmentType,getAllFulfillments(aModel.relations))]
+[let roles:Set(RoleType)=getRoles(aCompartmentType,aModel.relations)]
 [for(aRoleType:RoleType|roles)]
 	if(object instanceof [getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
 		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
@@ -72,7 +72,7 @@ public boolean isSame(Object object){
 [/let]
 	return false;
 }
-[let roleTypes:Set(RoleType)=getRoleTypes(aCompartmentType,getAllFulfillments(aModel.relations))]
+[let roleTypes:Set(RoleType)=getRoles(aCompartmentType,aModel.relations)]
 [for(aRoleType:RoleType|roleTypes)]
 @Override
 public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){

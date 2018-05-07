@@ -27,7 +27,7 @@
 [query public hasRole(roles:Set(AbstractRole),rg:RoleGroup):Boolean=roles->includes(rg)/]
 
 [query public preparePartForConstructor(ct:CompartmentType):Set(Part) = ct.parts ->select(parts | parts.lower = 1) /]
-[query public getAllFulfillments(relations:Set(Relation)): Set(Fulfillment) = relations ->selectByType(Fulfillment)/]
+[comment][query public getAllFulfillments(relations:Set(Relation)): Set(Fulfillment) = relations ->selectByType(Fulfillment)/][/comment]
 
 [comment][query public findAllRoleTypesInCompartmentType(ct:CompartmentType):Set(AbstractRole)=Sequence{self.parts.role->selectByType(RoleGroup).elements->selectByType(RoleType),self.parts.role->selectByType(RoleType)}->flatten()->excluding(null)->asSet()/][/comment]
 [query public isCompartmentTypePlayedRole(ct:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(Fulfillment).filler->selectByType(CompartmentType)->includes(ct) /]
@@ -54,7 +54,7 @@
 			->flatten()->excluding(null)->asSet().name/][/comment]
 [comment][query public filtBasicType(strBag:Bag(String)):Bag(String)=strBag->excluding('Boolean')->excluding('Char')->excluding('Character')->excluding('Date')->excluding('Double')->excluding('Float')->excluding('Integer')->excluding('Long')->excluding('Short')->excluding('String')/][/comment]
 [comment][query public notJavaType(aDataType:DataType):Boolean= aDataType.name<>'Boolean' and aDataType.name<>'Char' and aDataType.name<>'Date' and aDataType.name<>'Double' and aDataType.name<>'Float' and aDataType.name<>'Integer' and aDataType.name<>'String'/][/comment]
-[query public notJavaType(aType:Type):Boolean=aType.name<>'Boolean' and aType.name<>'Char' and aType.name<>'Character' and aType.name<>'Date' and aType.name<>'Double' and aType.name<>'Float' and aType.name<>'Integer' and aType.name<>'Long' and aType.name<>'Short' and aType.name<>'String'/]
+[query public notJavaType(aType:Type):Boolean=aType.name<>'Boolean' and aType.name<>'Char' and aType.name<>'Character' and aType.name<>'Date' and aType.name<>'Double' and aType.name<>'Float' and aType.name<>'Integer' and aType.name<>'Long' and aType.name<>'Object' and aType.name<>'Short' and aType.name<>'String'/]
 
 
 [comment]invoke methode[/comment] 
@@ -64,19 +64,7 @@
 [query public getRole(traceabilityContext : OclAny) : Set(RoleType) =invoke('org.rosi.crom.framework.generator.templates.main.Util', 'getRole()', Sequence{}) /]
 
 
-[query public getAllRoleTypes(aRoleGroup:RoleGroup) : Set(RoleType) = aRoleGroup.elements->iterate(aRoleGroupElement : RoleGroupElement; roleTypes:Set(RoleType) = Set{} | 
-	if (aRoleGroupElement.oclIsKindOf(RoleGroup))
-	then roleTypes->union(getAllRoleTypes(aRoleGroupElement.oclAsType(RoleGroup)))
-	else roleTypes->union(Set{aRoleGroupElement.oclAsType(RoleType)})
-	endif)/]
 
-[query public getAllRoleTypes(aCompartmentType:CompartmentType) : Set(RoleType) = 
-	aCompartmentType.parts.role
-	->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
-	if (aAbstractRole.oclIsKindOf(RoleGroup))
-	then roleTypes->union(getAllRoleTypes(aAbstractRole.oclAsType(RoleGroup)))
-	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
-	endif)/]
 [query public getAllRoleGroups(aRoleGroup:RoleGroup) : Set(RoleGroup) = 
 	aRoleGroup.elements->iterate(aRoleGroupElement : RoleGroupElement; roleGroups:Set(RoleGroup) = Set{} | 
 	if (aRoleGroupElement.oclIsKindOf(RoleGroup))
@@ -101,18 +89,47 @@
 	then getPlayers(aRoleGroup.eContainer().oclAsType(RoleGroup),relations)
 	else Set{}
 	endif)/]
-[query public getRoleTypes(nt:NaturalType,fulfillments:Set(Fulfillment)):Set(RoleType)=
-	fulfillments -> select(fulfillments | fulfillments.filler=nt).filled
+[query public getRoles(nt:NaturalType,relations:Set(Relation)):Set(RoleType)=
+	relations ->selectByType(Fulfillment) -> select(fulfillments | fulfillments.filler=nt).filled
 	->asSet()->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
 	if (aAbstractRole.oclIsKindOf(RoleGroup))
-	then roleTypes->union(getAllRoleTypes(aAbstractRole.oclAsType(RoleGroup)))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
 	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
 	endif)/]
-[query public getRoleTypes(ct:CompartmentType,fulfillments:Set(Fulfillment)):Set(RoleType)=
-	fulfillments -> select(fulfillments | fulfillments.filler=ct).filled
+[query public getRoles(ct:CompartmentType,relations:Set(Relation)):Set(RoleType)=
+	relations ->selectByType(Fulfillment) -> select(fulfillments | fulfillments.filler=ct).filled
 	->asSet()->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
 	if (aAbstractRole.oclIsKindOf(RoleGroup))
-	then roleTypes->union(getAllRoleTypes(aAbstractRole.oclAsType(RoleGroup)))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
+	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
+	endif)/]
+
+[query public getAllSuperTypePlayedRoles(aNaturalType:NaturalType,relations:Set(Relation)):Set(RoleType)=
+	getAllSuper(aNaturalType,relations)->iterate(thisNatural:NaturalType;roles:Set(RoleType)=Set{}|
+		roles->union(getRoles(thisNatural,relations)))/]
+
+[query public hasThisRole(aRoleType:RoleType,roles:Set(RoleType)):Boolean=
+	roles->iterate(thisRole : RoleType; has:Boolean = false | 
+		if aRoleType.name=thisRole.name and aRoleType.getOwner()=thisRole.getOwner()
+		then has or true
+		else has or false	
+		endif)/]
+[query public getAllRoles(aNaturalType:NaturalType,relations:Set(Relation)):Set(RoleType)=
+	getAllSuper(aNaturalType,relations)->union(Set{aNaturalType})->iterate(thisNatural:NaturalType;roles:Set(RoleType)=Set{}|
+		roles->union(getRoles(thisNatural,relations)))/]
+
+[query public getOwnedRoles(aRoleGroup:RoleGroup) : Set(RoleType) =
+	 aRoleGroup.elements->iterate(aRoleGroupElement : RoleGroupElement; roleTypes:Set(RoleType) = Set{} | 
+	if (aRoleGroupElement.oclIsKindOf(RoleGroup))
+	then roleTypes->union(getOwnedRoles(aRoleGroupElement.oclAsType(RoleGroup)))
+	else roleTypes->union(Set{aRoleGroupElement.oclAsType(RoleType)})
+	endif)/]
+
+[query public getOwnedRoles(aCompartmentType:CompartmentType) : Set(RoleType) = 
+	aCompartmentType.parts.role
+	->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
+	if (aAbstractRole.oclIsKindOf(RoleGroup))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
 	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
 	endif)/]
 
@@ -184,6 +201,12 @@
 	else null
 	endif/]
 
+[query public getSuper(aRoleType:RoleType,relations:Set(Relation)):RoleType=
+	if(hasSuper(aRoleType,relations))
+	then relations->selectByType(RoleInheritance)->select(sub=aRoleType).super->asOrderedSet()->first()
+	else null
+	endif/]
+
 [query public getSub(aNaturalType:NaturalType,relations:Set(Relation)):NaturalType=
 	if(hasSub(aNaturalType,relations))
 	then relations->selectByType(NaturalInheritance)->select(super=aNaturalType).sub->asOrderedSet()->first()
@@ -198,6 +221,18 @@
 	if(hasSub(aCompartmentType,relations))
 	then relations->selectByType(CompartmentInheritance)->select(super=aCompartmentType).sub->asOrderedSet()->first()
 	else null
+	endif/]
+
+[query public getSub(aRoleType:RoleType,relations:Set(Relation)):RoleType=
+	if(hasSub(aRoleType,relations))
+	then relations->selectByType(RoleInheritance)->select(super=aRoleType).sub->asOrderedSet()->first()
+	else null
+	endif/]
+
+[query public getAllSuper(aNaturalType:NaturalType,relations:Set(Relation)):Set(NaturalType)=
+	if(hasSuper(aNaturalType,relations))
+	then Set{getSuper(aNaturalType,relations)}->union(getAllSuper(getSuper(aNaturalType,relations),relations))
+	else Set{}
 	endif/]
 
 [query public getLastSub(aNaturalType:NaturalType,relations:Set(Relation)):NaturalType=
@@ -231,24 +266,80 @@
 [query public hasSuper(aNaturalType:NaturalType,relations:Set(Relation)):Boolean=relations->selectByType(NaturalInheritance)->select(sub=aNaturalType).super->notEmpty()/]
 [query public hasSuper(aDataType:DataType,relations:Set(Relation)):Boolean=relations->selectByType(DataInheritance)->select(sub=aDataType).super->notEmpty()/]
 [query public hasSuper(aCompartmentType:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(CompartmentInheritance)->select(sub=aCompartmentType).super->notEmpty()/]
+[query public hasSuper(aRoleType:RoleType,relations:Set(Relation)):Boolean=relations->selectByType(RoleInheritance)->select(sub=aRoleType).super->notEmpty()/]
 
 [query public hasSub(aNaturalType:NaturalType,relations:Set(Relation)):Boolean=relations->selectByType(NaturalInheritance)->select(super=aNaturalType).sub->notEmpty()/]
 [query public hasSub(aDataType:DataType,relations:Set(Relation)):Boolean=relations->selectByType(DataInheritance)->select(super=aDataType).sub->notEmpty()/]
 [query public hasSub(aCompartmentType:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(CompartmentInheritance)->select(super=aCompartmentType).sub->notEmpty()/]
-
-[comment][query public getAttributes(aDataType:DataType,relations:Set(Relation)):Set(Attributes)=][/comment]
-
-
-[comment][query public getAttributes(attributes:Set(Attribute),aType:Type):Set(Attribute)=if(hasSuper(aType)/][/comment]
+[query public hasSub(aRoleType:RoleType,relations:Set(Relation)):Boolean=relations->selectByType(RoleInheritance)->select(super=aRoleType).sub->notEmpty()/]
 
 
-[query public hasAttribute(aAttribute:Attribute,attributes:Set(Attribute)):Boolean=
+
+[query public getPartner(aRoleType : RoleType, aRelationship : Relationship):RoleType=
+	if(aRelationship.first.holder=aRoleType)
+	then aRelationship.second.holder
+	else aRelationship.first.holder
+	endif/]
+
+[query public hasThisAttribute(aAttribute:Attribute,attributes:Set(Attribute)):Boolean=
 	attributes->iterate(thisAttribute : Attribute; has:Boolean = false | 
 	if aAttribute.name=thisAttribute.name
 	then has or true
 	else has or false	
 	endif)/]
 
+[comment][query public getAllSuperAttributes(attributes:Set(Attribute)):Set(Attribute)=
+	attributes->iterate(thisAttribute : Attribute; newAttributes:Set(Attribute) = Set{} | 
+	if(not hasThisAttribute(thisAttribute,newAttributes))
+	then newAttributes->union(Set{thisAttribute})
+	else newAttributes
+	endif)/][/comment]
+[query public getSubAttributes(thisAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
+	thisAttributes->iterate(aAttribute : Attribute; newSubAttributes:Set(Attribute) = Set{} | 
+	if(not hasThisAttribute(aAttribute,superAttributes))
+	then newSubAttributes->union(Set{aAttribute})
+	else newSubAttributes
+	endif)/]
+
+[query public getSuperAttributes(thisAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
+	superAttributes->iterate(aAttribute : Attribute; newSuperAttributes:Set(Attribute) = Set{} | 
+	if(not hasThisAttribute(aAttribute,thisAttributes))
+	then newSuperAttributes->union(Set{aAttribute})
+	else newSuperAttributes
+	endif)/]
+
+[query public getAllAttributes(aNaturalType:NaturalType,relations:Set(Relation)):Set(Attribute)=
+	getAllSuper(aNaturalType,relations)->union(Set{aNaturalType})->iterate(aNaturalType:NaturalType;attributes:Set(Attribute)=Set{}|
+	attributes->union(aNaturalType.attributes))->iterate(aAttribute : Attribute; finalAttributes:Set(Attribute)=Set{}|
+	if(not hasThisAttribute(aAttribute,finalAttributes))
+	then finalAttributes->union(Set{aAttribute})
+	else finalAttributes
+	endif)/]
+[query public hasThisOperation(aOperation:Operation,operations:Set(Operation)):Boolean=
+	aOperation->iterate(thisOperation : Operation; has:Boolean = false | 
+	if aOperation.name=thisOperation.name
+	then has or true
+	else has or false	
+	endif)/]
+[query public getAllOperations(aNaturalType:NaturalType,relations:Set(Relation)):Set(Operation)=
+	getAllSuper(aNaturalType,relations)->union(Set{aNaturalType})->iterate(aNaturalType:NaturalType;operations:Set(Operation)=Set{}|
+	operations->union(aNaturalType.operations))/]
+
+[query public hasSuperRoleType(aRoleType:RoleType,aCompartmentType:CompartmentType):Boolean=getOwnedRoles(aCompartmentType)->includes(aRoleType)/]
+[query public hasSuperRoleGroup(aRoleGroup:RoleGroup,aCompartmentType:CompartmentType):Boolean=getAllRoleGroups(aCompartmentType)->includes(aRoleGroup)/]
+
+
+
+
+
+
+[comment][query public hasThisRoleType()][/comment]
+
+
+[comment][query public getAllType(aDataType:DataType):Set(Type)=aDataType.attributes/][/comment]
+
+[comment][query public getAttributes(aDataType:DataType,relations:Set(Relation)):Set(Attributes)=][/comment]
+[comment][query public getAttributes(attributes:Set(Attribute),aType:Type):Set(Attribute)=if(hasSuper(aType)/][/comment]
 [comment][query public combiAttributes(aDataType:DataType,attributes:Set(Attribute)):Set(Attribute)=
 	aDataType.attributes->iterate(thisAttribute : Attribute; attributes:Set(Attribute) = attributes | 
 	if hasAttribute(thisAttribute,attributes)
@@ -267,40 +358,6 @@
 	then attributes
 	else attributes->union(Set{thisAttribute})
 	endif)/][/comment]
-
-[query public getPartner(aRoleType : RoleType, aRelationship : Relationship):RoleType=
-	if(aRelationship.first.holder=aRoleType)
-	then aRelationship.second.holder
-	else aRelationship.first.holder
-	endif/]
-[query public getAllSuperAttributes(attributes:Set(Attribute)):Set(Attribute)=
-	attributes->iterate(thisAttribute : Attribute; newAttributes:Set(Attribute) = Set{} | 
-	if(not hasAttribute(thisAttribute,newAttributes))
-	then newAttributes->union(Set{thisAttribute})
-	else newAttributes
-	endif)/]
-[query public getSubAttributes(subAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
-	subAttributes->iterate(subAttribute : Attribute; newSubAttributes:Set(Attribute) = Set{} | 
-	if(not hasAttribute(subAttribute,superAttributes))
-	then newSubAttributes->union(Set{subAttribute})
-	else newSubAttributes
-	endif)/]
-
-[query public getSuperAttributes(subAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
-	superAttributes->iterate(superAttribute : Attribute; newSuperAttributes:Set(Attribute) = Set{} | 
-	if(not hasAttribute(superAttribute,subAttributes))
-	then newSuperAttributes->union(Set{superAttribute})
-	else newSuperAttributes
-	endif)/]
-
-[query public hasSuperRoleType(aRoleType:RoleType,aCompartmentType:CompartmentType):Boolean=getAllRoleTypes(aCompartmentType)->includes(aRoleType)/]
-[query public hasSuperRoleGroup(aRoleGroup:RoleGroup,aCompartmentType:CompartmentType):Boolean=getAllRoleGroups(aCompartmentType)->includes(aRoleGroup)/]
-
-
-
-[comment][query public getAllType(aDataType:DataType):Set(Type)=aDataType.attributes/][/comment]
-
-
 
 
 

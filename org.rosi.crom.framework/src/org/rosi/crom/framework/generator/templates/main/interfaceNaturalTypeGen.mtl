@@ -17,24 +17,41 @@ package [getPackagePath()/];
 
 import java.util.List;
 
-public interface [aNaturalType.name.toUpperFirst()/][superNaturalTypeInterface(aNaturalType,aModel.relations)/]{
+public interface [aNaturalType.name.toUpperFirst()/][createExtends(aNaturalType,aModel.relations)/]{
+
+	
 	[interfaceProperties(aNaturalType.attributes)/]
 	[interFaceOperations(aNaturalType.operations)/]
 [comment]	[playerOperationsNaturalTypeInterface(aNaturalType,aModel.relations)/][/comment]
-	[playerOperationsNaturalTypeInterface_new(aNaturalType,aModel.relations)/]
-[if(not hasSuper(aNaturalType,aModel.relations))]
+	[playerOperations(aNaturalType,aModel.relations)/]
 	[aNaturalType.name/] getCompoundObject();
-[/if]
+	boolean isSame(Object object);
 }
 [/file]
 [/template]
 
-[template private superNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[template private createExtends(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
 [if(hasSuper(aNaturalType,relations))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
  extends [superNaturalType.name.toUpperFirst()/]
 [/let]
 [/if]
+[/template]
+
+
+
+
+
+[template private playerOperations(aNaturalType : NaturalType,relations : Set(Relation))]
+[let roleTypes:Set(RoleType)=getAllRoles(aNaturalType,relations)]
+[for(aRoleType:RoleType|roleTypes)]
+boolean is[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s();
+boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
+boolean delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+[/for]
+[/let]
 [/template]
 
 
@@ -55,9 +72,9 @@ public interface [aNaturalType.name.toUpperFirst()/][superNaturalTypeInterface(a
 [attributesState(aNaturalType.attributes)/]
 [/template][/comment]
 
-[template private playerOperationsNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation))]
+[comment][template private playerOperationsNaturalTypeInterface(aNaturalType : NaturalType,relations : Set(Relation))]
 [comment]boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]);[/comment]
-boolean isSame(Object object);
+[comment]boolean isSame(Object object);[/comment]
 [let roleTypes:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(relations))]
 [for(aRoleType:RoleType|roleTypes)]
 boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
@@ -67,18 +84,6 @@ List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]
 [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
 [/for]
 [/let]
-[/template]
+[/template][/comment]
 
-[template private playerOperationsNaturalTypeInterface_new(aNaturalType : NaturalType,relations : Set(Relation))]
-[comment]boolean isSame([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]);[/comment]
-boolean isSame(Object object);
-[let roleTypes:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(relations))]
-[for(aRoleType:RoleType|roleTypes)]
-boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
-[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
-List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s();
-boolean add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
-boolean delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
-[/for]
-[/let]
-[/template]
+

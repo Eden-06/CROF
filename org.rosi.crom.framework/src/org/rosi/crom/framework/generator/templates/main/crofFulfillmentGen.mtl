@@ -2,7 +2,7 @@
 [**
  * The documentation of the module generateNaturalType.
  */]
-[module crofRelationGen('platform:/resource/org.rosi.crom.metamodel/')]
+[module crofFulfillmentGen('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::generalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
 
@@ -11,29 +11,12 @@
  * @param aNaturalType
  */]
 
-[template public crofRelationGen(aType:Type,aRoleType : RoleType)]
+[template public crofFulfillmentGen(aType:Type,aRoleType : RoleType)]
 [file (getFolderPath() +'/crof/Crof'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
 package [getPackagePath()/].crof;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.HashMap;
-import java.util.Iterator;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ListMultimap;
 
-import org.rosi.crom.framework.core.model.CromRelation;
-
-
-
-
-import [getPackagePath()/].*;
-
-
-public class Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] implements CromRelation{
+public class Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]{
 
 	private String player;
 	private String played;

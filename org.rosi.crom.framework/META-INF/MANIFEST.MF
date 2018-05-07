@@ -21,6 +21,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: org.rosi.crom.framework.core.model,
+ org.rosi.crom.framework.core.model.impl,
  org.rosi.crom.framework.generator.templates.main,
  org.rosi.crom.framework.generator.templates.project
 Import-Package: crom_l1_composed,

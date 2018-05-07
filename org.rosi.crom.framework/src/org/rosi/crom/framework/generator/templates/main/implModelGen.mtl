@@ -1,0 +1,163 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module implModelGen('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::generalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::generalTemplates/]
+[import org::rosi::crom::framework::generator::templates::main::crofRoleTypeGen/]
+[import org::rosi::crom::framework::generator::templates::main::crofRelationshipGen/]
+
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public implModelGen(aModel : Model)]
+[file (getFolderPath() +'/impl/ModelImpl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import org.rosi.crom.framework.core.model.impl.CromModelImpl;
+
+import [getPackagePath()/].*;
+
+public class ModelImpl extends CromModelImpl implements Model{	
+	private String model="[getPackagePath()/]";
+	@Override
+	public String getModelName(){
+		return this.model;
+	}
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	private List<[aCompartmentType.name/]> [aCompartmentType.name.toLowerFirst()/]s=new ArrayList<[aCompartmentType.name/]>();
+	@Override
+	public void set[aCompartmentType.name.toUpperFirst()/](List<[aCompartmentType.name/]> [aCompartmentType.name.toLowerFirst()/]s){
+		this.[aCompartmentType.name.toLowerFirst()/]s=[aCompartmentType.name.toLowerFirst()/]s;
+	}
+	@Override
+	public List<[aCompartmentType.name/]> get[aCompartmentType.name.toUpperFirst()/](){
+		return this.[aCompartmentType.name.toLowerFirst()/]s;
+	}
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	private List<[aNaturalType.name/]> [aNaturalType.name.toLowerFirst()/]s=new ArrayList<[aNaturalType.name/]>();
+	@Override
+	public void set[aNaturalType.name.toUpperFirst()/](List<[aNaturalType.name/]> [aNaturalType.name.toLowerFirst()/]s){
+		this.[aNaturalType.name.toLowerFirst()/]s=[aNaturalType.name.toLowerFirst()/]s;
+	}
+	@Override
+	public List<[aNaturalType.name/]> get[aNaturalType.name.toUpperFirst()/](){
+		return this.[aNaturalType.name.toLowerFirst()/]s;
+	}
+[/let]
+[elseif(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+	private List<[aDataType.name/]> [aDataType.name.toLowerFirst()/]s=new ArrayList<[aDataType.name/]>();
+	@Override
+	public void set[aDataType.name.toUpperFirst()/](List<[aDataType.name/]> [aDataType.name.toLowerFirst()/]s){
+		this.[aDataType.name.toLowerFirst()/]s=[aDataType.name.toLowerFirst()/]s;
+	}
+	@Override
+	public List<[aDataType.name/]> get[aDataType.name.toUpperFirst()/](){
+		return this.[aDataType.name.toLowerFirst()/]s;
+	}
+[/if]
+[/let]
+[/if]
+[/for]
+
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	@Override
+	public [aCompartmentType.name/] create[aCompartmentType.name/](){
+		[aCompartmentType.name.toUpperFirst()/]Impl [aCompartmentType.name.toLowerFirst()/]=new [aCompartmentType.name.toUpperFirst()/]Impl();
+		this.[aCompartmentType.name.toLowerFirst()/]s.add([aCompartmentType.name.toLowerFirst()/]);
+		return [aCompartmentType.name.toLowerFirst()/];
+	}
+	@Override
+	public int getIndex([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]) {
+		return this.[aCompartmentType.name.toLowerFirst()/]s.indexOf([aCompartmentType.name.toLowerFirst()/]);		
+	}
+[comment]	[fulfillmentGen(aCompartmentType,aModel.relations)/][/comment]
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	@Override
+	public [aNaturalType.name/] create[aNaturalType.name/](){
+		[aNaturalType.name.toUpperFirst()/]Impl [aNaturalType.name.toLowerFirst()/]=new [aNaturalType.name.toUpperFirst()/]Impl();
+		this.[aNaturalType.name.toLowerFirst()/]s.add([aNaturalType.name.toLowerFirst()/]);
+		return [aNaturalType.name.toLowerFirst()/];
+	}
+	@Override
+	public int getIndex([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]) {
+		return this.[aNaturalType.name.toLowerFirst()/]s.indexOf([aNaturalType.name.toLowerFirst()/]);		
+	}
+[/let]
+[elseif(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+	@Override
+	public [aDataType.name/] create[aDataType.name/](){
+		[aDataType.name.toUpperFirst()/]Impl [aDataType.name.toLowerFirst()/]=new [aDataType.name.toUpperFirst()/]Impl();
+		this.[aDataType.name.toLowerFirst()/]s.add([aDataType.name.toLowerFirst()/]);
+		return [aDataType.name.toLowerFirst()/];
+	}
+	@Override
+	public int getIndex([aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]) {
+		return this.[aDataType.name.toLowerFirst()/]s.indexOf([aDataType.name.toLowerFirst()/]);		
+	}
+[/if]
+[/let]
+[/if]
+[/for]
+	
+}
+[/file]
+[/template]
+
+[template private fulfillmentGen(aCompartmentType : CompartmentType,relations:Set(Relation))]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+[fulfillmentGen(aType,ar.oclAsType(RoleType))/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+[fulfillmentGen(aType,aRoleType)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in rtModelGen.mtl line 21.
+[/if]
+[/for]
+[/template]
+
+[template private fulfillmentGen(aType:Type,aRoleType : RoleType)]
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[aType.name.toUpperFirst()/] [aType.name.toLowerFirst()/]){
+	return [getOwner(aRoleType).name.toLowerFirst()/].bind[aRoleType.name.toUpperFirst()/]([aType.name.toLowerFirst()/]);
+}
+
+@Override
+public boolean unbind[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[aType.name.toUpperFirst()/] [aType.name.toLowerFirst()/]){
+	return [getOwner(aRoleType).name.toLowerFirst()/].unbind[aRoleType.name.toUpperFirst()/]([aType.name.toLowerFirst()/]);
+}
+
+
+
+[/template]
+
+
+
+

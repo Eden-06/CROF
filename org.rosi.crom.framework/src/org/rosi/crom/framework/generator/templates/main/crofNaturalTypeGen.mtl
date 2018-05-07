@@ -15,18 +15,15 @@
 [file (getFolderPath() +'/crof/Crof'+ aNaturalType.name.toUpperFirst()+'.java', false, 'UTF-8')]
 package [getPackagePath()/].crof;
 
-import org.rosi.crom.framework.core.model.CromNaturalType;
 
-import [getPackagePath()/].*;
-
-public class Crof[aNaturalType.name/][superCrofNaturalType(aNaturalType,aModel.relations)/] implements CromNaturalType {
+public class Crof[aNaturalType.name/][createExtends(aNaturalType,aModel.relations)/]  {
 	[crofFields(aNaturalType.attributes)/]
 	[crofProperties(aNaturalType.attributes)/]
 }
 [/file]
 [/template]
 
-[template private superCrofNaturalType(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[template private createExtends(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
 [if(hasSuper(aNaturalType,relations))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
  extends Crof[superNaturalType.name.toUpperFirst()/]

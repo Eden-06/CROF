@@ -36,7 +36,7 @@ public class [aCompartmentType.name.toUpperFirst()/]State{
 [/template]
 
 [template private roleAttributeCompartmentTypeState(aCompartmentType : CompartmentType,relations : Set(Relation)) post (replaceAll('\t', '').trim())]
-[let roleTypes : Set(RoleType) = getRoleTypes(aCompartmentType,getAllFulfillments(relations))]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,relations)]
 [if(not roleTypes->isEmpty())]
 [for(aRoleType:RoleType | roleTypes)]
 [comment]Map<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>();[/comment]

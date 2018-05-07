@@ -63,7 +63,7 @@ public void set[aCompartmentTypePlayer.name.toUpperFirst()/][aRoleType.name.toUp
 [/for]
 [/let]
 [elseif(ar.oclIsKindOf(RoleGroup))]
-[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [for(aType:Type|getPlayers(aRoleType,relations))]
 [if(aType.oclIsKindOf(NaturalType))]
@@ -101,23 +101,23 @@ there is something wrong in ctUniversalImplGen line 58.
 [if(aAbstractRole.oclIsKindOf(RoleType))]
 [for(t:Type|getPlayers(aAbstractRole.oclAsType(RoleType),aModel.relations))]
 [if(t.oclIsKindOf(NaturalType))]
-[ntbindFunktionImplGen_new(t.oclAsType(NaturalType),aAbstractRole.oclAsType(RoleType))/]
-[ntUnbindFunktionImplGen_new(t.oclAsType(NaturalType),aAbstractRole.oclAsType(RoleType))/]
+[ntbindFunktionImplGen(t.oclAsType(NaturalType),aAbstractRole.oclAsType(RoleType),aModel.relations)/]
+[ntUnbindFunktionImplGen(t.oclAsType(NaturalType),aAbstractRole.oclAsType(RoleType))/]
 [else]
-[ctbindFunktionImplGen_new(t.oclAsType(CompartmentType),aAbstractRole.oclAsType(RoleType))/]
-[ctUnbindFunktionImplGen_new(t.oclAsType(CompartmentType),aAbstractRole.oclAsType(RoleType))/]
+[ctbindFunktionImplGen(t.oclAsType(CompartmentType),aAbstractRole.oclAsType(RoleType))/]
+[ctUnbindFunktionImplGen(t.oclAsType(CompartmentType),aAbstractRole.oclAsType(RoleType))/]
 [/if]
 [/for]
 [elseif(aAbstractRole.oclIsKindOf(RoleGroup))]
-[let roleTypes:Set(RoleType)=getAllRoleTypes(aAbstractRole.oclAsType(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(aAbstractRole.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [for(aType:Type|getPlayers(aRoleType,aModel.relations))]
 [if(aType.oclIsKindOf(NaturalType))]
-[ntbindFunktionImplGen_new(aType.oclAsType(NaturalType),aRoleType)/]
-[ntUnbindFunktionImplGen_new(aType.oclAsType(NaturalType),aRoleType)/]
+[ntbindFunktionImplGen(aType.oclAsType(NaturalType),aRoleType,aModel.relations)/]
+[ntUnbindFunktionImplGen(aType.oclAsType(NaturalType),aRoleType)/]
 [elseif(aType.oclIsKindOf(CompartmentType))]
-[ctbindFunktionImplGen_new(aType.oclAsType(CompartmentType),aRoleType)/]
-[ctUnbindFunktionImplGen_new(aType.oclAsType(CompartmentType),aRoleType)/]
+[ctbindFunktionImplGen(aType.oclAsType(CompartmentType),aRoleType)/]
+[ctUnbindFunktionImplGen(aType.oclAsType(CompartmentType),aRoleType)/]
 [else]
 something wrong in ctUniversalImplGen.mtl line 107.
 [/if]
@@ -133,14 +133,14 @@ something wrong in ctUniversalImplGen.mtl line 93.
 [for(aNamedElement:NamedElement|aModel.elements)]
 [if(aNamedElement.oclIsKindOf(NaturalType))]
 [let aNaturalTypePlayer:NaturalType=aNamedElement.oclAsType(NaturalType)]
-[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoleTypes(aNaturalTypePlayer, getAllFulfillments(aModel.relations)),getAllRoleTypes(aCompartmentType))]
+[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoles(aNaturalTypePlayer, aModel.relations),getOwnedRoles(aCompartmentType))]
 [if(roleTypes<>Set{})]
 [if((roleTypes->size())=1)]
 [let aRoleType : RoleType = roleTypes->asOrderedSet()->first()]
-[ntgetRoleImplGen_new(aNaturalTypePlayer,aRoleType)/]
+[ntgetRoleImplGen(aNaturalTypePlayer,aRoleType)/]
 [/let]
 [else]
-[ntgetRolesImplGen_new(aNaturalTypePlayer, roleTypes)/]
+[ntgetRolesImplGen(aNaturalTypePlayer, roleTypes)/]
 [/if]
 [/if]
 [/let]
@@ -148,14 +148,14 @@ something wrong in ctUniversalImplGen.mtl line 93.
 [elseif(aNamedElement.oclIsKindOf(CompartmentType))]
 [let aCompartmentTypePlayer:CompartmentType=aNamedElement.oclAsType(CompartmentType)]
 [if(isCompartmentTypePlayedRole(aCompartmentTypePlayer,aModel.relations))]
-[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoleTypes(aCompartmentTypePlayer, getAllFulfillments(aModel.relations)), getAllRoleTypes(aCompartmentType))]
+[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoles(aCompartmentTypePlayer, aModel.relations), getOwnedRoles(aCompartmentType))]
 [if(roleTypes<>Set{})]
 [if((roleTypes->size())=1)]
 [let aRoleType : RoleType = roleTypes->asOrderedSet()->first()]
-[ctgetRoleImplGen_new(aCompartmentTypePlayer,aRoleType)/]
+[ctgetRoleImplGen(aCompartmentTypePlayer,aRoleType)/]
 [/let]
 [else]
-[ctgetRolesImplGen_new(aCompartmentTypePlayer, roleTypes)/]
+[ctgetRolesImplGen(aCompartmentTypePlayer, roleTypes)/]
 [/if]
 [/if]
 [/let]
@@ -168,34 +168,43 @@ something wrong in ctUniversalImplGen.mtl line 134.
 [/for]
 [/template]
 
-[template private ntbindFunktionImplGen(aNaturalType:NaturalType,aRoleType : RoleType)]
+[comment][template private ntbindFunktionImplGen(aNaturalType:NaturalType,aRoleType : RoleType,relations:Set(Relation))]
 @Override
 public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role=([aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]) [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get([aNaturalType.name.toLowerFirst()/]);
 	if(role==null){
-		role=new [aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](([aNaturalType.name.toUpperFirst()/]Impl)[aNaturalType.name.toLowerFirst()/]);
+		role=new [aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([aNaturalType.name.toLowerFirst()/]);
 		[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.put(([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/],role);
-		(([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).add[aRoleType.name.toUpperFirst()/](this,role);
+[if(hasSub(aNaturalType,relations))]
+		[addRole(getLastSub(aNaturalType,relations),aNaturalType,aRoleType,relations)/]
+[else]
+		[aNaturalType.name.toLowerFirst()/].add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this,role);
+[/if]
 	}
 	return role;
 }
-[/template]
+[/template][/comment]
 
-[template private ctbindFunktionImplGen(aCompartmentType:CompartmentType, aRoleType : RoleType)]
+
+
+
+
+
+[comment][template private ctbindFunktionImplGen(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role=([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]) [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get([aCompartmentType.name.toLowerFirst()/]);
 	if(role==null){
 		role=new [aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](([aCompartmentType.name.toUpperFirst()/]Impl)[aCompartmentType.name.toLowerFirst()/]);
 		[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.put(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/],role);
-		(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).add[aRoleType.name.toUpperFirst()/](this,role);
+		(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this,role);
 	}
 	return role;
 }
-[/template]
+[/template][/comment]
 
 
-[template private ntbindFunktionImplGen_new(aNaturalType:NaturalType,aRoleType : RoleType)]
+[template private ntbindFunktionImplGen(aNaturalType:NaturalType,aRoleType : RoleType,relations:Set(Relation))]
 @Override
 public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
@@ -203,14 +212,31 @@ public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aN
 			return [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
 		}
 	}
-	[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role = new [aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]);
+	[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role = new [aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([aNaturalType.name.toLowerFirst()/]);
 	[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add(role);
-	(([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).add[aRoleType.name.toUpperFirst()/](role);
+[if(hasSub(aNaturalType,relations))]
+		[addRole(getLastSub(aNaturalType,relations),aNaturalType,aRoleType,relations)/]
+[else]
+	(([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](role);
+[/if]
 	return role;
 }
 [/template]
 
-[template private ctbindFunktionImplGen_new(aCompartmentType:CompartmentType, aRoleType : RoleType)]
+[template private addRole(aNaturalType : NaturalType, targetNaturlType : NaturalType,aRoleType:RoleType, relations:Set(Relation))]
+[if(hasSuper(aNaturalType,relations) and aNaturalType<>targetNaturlType)]
+if([targetNaturlType.name.toLowerFirst()/] instanceof [aNaturalType.name.toUpperFirst()/]){
+	(([aNaturalType.name.toUpperFirst()/]Impl) [targetNaturlType.name.toLowerFirst()/]).add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](role);
+}
+else [addRole(getSuper(aNaturalType,relations),targetNaturlType,aRoleType,relations)/]
+[else]
+{
+	(([aNaturalType.name.toUpperFirst()/]Impl) [targetNaturlType.name.toLowerFirst()/]).add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](role);
+}
+[/if]
+[/template]
+
+[template private ctbindFunktionImplGen(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
@@ -220,18 +246,18 @@ public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aC
 	}
 	[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role = new [aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]);
 	[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add(role);
-	(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).add[aRoleType.name.toUpperFirst()/](role);
+	(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](role);
 	return role;
 }
 [/template]
-[template private ntUnbindFunktionImplGen(aNaturalType:NaturalType,aRoleType : RoleType)]
+[comment][template private ntUnbindFunktionImplGen(aNaturalType:NaturalType,aRoleType : RoleType)]
 @Override
 public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	if ([aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey([aNaturalType.name.toLowerFirst()/])
-			&& (([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).state.[aRoleType.name.toLowerFirst()/]s.containsKey(this)) {
+			&& (([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey(this)) {
 		if ((([aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]) [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get([aNaturalType.name.toLowerFirst()/]))
-				.equals((([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).state.[aRoleType.name.toLowerFirst()/]s.get(this))) {
-			(([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).state.[aRoleType.name.toLowerFirst()/]s.remove(this);
+				.equals((([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(this))) {
+			(([aNaturalType.name.toUpperFirst()/]Impl) [aNaturalType.name.toLowerFirst()/]).state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(this);
 			[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove([aNaturalType.name.toLowerFirst()/]);
 			return true;
 		} else {
@@ -246,9 +272,9 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpper
 [template private ctUnbindFunktionImplGen(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
-	if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey([aCompartmentType.name.toLowerFirst()/]) && (([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).state.[aRoleType.name.toLowerFirst()/]s.containsKey(this)) {
-		if ((([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]) [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get([aCompartmentType.name.toLowerFirst()/])).equals((([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).state.[aRoleType.name.toLowerFirst()/]s.get(this))) {
-			(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).state.[aRoleType.name.toLowerFirst()/]s.remove(this);
+	if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey([aCompartmentType.name.toLowerFirst()/]) && (([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.containsKey(this)) {
+		if ((([aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]) [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get([aCompartmentType.name.toLowerFirst()/])).equals((([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(this))) {
+			(([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]).state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(this);
 			[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove([aCompartmentType.name.toLowerFirst()/]);
 			return true;
 		} else {
@@ -258,8 +284,8 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toU
 		return false;
 	}
 }
-[/template]
-[template private ntUnbindFunktionImplGen_new(aNaturalType:NaturalType,aRoleType : RoleType)]
+[/template][/comment]
+[template private ntUnbindFunktionImplGen(aNaturalType:NaturalType,aRoleType : RoleType)]
 @Override
 public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
@@ -267,11 +293,11 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpper
 			[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
 		}
 	}
-	return [aNaturalType.name.toLowerFirst()/].delete[aRoleType.name.toUpperFirst()/](this);
+	return [aNaturalType.name.toLowerFirst()/].delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 }
 [/template]
 
-[template private ctUnbindFunktionImplGen_new(aCompartmentType:CompartmentType, aRoleType : RoleType)]
+[template private ctUnbindFunktionImplGen(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
@@ -279,11 +305,11 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toU
 			[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
 		}
 	}
-	return [aCompartmentType.name.toLowerFirst()/].delete[aRoleType.name.toUpperFirst()/](this);
+	return [aCompartmentType.name.toLowerFirst()/].delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 }
 [/template]
 
-[template private ntgetRolesImplGen(aNaturalType:NaturalType,roleTypes:Set(RoleType))]
+[comment][template private ntgetRolesImplGen(aNaturalType:NaturalType,roleTypes:Set(RoleType))]
 @Override
 public List<Object> getRole([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	List<Object> list=new ArrayList<Object>();
@@ -320,9 +346,9 @@ public List<Object> getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmen
 public [aRoleType.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	return [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get([aCompartmentType.name.toLowerFirst()/]);
 }
-[/template]
+[/template][/comment]
 
-[template private ntgetRolesImplGen_new(aNaturalType:NaturalType,roleTypes:Set(RoleType))]
+[template private ntgetRolesImplGen(aNaturalType:NaturalType,roleTypes:Set(RoleType))]
 @Override
 public List<[aNaturalType.name.toUpperFirst()/]> getRole([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	List<[aNaturalType.name.toUpperFirst()/]> list=new ArrayList<[aNaturalType.name.toUpperFirst()/]>();
@@ -337,7 +363,7 @@ public List<[aNaturalType.name.toUpperFirst()/]> getRole([aNaturalType.name.toUp
 }
 [/template]
 
-[template private ntgetRoleImplGen_new(aNaturalType : NaturalType,aRoleType : RoleType)]
+[template private ntgetRoleImplGen(aNaturalType : NaturalType,aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] getRole([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
@@ -348,7 +374,7 @@ public [aRoleType.name.toUpperFirst()/] getRole([aNaturalType.name.toUpperFirst(
 	return null;
 }
 [/template]
-[template private ctgetRolesImplGen_new(aCompartmentType : CompartmentType, roleTypes : Set(RoleType))]
+[template private ctgetRolesImplGen(aCompartmentType : CompartmentType, roleTypes : Set(RoleType))]
 @Override
 public List<[aCompartmentType.name.toUpperFirst()/]> getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	List<[aCompartmentType.name.toUpperFirst()/]> list=new ArrayList<[aCompartmentType.name.toUpperFirst()/]>();
@@ -363,7 +389,7 @@ public List<[aCompartmentType.name.toUpperFirst()/]> getRole([aCompartmentType.n
 }
 [/template]
 
-[template private ctgetRoleImplGen_new(aCompartmentType:CompartmentType, aRoleType : RoleType)]
+[template private ctgetRoleImplGen(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
@@ -414,7 +440,7 @@ this.[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.put([aType.na
 	aCompartmentType.parts ->select(parts | parts.lower = 1).role
 	->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
 	if (aAbstractRole.oclIsKindOf(RoleGroup))
-	then roleTypes->union(getAllRoleTypes(aAbstractRole.oclAsType(RoleGroup)))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
 	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
 	endif)/]
 [query private prepareParams(roleTypes:Set(RoleType),relations:Set(Relation)):Set(Type) = 

@@ -17,7 +17,7 @@
 [roleTypeImplGen(aType,ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
 [/for]
 [elseif(ar.oclIsKindOf(RoleGroup))]
-[let roleTypes:Set(RoleType)=getAllRoleTypes(ar.oclAsType(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [for(aType:Type|getPlayers(aRoleType,relations))]
 [roleTypeImplGen(aType,aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
@@ -35,11 +35,20 @@ public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements
 	[privateFields(aRoleType.attributes)/]
 
 	public [aType.name/][aRoleType.name/](){
-[comment]		super();[/comment]
+		super();
 	}
-	public [aType.name/][aRoleType.name/]([aType.name/]Impl [aType.name.toLowerFirst()/]Impl){
-[comment]		super();[/comment]
-		this.state=[aType.name.toLowerFirst()/]Impl.state;
+	public [aType.name/][aRoleType.name/]([aType.name/] [aType.name.toLowerFirst()/]){
+		super();
+[if(aType.oclIsKindOf(NaturalType))]
+[if(hasSub(aType.oclAsType(NaturalType),relations))]
+		[setRoleState(getLastSub(aType.oclAsType(NaturalType),relations),aType.oclAsType(NaturalType),relations)/]
+[else]
+		this.state=(([aType.name/]Impl)[aType.name.toLowerFirst()/]).state;
+[/if]
+[else]
+		this.state=(([aType.name/]Impl)[aType.name.toLowerFirst()/]).state;
+[/if]
+[comment]		this.state=[aType.name.toLowerFirst()/]Impl.state;			[/comment]
 	}
 	[overrideProperties(aRoleType.attributes)/]
 	[implOperations(aRoleType.operations)/]
@@ -50,13 +59,38 @@ public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements
 	}
 	@Override
 	public [aType.name.toUpperFirst()/] getPlayer() {
-		return getCompoundObject();
+		return ([aType.name.toUpperFirst()/])getCompoundObject();
 	}
 	[relationshipRoleTypeImpl(aRoleType,relationships,constraints)/]
 
 }
 [/template]
 
+[template private setRoleState(aNaturalType : NaturalType, targetNaturlType : NaturalType, relations:Set(Relation))]
+[if(hasSuper(aNaturalType,relations) and aNaturalType<>targetNaturlType)]
+if([targetNaturlType.name.toLowerFirst()/] instanceof [aNaturalType.name.toUpperFirst()/]){
+	this.state = (([aNaturalType.name.toUpperFirst()/]Impl)[targetNaturlType.name.toLowerFirst()/]).state;
+}
+else [setRoleState(getSuper(aNaturalType,relations),targetNaturlType,relations)/]
+[else]
+{
+	this.state=(([aNaturalType.name.toUpperFirst()/]Impl)[targetNaturlType.name.toLowerFirst()/]).state;
+}
+[/if]
+[/template]
+
+[template private setRoleState(aCompartmentType : CompartmentType, targetCompartmentType : CompartmentType, relations:Set(Relation))]
+[if(hasSuper(aCompartmentType,relations))]
+if([targetCompartmentType.name.toLowerFirst()/] instanceof [aCompartmentType.name.toUpperFirst()/]){
+	this.state = (([aCompartmentType.name.toUpperFirst()/]Impl)[targetCompartmentType.name.toLowerFirst()/]).state;
+}
+else [setRoleState(getSuper(aCompartmentType,relations),targetCompartmentType,relations)/]
+[else]
+{
+	this.state = (([aCompartmentType.name.toUpperFirst()/]Impl)[targetCompartmentType.name.toLowerFirst()/]).state;
+}
+[/if]
+[/template]
 
 [template private relationshipRoleTypeImpl(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint))]
 [for(aRelationship:Relationship|getRelationships(aRoleType,relationships))]
