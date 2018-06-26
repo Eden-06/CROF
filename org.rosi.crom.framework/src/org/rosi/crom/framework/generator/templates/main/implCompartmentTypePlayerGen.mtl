@@ -97,13 +97,13 @@ public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFi
 	return state.[aRoleType.name.toLowerFirst()/]s;
 }
 @Override
-public boolean add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+public boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
 	if(state.[aRoleType.name.toLowerFirst()/]s.contains([aRoleType.name.toLowerFirst()/]))
 			return false;
 		return state.[aRoleType.name.toLowerFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
 }
 @Override
-public boolean delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
+public boolean delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
 	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++) {
 			if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
 				state.[aRoleType.name.toLowerFirst()/]s.remove(i);
