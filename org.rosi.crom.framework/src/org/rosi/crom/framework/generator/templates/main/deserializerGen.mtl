@@ -29,7 +29,7 @@ import [getPackagePath()/].impl.*;
 import [getPackagePath()/].crof.*;
 
 public class Deserializer{
-	//private String filePath="./json/model.croj";
+	//private String filePath="./instance/model.croj";
 	private CrofModel crofModel=new CrofModel();
 	private Model model=Factory.INSTANCE.createModel();
 

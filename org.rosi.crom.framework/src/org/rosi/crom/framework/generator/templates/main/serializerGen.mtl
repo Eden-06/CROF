@@ -136,7 +136,7 @@ public class Serializer{
 [/for]
 		String str = new Gson().toJson(crofModel,CrofModel.class);
 		BufferedWriter writer = null;
-		String filePath="./json/"+model.getModelName()+"_1.croj";
+		String filePath="./instance/"+model.getModelName()+"_1.croj";
         File file = new File(filePath);
 [comment]        //如果文件不存在，则新建一个  
 //        if(!file.exists()){  
@@ -150,7 +150,7 @@ public class Serializer{
         while(file.exists()) {
         		String num=filePath.substring(filePath.lastIndexOf("_")+1, filePath.lastIndexOf("."));
         		int number=Integer.parseInt(num)+1;
-        		filePath="./json/"+model.getModelName()+"_"+number+".croj";
+        		filePath="./instance/"+model.getModelName()+"_"+number+".croj";
         		file = new File(filePath);
         }
         try {  

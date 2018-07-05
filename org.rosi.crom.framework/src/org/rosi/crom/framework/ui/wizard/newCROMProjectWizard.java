@@ -160,7 +160,7 @@ public class newCROMProjectWizard extends Wizard implements INewWizard, IExecuta
 			srcFolder.create(true, true, monitor);
 			final IFolder binFolder = container.getFolder(new Path("bin"));
 			binFolder.create(true, true, monitor);
-			final IFolder jsonFolder = container.getFolder(new Path("json"));
+			final IFolder jsonFolder = container.getFolder(new Path("instance"));
 			jsonFolder.create(true, true, monitor);
 			final IFolder libFolder = container.getFolder(new Path("lib"));
 			libFolder.create(true, true, monitor);

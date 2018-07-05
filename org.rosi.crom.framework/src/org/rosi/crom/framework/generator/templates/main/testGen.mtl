@@ -141,7 +141,7 @@ public class Test {
 		factory.storeJson(model);
 		
 		
-		factory.loadJson("./json/inheritance_1.croj");
+		factory.loadJson("./instance/inheritance_1.croj");
 		
 [comment]		CaImpl c1=(CaImpl)model.createCa();
 		NaImpl na1=(NaImpl)model.createNa();
