@@ -304,7 +304,7 @@ else if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPla
 [for(firstPlayer:Type|getPlayers(first,relations))]
 [for(secondPlayer:Type|getPlayers(second,relations))]
 if(crof[aRelationship.name.toUpperFirst()/].getFirst().equals("[firstPlayer.name.toUpperFirst()/][first.name.toUpperFirst()/]") && crof[aRelationship.name.toUpperFirst()/].getSecond().equals("[secondPlayer.name.toUpperFirst()/][second.name.toUpperFirst()/]")){
-	[firstPlayer.name.toLower()/][first.name.toUpperFirst()/]s.get(crof[aRelationship.name.toUpperFirst()/].getFirstPosition()).add[aRelationship.name.toUpperFirst()/]([secondPlayer.name.toLower()/][second.name.toUpperFirst()/]s.get(crof[aRelationship.name.toUpperFirst()/].getSecondPosition()));
+	[firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]s.get(crof[aRelationship.name.toUpperFirst()/].getFirstPosition()).add[aRelationship.name.toUpperFirst()/]([secondPlayer.name.toLowerFirst()/][second.name.toUpperFirst()/]s.get(crof[aRelationship.name.toUpperFirst()/].getSecondPosition()));
 }
 [/for]
 [/for]
