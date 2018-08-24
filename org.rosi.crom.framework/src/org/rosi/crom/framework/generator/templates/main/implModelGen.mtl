@@ -21,11 +21,10 @@ package [getPackagePath()/].impl;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.rosi.crom.framework.core.model.impl.CromModelImpl;
 
 import [getPackagePath()/].*;
 
-public class ModelImpl extends CromModelImpl implements Model{	
+public class ModelImpl implements Model{	
 	private String model="[getPackagePath()/]";
 	@Override
 	public String getModelName(){
