@@ -14,8 +14,6 @@
 [file (getFolderPath()+'/Factory.java', false, 'UTF-8')]
 package [getPackagePath()/];
 
-import java.util.Map;
-import java.util.List;
 
 
 public interface Factory {
