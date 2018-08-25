@@ -52,7 +52,7 @@ public void add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl 
 public Map<[getOwner(aRoleType).name/]Impl,[getOwner(aRoleType).name/]Impl.[aCompartmentType.name/][aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s() {
 	return state.[aRoleType.name.toLowerFirst()/]s;
 }
-public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] delete[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
+public [getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] remove[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/]Impl [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name/]Impl.[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]){
 	return state.[aRoleType.name.toLowerFirst()/]s.remove([getOwner(aRoleType).name.toLowerFirst()/]);
 }
 [/for]
@@ -102,7 +102,7 @@ public boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUp
 		return state.[aRoleType.name.toLowerFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
 }
 @Override
-public boolean delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
+public boolean remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
 	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++) {
 			if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
 				state.[aRoleType.name.toLowerFirst()/]s.remove(i);

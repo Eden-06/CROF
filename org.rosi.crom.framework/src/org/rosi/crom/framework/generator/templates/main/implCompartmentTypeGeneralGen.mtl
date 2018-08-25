@@ -293,7 +293,7 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpper
 			[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
 		}
 	}
-	return [aNaturalType.name.toLowerFirst()/].delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
+	return [aNaturalType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 }
 [/template]
 
@@ -305,7 +305,7 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toU
 			[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
 		}
 	}
-	return [aCompartmentType.name.toLowerFirst()/].delete[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
+	return [aCompartmentType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 }
 [/template]
 
