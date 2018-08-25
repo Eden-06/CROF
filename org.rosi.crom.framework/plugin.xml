@@ -11,7 +11,7 @@
          <action
                class="org.rosi.crom.framework.generator.ui.popupMenus.AcceleoGenerateAcceleoAction"
                id="org.crof.generator.popupMenus.acceleoGenerateAcceleoAction"
-               label="CROM2Java"
+               label="CROM Framework"
                menubarPath="org.rosi.crom.toformal.menu/group1">
          </action>
       </objectContribution>
