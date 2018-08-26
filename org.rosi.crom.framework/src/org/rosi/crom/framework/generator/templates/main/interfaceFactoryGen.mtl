@@ -19,9 +19,9 @@ package [getPackagePath()/];
 public interface Factory {
 	Factory INSTANCE = [getPackagePath()/].impl.FactoryImpl.init();
 	Model createModel();
-	void storeXML(Model model);
+[comment]	void storeXML(Model model);[/comment]
 	void storeJson(Model model);
-	Model loadXML(String filePath);
+[comment]	Model loadXML(String filePath);[/comment]
 	Model loadJson(String filePath);
 }
 [/file]

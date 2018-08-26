@@ -233,7 +233,7 @@ something wrong in rtModelGen.mtl line 21.
 [/if]
 [/for]
 [for(aRelationship:Relationship|aCompartmentType.relationships)]
-	List<Crof[aRelationship.name.toUpperFirst()/]> crof[aRelationship.name.toUpperFirst()/]s = new ArrayList<Crof[aRelationship.name.toUpperFirst()/]>();
+	//List<Crof[aRelationship.name.toUpperFirst()/]> crof[aRelationship.name.toUpperFirst()/]s = new ArrayList<Crof[aRelationship.name.toUpperFirst()/]>();
 	[exchangeRelationship(aRelationship,relations)/]
 [/for]
 }

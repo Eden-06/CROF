@@ -14,10 +14,7 @@
 [file (getFolderPath() +'/impl/FactoryImpl.java', false, 'UTF-8')]
 package [getPackagePath()/].impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 import [getPackagePath()/].*;
 import [getPackagePath()/].util.*;
@@ -36,20 +33,20 @@ public class FactoryImpl implements Factory{
 	}
 
 
-	@Override
+[comment]	@Override
 	public void storeXML(Model model){
 		//TODO
-	}
+	}[/comment]
 	@Override
 	public void storeJson(Model model){
 		new Serializer().toJson(model);
 	}
 
-	@Override
+[comment]	@Override
 	public Model loadXML(String filePath){	
 		//TODO
 		return null;
-	}
+	}[/comment]
 	@Override
 	public Model loadJson(String filePath){
 		return new Deserializer().fromJson(filePath);

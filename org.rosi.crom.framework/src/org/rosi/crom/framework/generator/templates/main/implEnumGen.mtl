@@ -13,8 +13,6 @@
 [file (getFolderPath() +'/impl/TypesImpl.java', false, 'UTF-8')]
 package [getPackagePath()/].impl;
 
-import [getPackagePath()/].Types;
-
 public enum TypesImpl{
 	[typesImpl(aModel)/]
 }

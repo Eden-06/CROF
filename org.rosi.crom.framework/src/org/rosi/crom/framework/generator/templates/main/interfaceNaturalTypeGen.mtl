@@ -45,7 +45,7 @@ public interface [aNaturalType.name.toUpperFirst()/][createExtends(aNaturalType,
 [template private playerOperations(aNaturalType : NaturalType,relations : Set(Relation))]
 [let roleTypes:Set(RoleType)=getAllRoles(aNaturalType,relations)]
 [for(aRoleType:RoleType|roleTypes)]
-boolean is[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+boolean has[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
 [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
 List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s();
 boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);
@@ -77,7 +77,7 @@ boolean remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperF
 [comment]boolean isSame(Object object);[/comment]
 [let roleTypes:Set(RoleType)=getRoleTypes(aNaturalType,getAllFulfillments(relations))]
 [for(aRoleType:RoleType|roleTypes)]
-boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
+boolean has[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
 [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]);
 List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[aRoleType.name.toUpperFirst()/]s();
 [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] add[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]);

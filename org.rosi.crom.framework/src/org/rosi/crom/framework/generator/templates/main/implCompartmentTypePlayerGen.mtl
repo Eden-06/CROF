@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 
 import [getPackagePath()/].*;
 
@@ -74,7 +73,7 @@ public boolean isSame(Object object){
 [let roleTypes:Set(RoleType)=getRoles(aCompartmentType,aModel.relations)]
 [for(aRoleType:RoleType|roleTypes)]
 @Override
-public boolean is[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+public boolean has[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
 	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
 		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
 			return true;

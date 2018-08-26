@@ -29,8 +29,6 @@ public class Util {
 	public static String packagePath = "";
 	public static Set<RoleType> thisset = new HashSet<RoleType>();
 
-	
-	
 	public Util() {
 	}
 
@@ -73,6 +71,7 @@ public class Util {
 	public static void setPackagePath(String str) {
 		packagePath = str;
 	}
+
 	public String getPackagePath() {
 		return packagePath;
 	}
@@ -80,6 +79,7 @@ public class Util {
 	public static void setFolderPath(String str) {
 		folderPath = str;
 	}
+
 	public String getFolderPath() {
 		return folderPath;
 	}
@@ -91,9 +91,6 @@ public class Util {
 	public String getFolderName() {
 		return folderName;
 	}
-
-
-
 
 	public boolean setRole(RoleTypeImpl role) {
 		return thisset.add((RoleType) role);
