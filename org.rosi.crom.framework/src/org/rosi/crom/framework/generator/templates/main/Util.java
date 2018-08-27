@@ -7,7 +7,7 @@ import java.util.Set;
 import java.io.File;
 import java.util.HashSet;
 import org.eclipse.emf.common.util.URI;
-import org.rosi.crom.framework.ui.wizard.newCROMProjectWizard;
+//import org.rosi.crom.framework.ui.wizard.newCROMProjectWizard;
 
 import crom_l1_composed.RoleType;
 import crom_l1_composed.impl.RoleTypeImpl;

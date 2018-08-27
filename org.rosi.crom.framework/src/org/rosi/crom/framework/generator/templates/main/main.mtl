@@ -8,14 +8,12 @@
 [import org::rosi::crom::framework::generator::templates::main::mainNaturalTypeGen/]
 [import org::rosi::crom::framework::generator::templates::main::mainCompartmentTypeGen/]
 [import org::rosi::crom::framework::generator::templates::main::mainFactoryGen/]
-[import org::rosi::crom::framework::generator::templates::main::packageGen/]
 [import org::rosi::crom::framework::generator::templates::main::testGen/]
 [import org::rosi::crom::framework::generator::templates::main::mainEnumGen/]
 [import org::rosi::crom::framework::generator::templates::main::mainModelGen/]
 [import org::rosi::crom::framework::generator::templates::main::crofModelGen/]
 [import org::rosi::crom::framework::generator::templates::main::serializerGen/]
 [import org::rosi::crom::framework::generator::templates::main::deserializerGen/]
-[import org::rosi::crom::framework::generator::templates::main::queryTest/]
 
 [**
  * The documentation of the template main.
@@ -34,7 +32,6 @@
 [/for]
 [serializerGen()/]
 [deserializerGen()/]
-
 [crofModelGen()/]
 [mainFactoryGen()/]
 [mainEnumGen()/]
