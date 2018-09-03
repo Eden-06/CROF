@@ -1,0 +1,131 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module universalInterfaceCompartmentType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceRoleType/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceRelationship/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+[template public universalInterfaceCompartmentType(aCompartmentType : CompartmentType, aModel : Model)]
+[interfaceProperties(aCompartmentType.attributes)/]
+[interFaceOperations(aCompartmentType.operations)/]
+[interfaceRoleType(aCompartmentType, aModel.relations)/]
+[interfaceRelationship(aCompartmentType)/]
+[bindFunktionInterface(aCompartmentType, aModel)/]
+[/template]
+
+[template private bindFunktionInterface(aCompartmentType : CompartmentType, aModel : Model)]
+[for(aAbstractRole : AbstractRole | aCompartmentType.parts.role)]
+[if(aAbstractRole.oclIsKindOf(RoleType))]
+[for(t : Type | getPlayers(aAbstractRole.oclAsType(RoleType), aModel.relations))]
+[if(t.oclIsKindOf(NaturalType))]
+[ntbindFunktionInterface(t.oclAsType(NaturalType),aAbstractRole.oclAsType(RoleType))/]
+[ntUnbindFunktionInterface(t.oclAsType(NaturalType),aAbstractRole.oclAsType(RoleType))/]
+[else]
+[ctbindFunktionInterface(t.oclAsType(CompartmentType),aAbstractRole.oclAsType(RoleType))/]
+[ctUnbindFunktionInterface(t.oclAsType(CompartmentType),aAbstractRole.oclAsType(RoleType))/]
+[/if]
+[/for]
+[elseif(aAbstractRole.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(aAbstractRole.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[for(aType:Type|getPlayers(aRoleType,aModel.relations))]
+[if(aType.oclIsKindOf(NaturalType))]
+[ntbindFunktionInterface(aType.oclAsType(NaturalType),aRoleType)/]
+[ntUnbindFunktionInterface(aType.oclAsType(NaturalType),aRoleType)/]
+[elseif(aType.oclIsKindOf(CompartmentType))]
+[ctbindFunktionInterface(aType.oclAsType(CompartmentType),aRoleType)/]
+[ctUnbindFunktionInterface(aType.oclAsType(CompartmentType),aRoleType)/]
+[else]
+something wrong in ctInterfaceUniversal.mtl line 45.
+[/if]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in ctInterfaceUniversal.mtl line 31.
+[/if]
+[/for]
+
+[comment]getRole features[/comment]
+[for(aNamedElement:NamedElement|aModel.elements)]
+[if(aNamedElement.oclIsKindOf(NaturalType))]
+[let aNaturalTypePlayer:NaturalType=aNamedElement.oclAsType(NaturalType)]
+[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoles(aNaturalTypePlayer, aModel.relations),getOwnedRoles(aCompartmentType))]
+[if(roleTypes<>Set{})]
+[if((roleTypes->size())=1)]
+[let aRoleType : RoleType = roleTypes->asOrderedSet()->first()]
+[ntgetRoleByNaturalTypeInterface_new(aNaturalTypePlayer,aRoleType)/]
+[/let]
+[else]
+[ntgetRolesByNaturalTypeInterface_new(aNaturalTypePlayer)/]
+[/if]
+[/if]
+[/let]
+[/let]
+[elseif(aNamedElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentTypePlayer:CompartmentType=aNamedElement.oclAsType(CompartmentType)]
+[if(isCompartmentTypePlayedRole(aCompartmentTypePlayer,aModel.relations))]
+[let roleTypes:Set(RoleType)=getRoleTypeByPlayerInCompartmentType(getRoles(aCompartmentTypePlayer, aModel.relations), getOwnedRoles(aCompartmentType))]
+[if(roleTypes<>Set{})]
+[if((roleTypes->size())=1)]
+[let aRoleType : RoleType = roleTypes->asOrderedSet()->first()]
+[ntgetRoleByCompartmentTypeInterface_new(aCompartmentTypePlayer,aRoleType)/]
+[/let]
+[else]
+[ntgetRolesByCompartmentTypeInterface_new(aCompartmentTypePlayer)/]
+[/if]
+[/if]
+[/let]
+[/if]
+[/let]
+[elseif(aNamedElement.oclIsKindOf(DataType))]
+[else]
+something wrong in ctUniversalImpl.mtl line 64.
+[/if]
+[/for]
+[/template]
+
+[template private ctbindFunktionInterface(aCompartmentType:CompartmentType,rt : RoleType)]
+[rt.name/] bind[rt.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[/template]
+[template private ntbindFunktionInterface(nt:NaturalType,rt : RoleType)]
+[rt.name/] bind[rt.name.toUpperFirst()/]([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
+[/template]
+[template private ctUnbindFunktionInterface(aCompartmentType:CompartmentType,rt : RoleType)]
+boolean unbind[rt.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[/template]
+[template private ntUnbindFunktionInterface(nt:NaturalType,rt : RoleType)]
+boolean unbind[rt.name.toUpperFirst()/]([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRolesByNaturalTypeInterface(nt:NaturalType)]
+List<Object> getRole([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRoleByNaturalTypeInterface(nt:NaturalType,rt:RoleType)]
+[rt.name.toUpperFirst()/] getRole([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRolesByCompartmentTypeInterface(aCompartmentType : CompartmentType)]
+List<Object> getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRoleByCompartmentTypeInterface(aCompartmentType : CompartmentType,rt:RoleType)]
+[rt.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[/template]
+
+[template private ntgetRolesByNaturalTypeInterface_new(nt:NaturalType)]
+List<[nt.name/]> getRole([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRoleByNaturalTypeInterface_new(nt:NaturalType,rt:RoleType)]
+[rt.name.toUpperFirst()/] getRole([nt.name.toUpperFirst()/] [nt.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRolesByCompartmentTypeInterface_new(aCompartmentType : CompartmentType)]
+List<[aCompartmentType.name/]> getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[/template]
+[template private ntgetRoleByCompartmentTypeInterface_new(aCompartmentType : CompartmentType,rt:RoleType)]
+[rt.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[/template]

@@ -1,0 +1,33 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateDataType.
+ */]
+[module crofDataType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public crofDataType(aDataType : DataType,aModel:Model)]
+[file (getFolderPath() +'/crof/Crof'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
+
+
+public class Crof[aDataType.name/][createExtends(aDataType,aModel.relations)/] {
+	[crofFields(aDataType.attributes)/]
+	[crofProperties(aDataType.attributes)/]
+}
+[/file]
+[/template]
+
+[template private createExtends(aDataType : DataType, relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aDataType,relations))]
+[let superDataType:DataType=getSuper(aDataType,relations)]
+ extends Crof[superDataType.name.toUpperFirst()/]
+[/let]
+[/if]
+[/template]
+
+

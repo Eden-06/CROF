@@ -1,0 +1,188 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the templates generalTemplates.
+ */]
+[module universalTemplates('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+
+
+[template public crofFields(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[if(notJavaType(aAttribute.type))]
+private String [aAttribute.name.toLowerFirst()/];
+[else]
+private [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
+[/if]
+[/for]	
+[/template]
+
+[template public crofProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[if(notJavaType(aAttribute.type))]
+public int get[aAttribute.name.toUpperFirst()/]Position() {
+	return Integer.parseInt([aAttribute.name.toLowerFirst()/].substring([aAttribute.name.toLowerFirst()/].indexOf("@")+1));
+}
+public String get[aAttribute.name.toUpperFirst()/]() {
+	return [aAttribute.name.toLowerFirst()/].substring(0,[aAttribute.name.toLowerFirst()/].indexOf("@"));
+}
+public void set[aAttribute.name.toUpperFirst()/](String [aAttribute.name.toLowerFirst()/]) {
+	this.[aAttribute.name.toLowerFirst()/] = [aAttribute.name.toLowerFirst()/];
+}
+
+[else]
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return [aAttribute.name/];
+}
+
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]){
+	this.[aAttribute.name/] = [aAttribute.name/];
+}
+[/if]
+[/for]
+[/template]
+
+[**
+ * The documentation of the template publicFields.
+ * create fields without access specifiers in class.
+ * @param Set(Attribute)
+ */]
+[template public defaultFields(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
+[/for]
+[/template]
+
+[template public implOperations(operations : Set(Operation))]
+[for (o : Operation | operations)]
+@Override
+public [typeFilter(o.type)/] [o.name/]([parameters(o)/]){
+	throw new UnsupportedOperationException("Invalid operation for sorted list.");
+}
+[/for]
+[/template]
+
+[template public interFaceOperations(operations : Set(Operation))]
+[for (o : Operation | operations)]
+[typeFilter(o.type)/] [o.name/]([parameters(o)/]);
+[/for]
+[/template]
+
+[template public interfaceProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+[typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/]();
+void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]);
+[/for]
+[/template]
+
+[**
+ * The documentation of the template overrideProperties.
+ * create properties with @Override annotation in class.
+ * @param Set(Attribute)
+ */]
+[template public overrideProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+@Override
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return [aAttribute.name/];
+}
+
+@Override
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]){
+	this.[aAttribute.name/] = [aAttribute.name/];
+}
+[/for]
+[/template]
+
+[template private parameters(o : Operation) post (replaceAll('\n', '').trim())]
+[for (p : Parameter  | o.params) separator (', ')]
+[typeFilterAttribute(p.type)/] [p.name/]
+[/for]
+[/template]
+
+[**
+ * The documentation of the template privateFields.
+ * create private fields in nonplayer class.
+ * @param Set(Attribute)
+ */]
+[template public privateFields(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+private [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
+[/for]	
+[/template]
+
+[template public playerProperties(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+@Override
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name.toUpperFirst().prefix('get')/](){
+	return this.state.[aAttribute.name/];
+}
+
+@Override
+public void [aAttribute.name.toUpperFirst().prefix('set')/]([typeFilterAttribute(aAttribute.type)/] [aAttribute.name/]){
+	this.state.[aAttribute.name/] = [aAttribute.name/];
+}
+[/for]
+[/template]
+
+[**
+ * The documentation of the template publicFields.
+ * create public fields in state class.
+ * @param Set(Attribute)
+ */]
+[template public publicFields(attributes : Set(Attribute))]
+[for (aAttribute : Attribute | attributes)]
+public [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
+[/for]	
+[/template]
+
+[template public typeFilter(t : Type) post (replaceAll('\n', '').trim())]
+[if (t<>null)]
+	[if (t.name='Boolean')]
+		boolean
+	[elseif (t.name='Byte')]
+		byte
+	[elseif (t.name='Char' or t.name='Character')]
+		char
+	[elseif (t.name='Double')]
+		double
+	[elseif (t.name='Float')]
+		float
+	[elseif (t.name='Integer')]
+		int
+	[elseif (t.name='Long')]
+		long
+	[elseif (t.name='Short')]
+		short
+	[else]
+		[t.name/]
+	[/if]
+[else]
+	void
+[/if]
+[/template]
+
+[template public typeFilterAttribute(t : Type) post (replaceAll('\n', '').trim())]
+[if (t<>null)]
+	[if (t.name='Boolean')]
+		boolean
+	[elseif (t.name='Byte')]
+		byte
+	[elseif (t.name='Char' or t.name='Character')]
+		char
+	[elseif (t.name='Double')]
+		double
+	[elseif (t.name='Float')]
+		float
+	[elseif (t.name='Integer')]
+		int
+	[elseif (t.name='Long')]
+		long
+	[elseif (t.name='Short')]
+		short
+	[else]
+		[t.name/]
+	[/if]
+[else]
+	Object
+[/if]
+[/template]

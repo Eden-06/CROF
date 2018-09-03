@@ -1,0 +1,28 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module mainCompartmentType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceCompartmentTypeNonPlayer/]
+[import org::rosi::crom::framework::generator::templates::main::implCompartmentTypeNonPlayer/]
+[import org::rosi::crom::framework::generator::templates::main::crofCompartmentType/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceCompartmentTypePlayer/]
+[import org::rosi::crom::framework::generator::templates::main::implCompartmentTypePlayer/]
+[import org::rosi::crom::framework::generator::templates::main::implCompartmentTypePlayerState/]
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public mainCompartmentType(aCompartmentType : CompartmentType, aModel : Model)]
+[if(isCompartmentTypePlayedRole(aCompartmentType,aModel.relations))]
+[interfaceCompartmentTypePlayer(aCompartmentType,aModel)/]
+[implCompartmentTypePlayer(aCompartmentType,aModel)/]
+[implCompartmentTypePlayerState(aCompartmentType,aModel)/]
+[else]
+[interfaceCompartmentTypeNonPlayer(aCompartmentType,aModel)/]
+[implCompartmentTypeNonPlayer(aCompartmentType,aModel)/]
+[/if]
+[crofCompartmentType(aCompartmentType,aModel)/]
+[/template]

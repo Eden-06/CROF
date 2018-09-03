@@ -1,0 +1,319 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateEnum.
+ */]
+[module deserializer('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+
+[template public deserializer(aModel : Model)]
+[file (getFolderPath() +'/util/Deserializer.java', false, 'UTF-8')]
+package [getPackagePath()/].util;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import com.google.gson.Gson;
+
+import [getPackagePath()/].*;
+import [getPackagePath()/].impl.*;
+import [getPackagePath()/].crof.*;
+
+public class Deserializer{
+	//private String filePath="./instance/model.croj";
+	private CrofModel crofModel=new CrofModel();
+	private Model model=Factory.INSTANCE.createModel();
+
+	[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+	public void exchange[aDataType.name.toUpperFirst()/](List<Crof[aDataType.name.toUpperFirst()/]> crof[aDataType.name.toUpperFirst()/]s){
+		for(int i=0;i<crof[aDataType.name.toUpperFirst()/]s.size();i++) {
+			[aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]=model.create[aDataType.name.toUpperFirst()/]();
+[for(aAttribute:Attribute|aDataType.attributes)]
+[if(notJavaType(aAttribute.type))]
+			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+[else]
+			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+[/if]
+[/for]
+			[superType(aDataType,aDataType, aModel.relations)/]
+		}
+	}
+[/if]
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	public void exchange[aNaturalType.name.toUpperFirst()/](List<Crof[aNaturalType.name.toUpperFirst()/]> crof[aNaturalType.name.toUpperFirst()/]s){
+		for(int i=0;i<crof[aNaturalType.name.toUpperFirst()/]s.size();i++) {
+			[aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]=model.create[aNaturalType.name.toUpperFirst()/]();
+[for(aAttribute:Attribute|aNaturalType.attributes)]
+[if(notJavaType(aAttribute.type))]
+			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+[else]
+			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+[/if]
+[/for]
+			[superType(aNaturalType,aNaturalType, aModel.relations)/]
+		}
+	}
+[/let]
+[elseif(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	public void exchange[aCompartmentType.name.toUpperFirst()/](List<Crof[aCompartmentType.name.toUpperFirst()/]> crof[aCompartmentType.name.toUpperFirst()/]s){
+		for(int i=0;i<crof[aCompartmentType.name.toUpperFirst()/]s.size();i++) {
+			[aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]=model.create[aCompartmentType.name.toUpperFirst()/]();
+[for(aAttribute:Attribute|aCompartmentType.attributes)]
+[if(notJavaType(aAttribute.type))]
+			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aCompartmentType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+[else]
+			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+[/if]
+[/for]
+		}
+	}
+	[exchangeRelations(aCompartmentType,aModel.relations)/]
+[/let]
+[/if]
+[/for]
+	public Model fromJson(String filePath) {
+        File file = new File(filePath);
+        BufferedReader reader = null;
+        String str="";
+		try {
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			String line = reader.readLine();
+            do {  
+            		str+=line+"\n";
+            		line = reader.readLine();
+            }  while(line != null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {  
+            try {  
+                if(reader != null){  
+                	reader.close();  
+                }  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+		str=str.trim();
+		this.crofModel= new Gson().fromJson(str,CrofModel.class);
+		if(!crofModel.getModelName().equals("[getPackagePath()/]")){
+			System.out.println("wrong Model");
+			return null;
+		}
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+		exchange[aDataType.name.toUpperFirst()/](crofModel.getCrof[aDataType.name.toUpperFirst()/]s());
+[/if]
+[/let]
+[/if]
+[/for]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+		exchange[aNaturalType.name.toUpperFirst()/](crofModel.getCrof[aNaturalType.name.toUpperFirst()/]s());
+[/let]
+[/if]
+[/for]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+		List<Crof[aCompartmentType.name.toUpperFirst()/]> crof[aCompartmentType.name.toUpperFirst()/]s= crofModel.getCrof[aCompartmentType.name.toUpperFirst()/]s();
+		exchange[aCompartmentType.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/]s);
+[/let]
+[/if]
+[/for]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+		for(int i = 0; i<crof[aCompartmentType.name.toUpperFirst()/]s.size(); i++){
+			exchange[aCompartmentType.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/]s.get(i),i);
+		}
+[/let]
+[/if]
+[/for]
+		return this.model;
+	}
+}
+[/file]
+[/template]
+
+[template public exchangeRelations(aCompartmentType:CompartmentType, relations:Set(Relation))]
+[comment]public void exchange[aCompartmentType.name.toUpperFirst()/](Crof[aCompartmentType.name.toUpperFirst()/] crof[aCompartmentType.name.toUpperFirst()/]) {[/comment]
+[comment]	[aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]=((List<[aCompartmentType.name.toUpperFirst()/]>)model.get[aCompartmentType.name.toUpperFirst()/]()).get(crofModel.getCrof[aCompartmentType.name.toUpperFirst()/]s().indexOf(crof[aCompartmentType.name.toUpperFirst()/]));[/comment]
+public void exchange[aCompartmentType.name.toUpperFirst()/](Crof[aCompartmentType.name.toUpperFirst()/] crof[aCompartmentType.name.toUpperFirst()/],int index) {
+	[aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]=((List<[aCompartmentType.name.toUpperFirst()/]>)model.get[aCompartmentType.name.toUpperFirst()/]()).get(index);
+[for(ar:AbstractRole | aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+	[exchangeRelations(aCompartmentType, ar.oclAsType(RoleType), aType,relations)/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+	[exchangeRelations(aCompartmentType, aRoleType, aType,relations)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in rtModel.mtl line 21.
+[/if]
+[/for]
+[for(aRelationship:Relationship|aCompartmentType.relationships)]
+	List<Crof[aRelationship.name.toUpperFirst()/]> crof[aRelationship.name.toUpperFirst()/]s = crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRelationship.name.toUpperFirst()/]();
+	for(int i=0;i<crof[aRelationship.name.toUpperFirst()/]s.size();i++){
+		Crof[aRelationship.name.toUpperFirst()/] crof[aRelationship.name.toUpperFirst()/]=crof[aRelationship.name.toUpperFirst()/]s.get(i);
+		[exchangeRelationship(aRelationship,relations)/]
+	}
+[/for]
+}
+[/template]
+
+[template public exchangeRelations(aCompartmentType : CompartmentType, aRoleType : RoleType, aType:Type,relations:Set(Relation))]
+List<Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s=crof[aCompartmentType.name.toUpperFirst()/].getCrof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s();
+List<[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> [aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
+for(int i=0;i<crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++) {
+	[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]=null;
+	Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/]=crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+[if(aType.oclIsKindOf(CompartmentType))]
+	[findLastSubCompartmentTypePlayer(aCompartmentType, aRoleType, aType,aType.oclAsType(CompartmentType),relations)/]
+[elseif(aType.oclIsKindOf(NaturalType))]
+	[findLastSubNaturalPlayer(aCompartmentType, aRoleType, aType,aType.oclAsType(NaturalType),relations)/]
+[else]
+[/if]
+[for(aAttribute:Attribute|aRoleType.attributes)]
+[if(notJavaType(aAttribute.type))]
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get([aType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]Position()));
+[else]
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get(crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]());
+[/if]
+[/for]
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add([aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]);
+}
+[/template]
+
+[template private findLastSubNaturalPlayer(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, superType:NaturalType,relations:Set(Relation))]
+[if(hasSub(superType,relations))]
+[ifNaturalPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getLastSub(superType,relations),relations)/]
+[else]
+[playerExchangeRelation(aCompartmentType, aRoleType,targetType, superType)/]
+[/if]
+[/template]
+[template private findLastSubCompartmentTypePlayer(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, superType:CompartmentType,relations:Set(Relation))]
+[if(hasSub(superType,relations))]
+[ifCompartmentPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getLastSub(superType,relations),relations)/]
+[else]
+[playerExchangeRelation(aCompartmentType, aRoleType,targetType, superType)/]
+[/if]
+[/template]
+
+
+[template private ifCompartmentPlayerExchangeRelation(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, subType:CompartmentType,relations:Set(Relation))]
+if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayer().equals("Crof[subType.name.toUpperFirst()/]")){
+	[playerExchangeRelation(aCompartmentType, aRoleType,targetType, subType)/]
+}
+[if(hasSuper(subType,relations))]
+[elseifCompartmentPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getSuper(subType,relations),relations)/]
+[/if]
+[/template]
+
+[template private ifNaturalPlayerExchangeRelation(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, subType:NaturalType,relations:Set(Relation))]
+if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayer().equals("Crof[subType.name.toUpperFirst()/]")){
+	[playerExchangeRelation(aCompartmentType, aRoleType,targetType, subType)/]
+}
+[if(hasSuper(subType,relations))]
+[elseifNaturalPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getSuper(subType,relations),relations)/]
+[/if]
+[/template]
+
+[template private elseifCompartmentPlayerExchangeRelation(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, subType:CompartmentType,relations:Set(Relation))]
+else if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayer().equals("Crof[subType.name.toUpperFirst()/]")){
+	[playerExchangeRelation(aCompartmentType, aRoleType,targetType, subType)/]
+}
+[if(hasSuper(subType,relations))]
+[elseifCompartmentPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getSuper(subType,relations),relations)/]
+[/if]
+[/template]
+
+[template private elseifNaturalPlayerExchangeRelation(aCompartmentType : CompartmentType, aRoleType : RoleType,targetType:Type, subType:NaturalType,relations:Set(Relation))]
+else if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayer().equals("Crof[subType.name.toUpperFirst()/]")){
+	[playerExchangeRelation(aCompartmentType, aRoleType,targetType, subType)/]
+}
+[if(hasSuper(subType,relations) and targetType.oclAsType(NaturalType)<>subType)]
+[elseifNaturalPlayerExchangeRelation(aCompartmentType, aRoleType,targetType,getSuper(subType,relations),relations)/]
+[/if]
+[/template]
+
+[template private playerExchangeRelation(aCompartmentType : CompartmentType, aRoleType : RoleType, targetType:Type,subType:Type)]
+[targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]=([aCompartmentType.name.toUpperFirst()/]Impl.[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[aCompartmentType.name.toLowerFirst()/].bind[aRoleType.name.toUpperFirst()/](model.get[subType.name.toUpperFirst()/]().get([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayerPosition()));
+[/template]
+
+
+
+
+
+
+
+
+[template private superType(targetDataType : DataType,thisDataType : DataType, relations : Set(Relation))]
+[if(hasSuper(thisDataType,relations))]
+[let attributes:Set(Attribute)=getSuperAttributes(targetDataType.attributes,getAllSuperAttributes(targetDataType,relations))]
+[for(aAttribute:Attribute|attributes)]
+[if(notJavaType(aAttribute.type))]
+[targetDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[targetDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+[else]
+[targetDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[targetDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+[/if]
+[/for]
+[/let]
+[/if]
+[/template]
+
+[template private superType(targetNaturalType : NaturalType,thisNaturalType : NaturalType, relations : Set(Relation))]
+[if(hasSuper(thisNaturalType,relations))]
+[let attributes:Set(Attribute)=getSuperAttributes(targetNaturalType.attributes,getAllSuperAttributes(targetNaturalType,relations))]
+[for(aAttribute:Attribute|attributes)]
+[if(notJavaType(aAttribute.type))]
+[targetNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[targetNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+[else]
+[targetNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[targetNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+[/if]
+[/for]
+[/let]
+[/if]
+[/template]
+
+
+[template private exchangeRelationship(aRelationship : Relationship,relations:Set(Relation))]
+[let first:RoleType=aRelationship.first.holder]
+[let second:RoleType=aRelationship.second.holder]
+[for(firstPlayer:Type|getPlayers(first,relations))]
+[for(secondPlayer:Type|getPlayers(second,relations))]
+if(crof[aRelationship.name.toUpperFirst()/].getFirst().equals("[firstPlayer.name.toUpperFirst()/][first.name.toUpperFirst()/]") && crof[aRelationship.name.toUpperFirst()/].getSecond().equals("[secondPlayer.name.toUpperFirst()/][second.name.toUpperFirst()/]")){
+	[firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]s.get(crof[aRelationship.name.toUpperFirst()/].getFirstPosition()).add[aRelationship.name.toUpperFirst()/]([secondPlayer.name.toLowerFirst()/][second.name.toUpperFirst()/]s.get(crof[aRelationship.name.toUpperFirst()/].getSecondPosition()));
+}
+[/for]
+[/for]
+[/let]
+[/let]
+[/template]
+
+
+
+

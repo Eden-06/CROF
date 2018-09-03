@@ -1,0 +1,130 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module implRoleType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+
+[**
+ * The documentation of the template aRoleTypeImpl.
+ * @param aNaturalType
+ */]
+[template public implRoleType(aCompartmentType : CompartmentType, relations : Set(Relation))]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+[roleTypeImpl(aType,ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+[roleTypeImpl(aType,aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in aRoleTypeImpl.mtl line 15.
+[/if]
+[/for]
+[/template]
+
+[template private roleTypeImpl(aType:Type,aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
+public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements [aRoleType.name/]{
+	[privateFields(aRoleType.attributes)/]
+
+	public [aType.name/][aRoleType.name/](){
+		super();
+	}
+	public [aType.name/][aRoleType.name/]([aType.name/] [aType.name.toLowerFirst()/]){
+		super();
+[if(aType.oclIsKindOf(NaturalType))]
+[if(hasSub(aType.oclAsType(NaturalType),relations))]
+		[setRoleState(getLastSub(aType.oclAsType(NaturalType),relations),aType.oclAsType(NaturalType),relations)/]
+[else]
+		this.state=(([aType.name/]Impl)[aType.name.toLowerFirst()/]).state;
+[/if]
+[else]
+		this.state=(([aType.name/]Impl)[aType.name.toLowerFirst()/]).state;
+[/if]
+[comment]		this.state=[aType.name.toLowerFirst()/]Impl.state;			[/comment]
+	}
+	[overrideProperties(aRoleType.attributes)/]
+	[implOperations(aRoleType.operations)/]
+	
+	@Override
+	public [getOwner(aRoleType).name.toUpperFirst()/] getOwner() {
+		return [getOwner(aRoleType).name.toUpperFirst()/]Impl.this;
+	}
+	@Override
+	public [aType.name.toUpperFirst()/] getPlayer() {
+		return ([aType.name.toUpperFirst()/])getCompoundObject();
+	}
+	[relationshipRoleTypeImpl(aRoleType,relationships,constraints)/]
+
+}
+[/template]
+
+[template private setRoleState(aNaturalType : NaturalType, targetNaturlType : NaturalType, relations:Set(Relation))]
+[if(hasSuper(aNaturalType,relations) and aNaturalType<>targetNaturlType)]
+if([targetNaturlType.name.toLowerFirst()/] instanceof [aNaturalType.name.toUpperFirst()/]){
+	this.state = (([aNaturalType.name.toUpperFirst()/]Impl)[targetNaturlType.name.toLowerFirst()/]).state;
+}
+else [setRoleState(getSuper(aNaturalType,relations),targetNaturlType,relations)/]
+[else]
+{
+	this.state=(([aNaturalType.name.toUpperFirst()/]Impl)[targetNaturlType.name.toLowerFirst()/]).state;
+}
+[/if]
+[/template]
+
+[template private setRoleState(aCompartmentType : CompartmentType, targetCompartmentType : CompartmentType, relations:Set(Relation))]
+[if(hasSuper(aCompartmentType,relations))]
+if([targetCompartmentType.name.toLowerFirst()/] instanceof [aCompartmentType.name.toUpperFirst()/]){
+	this.state = (([aCompartmentType.name.toUpperFirst()/]Impl)[targetCompartmentType.name.toLowerFirst()/]).state;
+}
+else [setRoleState(getSuper(aCompartmentType,relations),targetCompartmentType,relations)/]
+[else]
+{
+	this.state = (([aCompartmentType.name.toUpperFirst()/]Impl)[targetCompartmentType.name.toLowerFirst()/]).state;
+}
+[/if]
+[/template]
+
+[template private relationshipRoleTypeImpl(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint))]
+[for(aRelationship:Relationship|getRelationships(aRoleType,relationships))]
+[relationshipOptionsImpl(aRoleType,aRelationship)/]
+[/for]
+[/template]
+
+
+
+
+[template private relationshipOptionsImpl(aRoleType : RoleType,aRelationship : Relationship) ]
+[let partnerRoleType:RoleType=getPartner(aRoleType,aRelationship)]
+@Override
+public List<[partnerRoleType.name.toUpperFirst()/]> get[aRelationship.name.toUpperFirst()/](){
+	return [aRelationship.name.toLowerFirst()/]Instance.get[partnerRoleType.name.toUpperFirst()/]s(this);
+}
+@Override
+public boolean add[aRelationship.name.toUpperFirst()/]([partnerRoleType.name.toUpperFirst()/] [partnerRoleType.name.toLowerFirst()/]){
+[if(aRelationship.first.holder=aRoleType)]
+	return [aRelationship.name.toLowerFirst()/]Instance.add(this,[partnerRoleType.name.toLowerFirst()/]);
+[else]
+	return [aRelationship.name.toLowerFirst()/]Instance.add([partnerRoleType.name.toLowerFirst()/],this);
+[/if]
+}
+[/let]
+[/template]
+
+[template private privateAttributeOfRelationships(aRoleType : RoleType,relationships:OrderedSet(Relationship))]
+[let newRelationships:Set(Relationship)=getRelationships(aRoleType,relationships)]
+[for(aRelationship:Relationship|newRelationships)]
+private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirst()/]=new [aRelationship.name.toUpperFirst()/]Impl();
+[/for]
+[/let]
+[/template]
+
+
+

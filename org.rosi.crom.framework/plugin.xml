@@ -9,7 +9,7 @@
             nameFilter="*.crom"
             objectClass="org.eclipse.core.resources.IFile">
          <action
-               class="org.rosi.crom.framework.generator.ui.popupMenus.AcceleoGenerateAcceleoAction"
+               class="org.rosi.crom.framework.popupMenus.AcceleoGenerateAction"
                id="org.crof.generator.popupMenus.acceleoGenerateAcceleoAction"
                label="CROM Framework"
                menubarPath="org.rosi.crom.toformal.menu/group1">

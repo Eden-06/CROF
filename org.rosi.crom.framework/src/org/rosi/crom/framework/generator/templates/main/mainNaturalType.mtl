@@ -1,0 +1,21 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module mainNaturalType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceNaturalType/]
+[import org::rosi::crom::framework::generator::templates::main::implNaturalTypeState/]
+[import org::rosi::crom::framework::generator::templates::main::implNaturalType/]
+[import org::rosi::crom::framework::generator::templates::main::crofNaturalType/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+[template public mainNaturalType(aNaturalType : NaturalType, aModel : Model)]
+[interfaceNaturalType(aNaturalType, aModel)/]
+[implNaturalTypeState(aNaturalType, aModel)/]
+[implNaturalType(aNaturalType, aModel)/]
+[crofNaturalType(aNaturalType, aModel)/]
+[/template]

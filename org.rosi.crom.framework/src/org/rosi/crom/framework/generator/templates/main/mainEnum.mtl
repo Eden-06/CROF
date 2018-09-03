@@ -1,0 +1,17 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateTypes.
+ */]
+[module mainEnum('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceEnum/]
+[import org::rosi::crom::framework::generator::templates::main::implEnum/]
+
+[**
+ * The documentation of the template Types.
+ * @param aModel
+ */]
+[template public mainEnum(aModel:Model)]
+[interfaceEnum()/]
+[implEnum()/]
+[/template]

@@ -1,0 +1,18 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateEnum.
+ */]
+[module mainFactory('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::implFactory/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceFactory/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public mainFactory(model:Model)]
+[interfaceFactory(model)/]
+[implFactory(model)/]
+[/template]
+
+

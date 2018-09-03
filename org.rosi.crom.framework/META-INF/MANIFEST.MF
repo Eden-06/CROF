@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CROF
 Bundle-SymbolicName: org.rosi.crom.framework;singleton:=true
-Bundle-Version: 0.6.0.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.rosi.crom.framework.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.acceleo.model,
  org.eclipse.acceleo.profiler,
  org.eclipse.acceleo.engine,
- com.google.guava,
  org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

@@ -1,0 +1,66 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module relationshipInterface.
+ */]
+[module interfaceRelationship('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+
+[**
+ * The documentation of the template relationshipInterface.
+ * @param aNaturalType
+ */]
+[template public interfaceRelationship(aCompartmentType : CompartmentType) ]
+[for(aConstraint:Constraint|aCompartmentType.constraints)]
+[if(aConstraint.oclIsKindOf(Irreflexive))]
+[irreflexiveInterface(aConstraint.oclAsType(Irreflexive))/]
+[elseif(aConstraint.oclIsKindOf(Reflexive))]
+[reflexiveInterface(aConstraint.oclAsType(Reflexive))/]
+[elseif(aConstraint.oclIsKindOf(Total))]
+[totalInterface(aConstraint.oclAsType(Total))/]
+[elseif(aConstraint.oclIsKindOf(Cyclic))]
+[cyclicInterface(aConstraint.oclAsType(Cyclic))/]
+[elseif(aConstraint.oclIsKindOf(Acyclic))]
+[acyclicInterface(aConstraint.oclAsType(Acyclic))/]
+[else]
+[/if]
+[/for]
+
+[let relationsships:Set(Relationship)=getRelationshipsWithoutConstraint(aCompartmentType.relationships,aCompartmentType.constraints)]
+[for(aRelationship:Relationship|relationsships)]
+[relationshipInterface(aRelationship)/]
+[/for]
+[/let]
+[/template]
+
+[template private relationshipInterface(aRelationship : Relationship) ]
+interface [aRelationship.name.toUpperFirst()/]{
+	[relationshipOptionsInterface(aRelationship)/]
+}
+[/template]
+
+[template private irreflexiveInterface(aIrreflexive : Irreflexive) ]
+interface [aIrreflexive.relation.name.toUpperFirst()/]{
+	[relationshipOptionsInterface(aIrreflexive.relation)/]
+}
+[/template]
+[template private reflexiveInterface(aReflexive : Reflexive) ]
+//TODO reflexivInterface
+[/template]
+[template private totalInterface(aTotal : Total) ]
+//TODO totalInterface
+[/template]
+[template private cyclicInterface(aCyclic : Cyclic) ]
+//TODO cyclicInterface
+[/template]
+[template private acyclicInterface(aAcyclic : Acyclic) ]
+//TODO acyclicInterface
+[/template]
+
+
+
+[template private relationshipOptionsInterface(aRelationship : Relationship) ]
+boolean add([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/], [aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]);
+boolean remove([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/], [aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]);
+List<[aRelationship.second.holder.name.toUpperFirst()/]> get[aRelationship.second.holder.name.toUpperFirst()/]s([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/]);
+List<[aRelationship.first.holder.name.toUpperFirst()/]> get[aRelationship.first.holder.name.toUpperFirst()/]s([aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]);
+[/template]

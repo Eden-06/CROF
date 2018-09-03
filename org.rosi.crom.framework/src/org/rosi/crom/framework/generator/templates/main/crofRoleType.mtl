@@ -1,0 +1,55 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module crofRoleType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+[import org::rosi::crom::framework::generator::templates::main::crofFulfillment/]
+
+[**
+ * The documentation of the template aRoleTypeImpl.
+ * @param aNaturalType
+ */]
+[template public crofRoleType(aCompartmentType : CompartmentType, relations : Set(Relation))]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[roleTypeModel(ar.oclAsType(RoleType),relations)/]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+[crofFulfillment(aType,ar.oclAsType(RoleType))/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[roleTypeModel(aRoleType,relations)/]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+[crofFulfillment(aType,aRoleType)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in rtModel.mtl line 21.
+[/if]
+[/for]
+[/template]
+
+[template private roleTypeModel(aRoleType : RoleType, relations : Set(Relation))]
+[file (getFolderPath() +'/crof/Crof'+ aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
+
+
+public class Crof[aRoleType.name.toUpperFirst()/][createExtends(aRoleType,relations)/]{
+	[crofFields(aRoleType.attributes)/]
+	[crofProperties(aRoleType.attributes)/]
+}
+[/file]
+[/template]
+
+[template private createExtends(aRoleType : RoleType, relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aRoleType,relations))]
+[let superRoleType:RoleType=getSuper(aRoleType,relations)]
+ extends Crof[superRoleType.name.toUpperFirst()/]
+[/let]
+[else]
+[/if]
+[/template]

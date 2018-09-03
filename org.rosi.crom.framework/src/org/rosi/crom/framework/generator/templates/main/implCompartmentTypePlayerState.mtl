@@ -1,0 +1,47 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module implCompartmentTypePlayerState('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+[import org::rosi::crom::framework::generator::templates::main::implRoleType/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceRoleType/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public implCompartmentTypePlayerState(aCompartmentType : CompartmentType, model:Model)]
+[file (getFolderPath() +'/impl/'+ aCompartmentType.name.toUpperFirst()+'State.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import [getPackagePath()/].*;
+
+public class [aCompartmentType.name.toUpperFirst()/]State{
+	[attributesStateCompartmentType(aCompartmentType,model.relations)/]
+	public [aCompartmentType.name.toUpperFirst()/]Impl compoundObject;
+}
+[/file]
+[/template]
+
+
+[template private attributesStateCompartmentType(aCompartmentType : CompartmentType,relations : Set(Relation))]
+[publicFields(aCompartmentType.attributes)/]
+[roleAttributeCompartmentTypeState(aCompartmentType,relations)/]
+[/template]
+
+[template private roleAttributeCompartmentTypeState(aCompartmentType : CompartmentType,relations : Set(Relation)) post (replaceAll('\t', '').trim())]
+[let roleTypes : Set(RoleType) = getRoles(aCompartmentType,relations)]
+[if(not roleTypes->isEmpty())]
+[for(aRoleType:RoleType | roleTypes)]
+[comment]Map<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new HashMap<[getOwner(aRoleType).name/],[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>();[/comment]
+List<[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>  [aRoleType.name.toLowerFirst()/]s=new ArrayList<[getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/]>();
+[/for]
+[/if]
+[/let]
+[/template]

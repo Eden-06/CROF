@@ -1,0 +1,18 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module mainModel('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::interfaceModel/]
+[import org::rosi::crom::framework::generator::templates::main::implModel/]
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public mainModel(aModel : Model)]
+[interfaceModel(aModel)/]
+[implModel(aModel)/]
+[/template]

@@ -1,0 +1,53 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module crofFulfillment('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+
+[**
+ * The documentation of the template aRoleTypeImpl.
+ * @param aNaturalType
+ */]
+
+[template public crofFulfillment(aType:Type,aRoleType : RoleType)]
+[file (getFolderPath() +'/crof/Crof'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
+
+
+public class Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]{
+
+	private String player;
+	private String played;
+	
+	public int getPlayerPosition() {
+		return Integer.parseInt(player.substring(player.indexOf("@")+1));
+	}
+	public String getPlayer() {
+		return player.substring(0,player.indexOf("@"));
+	}
+	public void setPlayer(String player) {
+		this.player = player;
+	}
+	public int getPlayedPosition() {
+		return Integer.parseInt(played.substring(played.indexOf("@")+1));
+	}
+	public String getPlayed() {
+		return played.substring(0,played.indexOf("@"));
+	}
+	public void setPlayed(String played) {
+		this.played = played;
+	}
+}
+[/file]
+[/template]
+
+
+
+
+
+
+
+
+

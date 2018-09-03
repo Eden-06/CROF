@@ -1,0 +1,63 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateTypes.
+ */]
+[module implFactory('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public implFactory(aModel:Model)]
+
+[file (getFolderPath() +'/impl/FactoryImpl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+
+
+import [getPackagePath()/].*;
+import [getPackagePath()/].util.*;
+
+
+public class FactoryImpl implements Factory{
+	@Override
+	public Model createModel() {
+		return new ModelImpl();
+	}
+
+
+
+	public static Factory init(){
+		return new FactoryImpl();	
+	}
+
+
+[comment]	@Override
+	public void storeXML(Model model){
+		//TODO
+	}[/comment]
+	@Override
+	public void storeJson(Model model){
+		new Serializer().toJson(model);
+	}
+
+[comment]	@Override
+	public Model loadXML(String filePath){	
+		//TODO
+		return null;
+	}[/comment]
+	@Override
+	public Model loadJson(String filePath){
+		return new Deserializer().fromJson(filePath);
+	}
+}
+[/file]
+
+
+[/template]
+
+
+
+
+

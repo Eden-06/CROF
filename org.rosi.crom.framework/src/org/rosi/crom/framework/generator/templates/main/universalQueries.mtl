@@ -1,0 +1,291 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module globalGenerator.
+ */]
+[module universalQueries('platform:/resource/org.rosi.crom.metamodel/')]
+
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+
+
+[query public hasPlayer(name:String,rt:RoleType,relations:Set(Relation)):
+	Boolean=Sequence{relations->selectByType(Fulfillment)->select(filled=rt).filler.name,
+			relations->selectByType(Fulfillment)->select(filled=rt.eContainer()).filler.name
+			}->asSet()->includes(name)/]
+
+[query public getRoleTypeByPlayerInCompartmentType(playedRoles:Set(RoleType),hasRoles:Set(RoleType)):Set(RoleType)=playedRoles->intersection(hasRoles)/]
+
+[query public hasRole(roles:Set(AbstractRole),rt:RoleType):Boolean=roles->includes(rt)/]
+[query public hasRole(roles:Set(AbstractRole),rg:RoleGroup):Boolean=roles->includes(rg)/]
+
+[comment][query public preparePartForConstructor(ct:CompartmentType):Set(Part) = ct.parts ->select(parts | parts.lower = 1) /][/comment]
+[query public isCompartmentTypePlayedRole(ct:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(Fulfillment).filler->selectByType(CompartmentType)->includes(ct) /]
+[query public getNaturalTypeByNameOfRoleType(rt:RoleType,fulfillments:Set(Fulfillment)):Set(NaturalType)=fulfillments -> select(fulfillments | fulfillments.filled=rt).filler->asSet()/]
+[query public getNaturalTypeByNameOfRoleGroup(rg:RoleGroup,fulfillments:Set(Fulfillment)):Set(NaturalType)=fulfillments -> select(fulfillments | fulfillments.filled=rg).filler->asSet()/]
+[query public notJavaType(aType:Type):Boolean=aType.name<>'Boolean' and aType.name<>'Char' and aType.name<>'Character' and aType.name<>'Date' and aType.name<>'Double' and aType.name<>'Float' and aType.name<>'Integer' and aType.name<>'Long' and aType.name<>'Object' and aType.name<>'Short' and aType.name<>'String'/]
+
+
+[comment]invoke methode[/comment] 
+[query public getFolderPath(traceabilityContext : OclAny) : String =invoke('org.rosi.crom.framework.generator.templates.main.Util', 'getFolderPath()', Sequence{}) /]
+[query public getPackagePath(traceabilityContext : OclAny) : String =invoke('org.rosi.crom.framework.generator.templates.main.Util', 'getPackagePath()', Sequence{}) /]
+[query public setRole(rt:RoleType) : Boolean =invoke('org.rosi.crom.framework.generator.templates.main.Util', 'setRole(crom_l1_composed.impl.RoleTypeImpl)', Sequence{rt}) /]
+[query public getRole(traceabilityContext : OclAny) : Set(RoleType) =invoke('org.rosi.crom.framework.generator.templates.main.Util', 'getRole()', Sequence{}) /]
+
+
+
+[query public getAllRoleGroups(aRoleGroup:RoleGroup) : Set(RoleGroup) = 
+	aRoleGroup.elements->iterate(aRoleGroupElement : RoleGroupElement; roleGroups:Set(RoleGroup) = Set{} | 
+	if (aRoleGroupElement.oclIsKindOf(RoleGroup))
+	then roleGroups->union(getAllRoleGroups(aRoleGroupElement.oclAsType(RoleGroup)))
+	else roleGroups->union(Set{aRoleGroupElement.oclAsType(RoleGroup)})
+	endif)/]
+[query public getAllRoleGroups(aCompartmentType:CompartmentType) : Set(RoleGroup) = 
+	aCompartmentType.parts.role
+	->iterate(aAbstractRole : AbstractRole; roleGroups:Set(RoleGroup) = Set{} | 
+	if (aAbstractRole.oclIsKindOf(RoleGroup))
+	then roleGroups->union(getAllRoleGroups(aAbstractRole.oclAsType(RoleGroup)))
+	else roleGroups->union(Set{aAbstractRole.oclAsType(RoleGroup)})
+	endif)/]
+
+[query public getPlayers(aRoleType:RoleType,relations:Set(Relation)) : Set(Type) = relations->selectByType(Fulfillment)->select(filled=aRoleType).filler->asSet()->union(
+	if (aRoleType.eContainer().oclIsKindOf(RoleGroup))
+	then getPlayers(aRoleType.eContainer().oclAsType(RoleGroup),relations)
+	else Set{}
+	endif)/]
+[query public getPlayers(aRoleGroup:RoleGroup,relations:Set(Relation)) : Set(Type) = relations->selectByType(Fulfillment)->select(filled=aRoleGroup).filler->asSet()->union(
+	if (aRoleGroup.eContainer().oclIsKindOf(RoleGroup))
+	then getPlayers(aRoleGroup.eContainer().oclAsType(RoleGroup),relations)
+	else Set{}
+	endif)/]
+[query public getRoles(nt:NaturalType,relations:Set(Relation)):Set(RoleType)=
+	relations ->selectByType(Fulfillment) -> select(fulfillments | fulfillments.filler=nt).filled
+	->asSet()->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
+	if (aAbstractRole.oclIsKindOf(RoleGroup))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
+	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
+	endif)/]
+[query public getRoles(ct:CompartmentType,relations:Set(Relation)):Set(RoleType)=
+	relations ->selectByType(Fulfillment) -> select(fulfillments | fulfillments.filler=ct).filled
+	->asSet()->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
+	if (aAbstractRole.oclIsKindOf(RoleGroup))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
+	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
+	endif)/]
+
+[query public getAllSuperTypePlayedRoles(aNaturalType:NaturalType,relations:Set(Relation)):Set(RoleType)=
+	getAllSuper(aNaturalType,relations)->iterate(thisNatural:NaturalType;roles:Set(RoleType)=Set{}|
+		roles->union(getRoles(thisNatural,relations)))/]
+
+[query public hasThisRole(aRoleType:RoleType,roles:Set(RoleType)):Boolean=
+	roles->iterate(thisRole : RoleType; has:Boolean = false | 
+		if aRoleType.name=thisRole.name and aRoleType.getOwner()=thisRole.getOwner()
+		then has or true
+		else has or false	
+		endif)/]
+[query public getAllRoles(aNaturalType:NaturalType,relations:Set(Relation)):Set(RoleType)=
+	getAllSuper(aNaturalType,relations)->union(Set{aNaturalType})->iterate(thisNatural:NaturalType;roles:Set(RoleType)=Set{}|
+		roles->union(getRoles(thisNatural,relations)))/]
+
+[query public getOwnedRoles(aRoleGroup:RoleGroup) : Set(RoleType) =
+	 aRoleGroup.elements->iterate(aRoleGroupElement : RoleGroupElement; roleTypes:Set(RoleType) = Set{} | 
+	if (aRoleGroupElement.oclIsKindOf(RoleGroup))
+	then roleTypes->union(getOwnedRoles(aRoleGroupElement.oclAsType(RoleGroup)))
+	else roleTypes->union(Set{aRoleGroupElement.oclAsType(RoleType)})
+	endif)/]
+
+[query public getOwnedRoles(aCompartmentType:CompartmentType) : Set(RoleType) = 
+	aCompartmentType.parts.role
+	->iterate(aAbstractRole : AbstractRole; roleTypes:Set(RoleType) = Set{} | 
+	if (aAbstractRole.oclIsKindOf(RoleGroup))
+	then roleTypes->union(getOwnedRoles(aAbstractRole.oclAsType(RoleGroup)))
+	else roleTypes->union(Set{aAbstractRole.oclAsType(RoleType)})
+	endif)/]
+
+[query public getOwner(aRoleType:RoleType):CompartmentType=
+	if (aRoleType.eContainer().oclIsKindOf(RoleGroup))
+	then getOwner(aRoleType.eContainer().oclAsType(RoleGroup))
+	else aRoleType.eContainer().eContainer().oclAsType(CompartmentType)
+	endif/]
+
+[query public getOwner(aRoleGroup:RoleGroup):CompartmentType=
+	if (aRoleGroup.eContainer().oclIsKindOf(RoleGroup))
+	then getOwner(aRoleGroup.eContainer().oclAsType(RoleGroup))
+	else aRoleGroup.eContainer().eContainer().oclAsType(CompartmentType)
+	endif/]
+
+
+[comment][query public palyerCollection(aType:Type,types:Set(Type)):Set(Type)=Sequence{aType,types}->flatten()->excluding(null)->asSet()/]
+[query public palyerCollection(types1:Set(Type),types2:Set(Type)):Set(Type)=Sequence{types1,types2}->flatten()->excluding(null)->asSet()/]
+[query public palyerCollection(types:Set(Type)):Set(Type)=types->flatten()->excluding(null)->asSet()/]
+[query public palyerCollection(aType:Type):Set(Type)=Sequence{aType}->flatten()->excluding(null)->asSet()/][/comment]
+[query public getRelationshipsWithoutConstraint(relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint)):Set(Relationship)=(relationships->asSet())-getRelationshipsWithConstraint(constraints)/]
+[query public getRelationshipsWithConstraint(constraints:OrderedSet(Constraint)):Set(Relationship)=
+	constraints->iterate(aConstraint : Constraint; relationships:OrderedSet(Relationship) = OrderedSet{} | 
+	if (aConstraint.oclIsKindOf(Irreflexive))
+	then relationships->append(aConstraint.oclAsType(Irreflexive).relation)
+	else if(aConstraint.oclIsKindOf(Reflexive))
+		then relationships->append(aConstraint.oclAsType(Reflexive).relation)
+		else if(aConstraint.oclIsKindOf(Total))
+			then relationships->append(aConstraint.oclAsType(Total).relation)
+			else if(aConstraint.oclIsKindOf(Cyclic))
+				then relationships->append(aConstraint.oclAsType(Cyclic).relation)
+				else if(aConstraint.oclIsKindOf(Acyclic))
+					then relationships->append(aConstraint.oclAsType(Acyclic).relation)
+					else relationships
+					endif
+				endif
+			endif
+		endif
+	endif 
+	)->asSet()/]
+
+[query public getRelationships(aRoleType : RoleType,relationships:OrderedSet(Relationship)):Set(Relationship)=
+	relationships->iterate(aRelationship : Relationship; newRelationships:OrderedSet(Relationship) = OrderedSet{} | 
+	if (aRelationship.first.holder=aRoleType or aRelationship.second.holder=aRoleType)
+	then newRelationships->append(aRelationship)
+	else newRelationships
+	endif)->asSet()/]
+
+[query public getSuper(aNaturalType:NaturalType,relations:Set(Relation)):NaturalType=
+	if(hasSuper(aNaturalType,relations))
+	then relations->selectByType(NaturalInheritance)->select(sub=aNaturalType).super->asOrderedSet()->first()
+	else null
+	endif/]
+[query public getSuper(aDataType:DataType,relations:Set(Relation)):DataType=
+	if(hasSuper(aDataType,relations))
+	then relations->selectByType(DataInheritance)->select(sub=aDataType).super->asOrderedSet()->first()
+	else null
+	endif/]
+[query public getSuper(aCompartmentType:CompartmentType,relations:Set(Relation)):CompartmentType=
+	if(hasSuper(aCompartmentType,relations))
+	then relations->selectByType(CompartmentInheritance)->select(sub=aCompartmentType).super->asOrderedSet()->first()
+	else null
+	endif/]
+
+[query public getSuper(aRoleType:RoleType,relations:Set(Relation)):RoleType=
+	if(hasSuper(aRoleType,relations))
+	then relations->selectByType(RoleInheritance)->select(sub=aRoleType).super->asOrderedSet()->first()
+	else null
+	endif/]
+
+[query public getSub(aNaturalType:NaturalType,relations:Set(Relation)):NaturalType=
+	if(hasSub(aNaturalType,relations))
+	then relations->selectByType(NaturalInheritance)->select(super=aNaturalType).sub->asOrderedSet()->first()
+	else null
+	endif/]
+[query public getSub(aDataType:DataType,relations:Set(Relation)):DataType=
+	if(hasSub(aDataType,relations))
+	then relations->selectByType(DataInheritance)->select(super=aDataType).sub->asOrderedSet()->first()
+	else null
+	endif/]
+[query public getSub(aCompartmentType:CompartmentType,relations:Set(Relation)):CompartmentType=
+	if(hasSub(aCompartmentType,relations))
+	then relations->selectByType(CompartmentInheritance)->select(super=aCompartmentType).sub->asOrderedSet()->first()
+	else null
+	endif/]
+
+[query public getSub(aRoleType:RoleType,relations:Set(Relation)):RoleType=
+	if(hasSub(aRoleType,relations))
+	then relations->selectByType(RoleInheritance)->select(super=aRoleType).sub->asOrderedSet()->first()
+	else null
+	endif/]
+
+[query public getAllSuper(aNaturalType:NaturalType,relations:Set(Relation)):Set(NaturalType)=
+	if(hasSuper(aNaturalType,relations))
+	then Set{getSuper(aNaturalType,relations)}->union(getAllSuper(getSuper(aNaturalType,relations),relations))
+	else Set{}
+	endif/]
+
+[query public getLastSub(aNaturalType:NaturalType,relations:Set(Relation)):NaturalType=
+	if(hasSub(getSub(aNaturalType,relations),relations))
+	then getLastSub(getSub(aNaturalType,relations),relations)
+	else getSub(aNaturalType,relations)
+	endif/]
+
+[query public getLastSub(aCompartmentType:CompartmentType,relations:Set(Relation)):CompartmentType=
+	if(hasSub(getSub(aCompartmentType,relations),relations))
+	then getLastSub(getSub(aCompartmentType,relations),relations)
+	else getSub(aCompartmentType,relations)
+	endif/]
+
+[query public getAllSuperAttributes(aNaturalType:NaturalType,relations:Set(Relation)):Set(Attribute)=
+	if(hasSuper(getSuper(aNaturalType,relations),relations))
+	then getSuper(aNaturalType,relations).attributes->union(getAllSuperAttributes(getSuper(aNaturalType,relations),relations))
+	else getSuper(aNaturalType,relations).attributes
+	endif/]
+[query public getAllSuperAttributes(aDataType:DataType,relations:Set(Relation)):Set(Attribute)=
+	if(hasSuper(getSuper(aDataType,relations),relations))
+	then getSuper(aDataType,relations).attributes->union(getAllSuperAttributes(getSuper(aDataType,relations),relations))
+	else getSuper(aDataType,relations).attributes
+	endif/]
+[query public getAllSuperAttributes(aCompartmentType:CompartmentType,relations:Set(Relation)):Set(Attribute)=
+	if(hasSuper(getSuper(aCompartmentType,relations),relations))
+	then getSuper(aCompartmentType,relations).attributes->union(getAllSuperAttributes(getSuper(aCompartmentType,relations),relations))
+	else getSuper(aCompartmentType,relations).attributes
+	endif/]
+
+[query public hasSuper(aNaturalType:NaturalType,relations:Set(Relation)):Boolean=relations->selectByType(NaturalInheritance)->select(sub=aNaturalType).super->notEmpty()/]
+[query public hasSuper(aDataType:DataType,relations:Set(Relation)):Boolean=relations->selectByType(DataInheritance)->select(sub=aDataType).super->notEmpty()/]
+[query public hasSuper(aCompartmentType:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(CompartmentInheritance)->select(sub=aCompartmentType).super->notEmpty()/]
+[query public hasSuper(aRoleType:RoleType,relations:Set(Relation)):Boolean=relations->selectByType(RoleInheritance)->select(sub=aRoleType).super->notEmpty()/]
+
+[query public hasSub(aNaturalType:NaturalType,relations:Set(Relation)):Boolean=relations->selectByType(NaturalInheritance)->select(super=aNaturalType).sub->notEmpty()/]
+[query public hasSub(aDataType:DataType,relations:Set(Relation)):Boolean=relations->selectByType(DataInheritance)->select(super=aDataType).sub->notEmpty()/]
+[query public hasSub(aCompartmentType:CompartmentType,relations:Set(Relation)):Boolean=relations->selectByType(CompartmentInheritance)->select(super=aCompartmentType).sub->notEmpty()/]
+[query public hasSub(aRoleType:RoleType,relations:Set(Relation)):Boolean=relations->selectByType(RoleInheritance)->select(super=aRoleType).sub->notEmpty()/]
+
+
+
+[query public getPartner(aRoleType : RoleType, aRelationship : Relationship):RoleType=
+	if(aRelationship.first.holder=aRoleType)
+	then aRelationship.second.holder
+	else aRelationship.first.holder
+	endif/]
+
+[query public hasThisAttribute(aAttribute:Attribute,attributes:Set(Attribute)):Boolean=
+	attributes->iterate(thisAttribute : Attribute; has:Boolean = false | 
+	if aAttribute.name=thisAttribute.name
+	then has or true
+	else has or false	
+	endif)/]
+
+[query public getSubAttributes(thisAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
+	thisAttributes->iterate(aAttribute : Attribute; newSubAttributes:Set(Attribute) = Set{} | 
+	if(not hasThisAttribute(aAttribute,superAttributes))
+	then newSubAttributes->union(Set{aAttribute})
+	else newSubAttributes
+	endif)/]
+
+[query public getSuperAttributes(thisAttributes:Set(Attribute),superAttributes:Set(Attribute)):Set(Attribute)=
+	superAttributes->iterate(aAttribute : Attribute; newSuperAttributes:Set(Attribute) = Set{} | 
+	if(not hasThisAttribute(aAttribute,thisAttributes))
+	then newSuperAttributes->union(Set{aAttribute})
+	else newSuperAttributes
+	endif)/]
+
+[query public getAllAttributes(aNaturalType:NaturalType,relations:Set(Relation)):Set(Attribute)=
+	getAllSuper(aNaturalType,relations)->union(Set{aNaturalType})->iterate(aNaturalType:NaturalType;attributes:Set(Attribute)=Set{}|
+	attributes->union(aNaturalType.attributes))->iterate(aAttribute : Attribute; finalAttributes:Set(Attribute)=Set{}|
+	if(not hasThisAttribute(aAttribute,finalAttributes))
+	then finalAttributes->union(Set{aAttribute})
+	else finalAttributes
+	endif)/]
+[query public hasThisOperation(aOperation:Operation,operations:Set(Operation)):Boolean=
+	aOperation->iterate(thisOperation : Operation; has:Boolean = false | 
+	if aOperation.name=thisOperation.name
+	then has or true
+	else has or false	
+	endif)/]
+[query public getAllOperations(aNaturalType:NaturalType,relations:Set(Relation)):Set(Operation)=
+	getAllSuper(aNaturalType,relations)->union(Set{aNaturalType})->iterate(aNaturalType:NaturalType;operations:Set(Operation)=Set{}|
+	operations->union(aNaturalType.operations))/]
+
+[query public hasSuperRoleType(aRoleType:RoleType,aCompartmentType:CompartmentType):Boolean=getOwnedRoles(aCompartmentType)->includes(aRoleType)/]
+[query public hasSuperRoleGroup(aRoleGroup:RoleGroup,aCompartmentType:CompartmentType):Boolean=getAllRoleGroups(aCompartmentType)->includes(aRoleGroup)/]
+
+
+
+

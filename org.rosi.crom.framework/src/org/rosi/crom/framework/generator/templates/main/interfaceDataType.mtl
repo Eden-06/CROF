@@ -1,0 +1,32 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateDataType.
+ */]
+[module interfaceDataType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public interfaceDataType(aDataType : DataType,aModel:Model)]
+[file (getFolderPath() +'/'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+public interface [aDataType.name/][superDataTypeInterface(aDataType,aModel.relations)/]{
+	[interfaceProperties(aDataType.attributes)/]
+	[interFaceOperations(aDataType.operations)/]
+}
+[/file]
+[/template]
+
+[template private superDataTypeInterface(aDataType : DataType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[if(hasSuper(aDataType,relations))]
+[let superDataType:DataType=getSuper(aDataType,relations)]
+ extends [superDataType.name.toUpperFirst()/]
+[/let]
+[/if]
+[/template]
+
+

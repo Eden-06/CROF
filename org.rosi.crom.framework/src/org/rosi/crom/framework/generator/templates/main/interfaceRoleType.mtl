@@ -1,0 +1,66 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module interfaceRoleType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+[template public interfaceRoleType(aCompartmentType : CompartmentType,relations:Set(Relation)) ]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[roleTypeInterface(ar.oclAsType(RoleType),aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[roleTypeInterface(aRoleType,aCompartmentType.relationships,aCompartmentType.constraints,relations)/]
+[/for]
+[/let]
+[else]
+something wrong in aRoleTypeImpl.mtl line 15.
+[/if]
+[/for]
+[/template]
+
+[template private roleTypeInterface(aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
+interface [aRoleType.name/]{
+	[interfaceProperties(aRoleType.attributes)/]
+	[interFaceOperations(aRoleType.operations)/]
+	Object getPlayer();
+	boolean isSame(Object object);
+	[getOwner(aRoleType).name.toUpperFirst()/] getOwner();
+	[relationshipRoleTypeInterface(aRoleType,relationships)/]
+}
+[/template]
+
+[comment][template public roleTypeIsSame(rt : RoleType,relations:Set(Relation))]
+[for(t:Type|getPlayers(rt,relations))]
+[if(t.oclIsKindOf(NaturalType))]
+boolean isSame([t.oclAsType(NaturalType).name.toUpperFirst()/] [t.oclAsType(NaturalType).name.toLowerFirst()/]);
+[else]
+boolean isSame([t.oclAsType(CompartmentType).name.toUpperFirst()/] [t.oclAsType(CompartmentType).name.toLowerFirst()/]);
+[/if]
+[/for]
+[/template][/comment]
+
+
+[template private relationshipRoleTypeInterface(aRoleType : RoleType,relationships:OrderedSet(Relationship))]
+[for(aRelationship:Relationship|getRelationships(aRoleType,relationships))]
+[relationshipOptionsInterface(aRoleType,aRelationship)/]
+[/for]
+[/template]
+
+
+
+
+[template private relationshipOptionsInterface(aRoleType : RoleType,aRelationship : Relationship) ]
+[let partnerRoleType:RoleType=getPartner(aRoleType,aRelationship)]
+List<[partnerRoleType.name.toUpperFirst()/]> get[aRelationship.name.toUpperFirst()/]();
+boolean add[aRelationship.name.toUpperFirst()/]([partnerRoleType.name.toUpperFirst()/] [partnerRoleType.name.toLowerFirst()/]);
+[/let]
+[/template]
+

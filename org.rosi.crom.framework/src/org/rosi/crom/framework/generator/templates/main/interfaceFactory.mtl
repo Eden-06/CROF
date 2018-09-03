@@ -1,0 +1,30 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateTypes.
+ */]
+[module interfaceFactory('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+
+[**
+ * The documentation of the template generateDataType.
+ * @param aDataType
+ */]
+[template public interfaceFactory(aModel:Model)]
+
+[file (getFolderPath()+'/Factory.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+
+
+public interface Factory {
+	Factory INSTANCE = [getPackagePath()/].impl.FactoryImpl.init();
+	Model createModel();
+[comment]	void storeXML(Model model);[/comment]
+	void storeJson(Model model);
+[comment]	Model loadXML(String filePath);[/comment]
+	Model loadJson(String filePath);
+}
+[/file]
+[/template]
+
+

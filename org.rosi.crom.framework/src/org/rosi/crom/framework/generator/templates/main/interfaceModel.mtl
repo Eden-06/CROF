@@ -1,0 +1,103 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateCompartmentType.
+ */]
+[module interfaceModel('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+[import org::rosi::crom::framework::generator::templates::main::crofRoleType/]
+[import org::rosi::crom::framework::generator::templates::main::crofRelationship/]
+
+
+[**
+ * The documentation of the template generateCompartmentType.
+ * @param aDataType
+ */]
+
+[template public interfaceModel(aModel : Model)]
+[file (getFolderPath() +'/Model.java', false, 'UTF-8')]
+package [getPackagePath()/];
+
+import java.util.List;
+
+
+
+
+public interface Model {
+	String getModelName();
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	void set[aCompartmentType.name.toUpperFirst()/](List<[aCompartmentType.name/]> [aCompartmentType.name.toLowerFirst()/]s);
+	List<[aCompartmentType.name/]> get[aCompartmentType.name.toUpperFirst()/]();
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	void set[aNaturalType.name.toUpperFirst()/](List<[aNaturalType.name/]> [aNaturalType.name.toLowerFirst()/]s);
+	List<[aNaturalType.name/]> get[aNaturalType.name.toUpperFirst()/]();
+[/let]
+[elseif(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+	void set[aDataType.name.toUpperFirst()/](List<[aDataType.name/]> [aDataType.name.toLowerFirst()/]s);
+	List<[aDataType.name/]> get[aDataType.name.toUpperFirst()/]();
+[/if]
+[/let]
+[/if]
+[/for]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+	[aCompartmentType.name/] create[aCompartmentType.name/]();
+	int getIndex([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]);
+[comment]	[fulfillment(aCompartmentType,aModel.relations)/][/comment]
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+	[aNaturalType.name/] create[aNaturalType.name/]();
+	int getIndex([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]);
+[/let]
+[elseif(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+	[aDataType.name/] create[aDataType.name/]();
+	int getIndex([aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]);
+[/if]
+[/let]
+[/if]
+[/for]	
+}
+[/file]
+[/template]
+
+
+
+[template private fulfillment(aCompartmentType : CompartmentType,relations:Set(Relation))]
+[for(ar:AbstractRole|aCompartmentType.parts.role)]
+[if(ar.oclIsKindOf(RoleType))]
+[for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
+[fulfillment(aType,ar.oclAsType(RoleType))/]
+[/for]
+[elseif(ar.oclIsKindOf(RoleGroup))]
+[let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
+[for(aRoleType:RoleType|roleTypes)]
+[for(aType:Type|getPlayers(aRoleType,relations))]
+[fulfillment(aType,aRoleType)/]
+[/for]
+[/for]
+[/let]
+[else]
+something wrong in rtModel.mtl line 21.
+[/if]
+[/for]
+[/template]
+
+[template private fulfillment(aType:Type,aRoleType : RoleType)]
+
+[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[aType.name.toUpperFirst()/] [aType.name.toLowerFirst()/]);
+
+boolean unbind[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/],[aType.name.toUpperFirst()/] [aType.name.toLowerFirst()/]);
+
+[/template]
+
+

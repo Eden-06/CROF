@@ -1,0 +1,128 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generateNaturalType.
+ */]
+[module implNaturalType('platform:/resource/org.rosi.crom.metamodel/')]
+[import org::rosi::crom::framework::generator::templates::main::universalQueries/]
+[import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
+
+[**
+ * The documentation of the template generateNaturalType.
+ * @param aNaturalType
+ */]
+
+[template public implNaturalType(aNaturalType : NaturalType,aModel:Model)]
+[file (getFolderPath() +'/impl/'+ aNaturalType.name.toUpperFirst()+'Impl.java', false, 'UTF-8')]
+package [getPackagePath()/].impl;
+
+import java.util.List;
+import java.util.Collections;
+
+import [getPackagePath()/].*;
+
+
+public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
+	protected [aNaturalType.name/]State state;
+
+	public [aNaturalType.name/]Impl() {
+		this.state=new [aNaturalType.name/]State();
+		this.state.compoundObject=this;
+	}
+
+	[implementProperties(aNaturalType,aModel.relations)/]
+	[implementOperations(aNaturalType,aModel.relations)/]
+
+	@Override
+	public [aNaturalType.name/] getCompoundObject() {
+		return ([aNaturalType.name/])this.state.compoundObject;
+	}
+
+	[isSame(aNaturalType,aModel.relations)/]
+	[playerManagementOperations(aNaturalType,aModel)/]
+}
+
+[/file]
+[/template]
+
+[template private isSame(aNaturalType : NaturalType,relations : Set(Relation))]
+@Override
+public boolean isSame(Object object){
+[let roles:Set(RoleType)=getRoles(aNaturalType,relations)]
+[for(aRoleType:RoleType|roles)]
+	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
+		return this.state.equals((([getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])object).state);
+[/for]
+[/let]
+	return false;
+}
+[comment]@Override
+public boolean isSame(Object object){
+[let roleTypes:Set(RoleType)=getRoles(aNaturalType,relations)]
+[for(aRoleType:RoleType|roleTypes)]
+	if(object instanceof [getOwner(aRoleType).name/].[aRoleType.name/])
+		return this.getCompoundObject().equals((([getOwner(aRoleType).name/].[aRoleType.name/])object).getPlayer());
+[/for]
+	return false;
+}
+[/let][/comment]
+[/template]
+
+[template private implementProperties(aNaturalType : NaturalType,relations : Set(Relation))]
+[let attributes:Set(Attribute)=getAllAttributes(aNaturalType,relations)]
+[playerProperties(attributes)/]
+[/let]
+[/template]
+
+[template private implementOperations(aNaturalType : NaturalType,relations : Set(Relation))]
+[let operations:Set(Operation)=getAllOperations(aNaturalType,relations)]
+[implOperations(operations)/]
+[/let]
+[/template]
+
+[template public playerManagementOperations(aNaturalType : NaturalType,aModel : Model)]
+[let roleTypes:Set(RoleType)=getAllRoles(aNaturalType,aModel.relations)]
+[for(aRoleType:RoleType|roleTypes)]
+@Override
+public boolean has[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++){
+		if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return true;
+		}
+	}
+	return false;
+}
+@Override
+public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++){
+		if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+		}
+	}
+	return null;
+}
+
+@Override
+public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(){
+	return Collections.unmodifiableList(this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s);
+}
+@Override
+public boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
+	if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.contains([aRoleType.name.toLowerFirst()/]))
+			return false;
+		return this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
+}
+@Override
+public boolean remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
+	for(int i=0;i<state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++) {
+			if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
+				this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
+				return true;
+			}
+		}
+		return false;
+}
+[/for]
+[/let]
+[/template]
+
+
