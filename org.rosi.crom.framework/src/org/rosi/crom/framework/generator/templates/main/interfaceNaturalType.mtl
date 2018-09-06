@@ -17,7 +17,7 @@ package [getPackagePath()/];
 
 import java.util.List;
 
-public interface [aNaturalType.name.toUpperFirst()/][createExtends(aNaturalType,aModel.relations)/]{
+public interface [aNaturalType.name.toUpperFirst()/][addExtends(aNaturalType,aModel.relations)/]{
 
 	
 	[interfaceProperties(aNaturalType.attributes)/]
@@ -30,12 +30,12 @@ public interface [aNaturalType.name.toUpperFirst()/][createExtends(aNaturalType,
 [/file]
 [/template]
 
-[template private createExtends(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
-[if(hasSuper(aNaturalType,relations))]
+[template private addExtends(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
+[if(not superNaturalType->isEmpty())]
  extends [superNaturalType.name.toUpperFirst()/]
-[/let]
 [/if]
+[/let]
 [/template]
 
 

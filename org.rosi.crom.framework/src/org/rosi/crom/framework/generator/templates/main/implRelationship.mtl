@@ -67,27 +67,6 @@ public class [aIrreflexive.relation.name.toUpperFirst()/]Impl implements [aIrref
 //TODO acyclicImpl
 [/template]
 
-[comment][template private relationshipOptionsImpl(aRelationship : Relationship) ]
-ListMultimap<[aRelationship.first.holder.name.toUpperFirst()/], [aRelationship.second.holder.name.toUpperFirst()/]> [aRelationship.name/] = ArrayListMultimap.create();
-@Override
-public boolean remove([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/], [aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]){
-	return [aRelationship.name/].remove([aRelationship.first.holder.name.toLowerFirst()/],[aRelationship.second.holder.name.toLowerFirst()/]);
-}
-@Override
-public List<[aRelationship.second.holder.name.toUpperFirst()/]> get[aRelationship.second.holder.name.toUpperFirst()/]s([aRelationship.first.holder.name.toUpperFirst()/] [aRelationship.first.holder.name.toLowerFirst()/]){
-	return [aRelationship.name/].get([aRelationship.first.holder.name.toLowerFirst()/]);
-}
-@Override
-public List<[aRelationship.first.holder.name.toUpperFirst()/]> get[aRelationship.first.holder.name.toUpperFirst()/]s([aRelationship.second.holder.name.toUpperFirst()/] [aRelationship.second.holder.name.toLowerFirst()/]){
-	List<[aRelationship.first.holder.name.toUpperFirst()/]> [aRelationship.first.holder.name.toLowerFirst()/]s=new ArrayList<[aRelationship.first.holder.name.toUpperFirst()/]>();
-	for (Map.Entry<[aRelationship.first.holder.name.toUpperFirst()/],[aRelationship.second.holder.name.toUpperFirst()/]> entry : [aRelationship.name/].entries()) {
-		if (Objects.equals([aRelationship.second.holder.name.toLowerFirst()/], entry.getValue())) {
-			[aRelationship.first.holder.name.toLowerFirst()/]s.add(entry.getKey());
-		}
-	}		
-	return [aRelationship.first.holder.name.toLowerFirst()/]s;
-}
-[/template][/comment]
 [template private relationshipOptionsImpl(aRelationship : Relationship) ]
 List<Map.Entry<[aRelationship.first.holder.name.toUpperFirst()/], [aRelationship.second.holder.name.toUpperFirst()/]>> [aRelationship.name/]=new ArrayList<Map.Entry<[aRelationship.first.holder.name.toUpperFirst()/], [aRelationship.second.holder.name.toUpperFirst()/]>>();
 

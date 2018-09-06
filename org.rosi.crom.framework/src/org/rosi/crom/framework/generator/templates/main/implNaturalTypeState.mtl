@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import [getPackagePath()/].*;
 
-public class [aNaturalType.name.toUpperFirst()/]State[extendsByNaturalTypeState(aNaturalType,aModel.relations)/]{
+public class [aNaturalType.name.toUpperFirst()/]State[addExtends(aNaturalType,aModel.relations)/]{
 	[fieldsByNaturalTypeState(aNaturalType,aModel.relations)/]
 [if(not hasSuper(aNaturalType,aModel.relations))]
 	public Object compoundObject;
@@ -29,7 +29,7 @@ public class [aNaturalType.name.toUpperFirst()/]State[extendsByNaturalTypeState(
 [/file]
 [/template]
 
-[template private extendsByNaturalTypeState(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
+[template private addExtends(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
 [if(not superNaturalType->isEmpty())]
  extends [superNaturalType.name.toUpperFirst()/]State
