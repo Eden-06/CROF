@@ -6,7 +6,7 @@
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::interfaceDataType/]
 [import org::rosi::crom::framework::generator::templates::main::implDataType/]
-[import org::rosi::crom::framework::generator::templates::main::crofDataType/]
+[import org::rosi::crom::framework::generator::templates::main::crokDataType/]
 
 [**
  * The documentation of the template generateDataType.
@@ -16,7 +16,7 @@
 [if(notJavaType(aDataType))]
 [interfaceDataType(aDataType,aModel)/]
 [implDataType(aDataType,aModel)/]
-[crofDataType(aDataType,aModel)/]
+[crokDataType(aDataType,aModel)/]
 [/if]
 [/template]
 

@@ -2,28 +2,28 @@
 [**
  * The documentation of the module generateNaturalType.
  */]
-[module crofRoleType('platform:/resource/org.rosi.crom.metamodel/')]
+[module crokRoleType('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
-[import org::rosi::crom::framework::generator::templates::main::crofFulfillment/]
+[import org::rosi::crom::framework::generator::templates::main::crokFulfillment/]
 
 [**
  * The documentation of the template aRoleTypeImpl.
  * @param aNaturalType
  */]
-[template public crofRoleType(aCompartmentType : CompartmentType, relations : Set(Relation))]
+[template public crokRoleType(aCompartmentType : CompartmentType, relations : Set(Relation))]
 [for(ar:AbstractRole|aCompartmentType.parts.role)]
 [if(ar.oclIsKindOf(RoleType))]
 [roleTypeModel(ar.oclAsType(RoleType),relations)/]
 [for(aType:Type|getPlayers(ar.oclAsType(RoleType),relations))]
-[crofFulfillment(aType,ar.oclAsType(RoleType))/]
+[crokFulfillment(aType,ar.oclAsType(RoleType))/]
 [/for]
 [elseif(ar.oclIsKindOf(RoleGroup))]
 [let roleTypes:Set(RoleType)=getOwnedRoles(ar.oclAsType(RoleGroup))]
 [for(aRoleType:RoleType|roleTypes)]
 [roleTypeModel(aRoleType,relations)/]
 [for(aType:Type|getPlayers(aRoleType,relations))]
-[crofFulfillment(aType,aRoleType)/]
+[crokFulfillment(aType,aRoleType)/]
 [/for]
 [/for]
 [/let]
@@ -34,21 +34,21 @@ something wrong in rtModel.mtl line 21.
 [/template]
 
 [template private roleTypeModel(aRoleType : RoleType, relations : Set(Relation))]
-[file (getFolderPath() +'/crof/Crof'+ aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].crof;
+[file (getFolderPath() +'/crok/Crok'+ aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crok;
 
 
-public class Crof[aRoleType.name.toUpperFirst()/][createExtends(aRoleType,relations)/]{
-	[crofFields(aRoleType.attributes)/]
-	[crofProperties(aRoleType.attributes)/]
+public class Crok[aRoleType.name.toUpperFirst()/][addExtends(aRoleType,relations)/]{
+	[crokFields(aRoleType.attributes)/]
+	[crokProperties(aRoleType.attributes)/]
 }
 [/file]
 [/template]
 
-[template private createExtends(aRoleType : RoleType, relations : Set(Relation)) post(replaceAll('\n',''))]
+[template private addExtends(aRoleType : RoleType, relations : Set(Relation)) post(replaceAll('\n',''))]
 [if(hasSuper(aRoleType,relations))]
 [let superRoleType:RoleType=getSuper(aRoleType,relations)]
- extends Crof[superRoleType.name.toUpperFirst()/]
+ extends Crok[superRoleType.name.toUpperFirst()/]
 [/let]
 [else]
 [/if]

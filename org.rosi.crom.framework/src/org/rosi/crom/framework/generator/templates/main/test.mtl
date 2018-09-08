@@ -25,20 +25,22 @@ public class Test {
 
 		Model model=factory.createModel();
 
-
+/*
 		//Bank
 		Bank bank=model.createBank();
 		bank.setName("bank");
 		Person peter=model.createPerson();
 		peter.setFirstName("Peter");
-		Bank.Consultant con=bank.bindConsultant(peter);
+		Bank.Consultant con1=bank.bindConsultant(peter);
+		Bank.Customer cu1=bank.bindCustomer(peter);
+		System.out.println(con1.addAdvices(cu1));
 		Person klaus=model.createPerson();
 		klaus.setFirstName("Klaus");
-		Bank.Customer cu1=bank.bindCustomer(klaus);
+		Bank.Customer cu2=bank.bindCustomer(klaus);
 		Company company=model.createCompany();
 		company.setName("Google");
-		Bank.Customer cu2=bank.bindCustomer(company);
-		con.addAdvices(cu2);
+		Bank.Customer cu3=bank.bindCustomer(company);
+		System.out.println(con1.addAdvices(cu3));
 		Account account1=model.createAccount();
 		account1.setBalance(model.createMoney());
 		Bank.SavingsAccount sa=bank.bindSavingsAccount(account1);
@@ -48,8 +50,8 @@ public class Test {
 
 		Bank.CheckingsAccount ca=bank.bindCheckingsAccount(account2);
 		ca.setLimit(model.createMoney());
-		cu2.addOwn_sa(sa);
-		cu1.addOwn_ca(ca);
+		cu3.addOwn_sa(sa);
+		cu2.addOwn_ca(ca);
 		
 		Transaction t=model.createTransaction();
 		Bank.MoneyTransfer m=bank.bindMoneyTransfer(t);
@@ -64,7 +66,7 @@ public class Test {
 
 
 
-
+*/
 
 
 
@@ -72,26 +74,25 @@ public class Test {
 		
 		//inheritance
 		/*
-				Ca ca=model.createCa();
-		ca.setName("ca");
-		Na na=model.createNa();
-		na.setAttr("na");
-		Nb nb=model.createNb();
-		nb.setBttr("nb");
-		nb.setAttr("nbna");
-		Nd nd=model.createNd();
-		nd.setBttr("ndnb");
-		nd.setAttr("ndna");
-		Ca.Rb rb=ca.bindRb( nb);
-		rb.setName("nbrb");
-		Ca.Rb rd=ca.bindRb( nd);
-		rd.setName("ndrb");
-		Ca.Ra ra=ca.bindRa( nb);
-		ra.setName("nbra");
-		Ca.Ra ra1=ca.bindRa( nd);
-		ra1.setName("ndra");
-		System.out.println(rb.getPlayer());
-		System.out.println(ra.getPlayer());
+		Comp c=model.createComp();
+		c.setName("comp");
+		SuperNatural sup=model.createSuperNatural();
+		sup.setSupField("sup");
+		Natural mid=model.createNatural();
+		mid.setMidField("mid");
+		mid.setSupField("supInMid");
+		SubNatural sub=model.createSubNatural();
+		sub.setMidField("midInSub");
+		sub.setSupField("supInSub");
+		Comp.Role ra=c.bindRole(sup);
+		ra.setName("supRole");
+		Comp.Role rb=c.bindRole(mid);
+		rb.setName("minRole");
+		Comp.Role rc=c.bindRole(sub);
+		rc.setName("subRole");
+		System.out.println(((SuperNaturalImpl)ra.getPlayer()).getSupField());
+		System.out.println(((NaturalImpl)rb.getPlayer()).getSupField());
+		System.out.println(((SubNaturalImpl)rc.getPlayer()).getSupField());
 		
 		*/
 		

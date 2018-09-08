@@ -5,8 +5,8 @@
 [module interfaceModel('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
-[import org::rosi::crom::framework::generator::templates::main::crofRoleType/]
-[import org::rosi::crom::framework::generator::templates::main::crofRelationship/]
+[import org::rosi::crom::framework::generator::templates::main::crokRoleType/]
+[import org::rosi::crom::framework::generator::templates::main::crokRelationship/]
 
 
 [**
