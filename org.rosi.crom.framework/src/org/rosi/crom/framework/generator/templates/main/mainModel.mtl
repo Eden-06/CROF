@@ -6,7 +6,7 @@
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::interfaceModel/]
 [import org::rosi::crom::framework::generator::templates::main::implModel/]
-[import org::rosi::crom::framework::generator::templates::main::crokModel/]
+[import org::rosi::crom::framework::generator::templates::main::crofModel/]
 
 [**
  * The documentation of the template generateCompartmentType.
@@ -16,5 +16,5 @@
 [template public mainModel(aModel : Model)]
 [interfaceModel(aModel)/]
 [implModel(aModel)/]
-[crokModel()/]
+[crofModel()/]
 [/template]

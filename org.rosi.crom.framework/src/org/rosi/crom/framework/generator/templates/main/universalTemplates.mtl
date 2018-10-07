@@ -6,7 +6,7 @@
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 
 
-[template public crokFields(attributes : Set(Attribute))]
+[template public crofFields(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
 [if(notJavaType(aAttribute.type))]
 private String [aAttribute.name.toLowerFirst()/];
@@ -16,7 +16,7 @@ private [typeFilterAttribute(aAttribute.type)/] [aAttribute.name/];
 [/for]	
 [/template]
 
-[template public crokProperties(attributes : Set(Attribute))]
+[template public crofProperties(attributes : Set(Attribute))]
 [for (aAttribute : Attribute | attributes)]
 [if(notJavaType(aAttribute.type))]
 public int get[aAttribute.name.toUpperFirst()/]Position() {

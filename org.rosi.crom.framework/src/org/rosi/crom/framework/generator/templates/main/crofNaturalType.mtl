@@ -2,7 +2,7 @@
 [**
  * The documentation of the module generateNaturalType.
  */]
-[module crokNaturalType('platform:/resource/org.rosi.crom.metamodel/')]
+[module crofNaturalType('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
 
@@ -11,14 +11,14 @@
  * @param aNaturalType
  */]
 
-[template public crokNaturalType(aNaturalType : NaturalType,aModel:Model)]
-[file (getFolderPath() +'/crok/Crok'+ aNaturalType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].crok;
+[template public crofNaturalType(aNaturalType : NaturalType,aModel:Model)]
+[file (getFolderPath() +'/crof/Crof'+ aNaturalType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 
-public class Crok[aNaturalType.name/][addExtends(aNaturalType,aModel.relations)/]  {
-	[crokFields(aNaturalType.attributes)/]
-	[crokProperties(aNaturalType.attributes)/]
+public class Crof[aNaturalType.name/][addExtends(aNaturalType,aModel.relations)/]  {
+	[crofFields(aNaturalType.attributes)/]
+	[crofProperties(aNaturalType.attributes)/]
 }
 [/file]
 [/template]
@@ -26,7 +26,7 @@ public class Crok[aNaturalType.name/][addExtends(aNaturalType,aModel.relations)/
 [template private addExtends(aNaturalType : NaturalType,relations : Set(Relation)) post(replaceAll('\n',''))]
 [if(hasSuper(aNaturalType,relations))]
 [let superNaturalType:NaturalType=getSuper(aNaturalType,relations)]
- extends Crok[superNaturalType.name.toUpperFirst()/]
+ extends Crof[superNaturalType.name.toUpperFirst()/]
 [/let]
 [/if]
 [/template]

@@ -2,7 +2,7 @@
 [**
  * The documentation of the module generateNaturalType.
  */]
-[module crokRelationship('platform:/resource/org.rosi.crom.metamodel/')]
+[module crofRelationship('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
 
@@ -11,12 +11,12 @@
  * @param aNaturalType
  */]
 
-[template public crokRelationship(aRelationship:Relationship)]
-[file (getFolderPath() +'/crok/Crok'+ aRelationship.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].crok;
+[template public crofRelationship(aRelationship:Relationship)]
+[file (getFolderPath() +'/crof/Crof'+ aRelationship.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 
-public class Crok[aRelationship.name.toUpperFirst()/]{
+public class Crof[aRelationship.name.toUpperFirst()/]{
 
 	private String first;
 	private String second;

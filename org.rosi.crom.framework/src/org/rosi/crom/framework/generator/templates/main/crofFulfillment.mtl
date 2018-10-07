@@ -2,7 +2,7 @@
 [**
  * The documentation of the module generateNaturalType.
  */]
-[module crokFulfillment('platform:/resource/org.rosi.crom.metamodel/')]
+[module crofFulfillment('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
 
@@ -11,12 +11,12 @@
  * @param aNaturalType
  */]
 
-[template public crokFulfillment(aType:Type,aRoleType : RoleType)]
-[file (getFolderPath() +'/crok/Crok'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].crok;
+[template public crofFulfillment(aType:Type,aRoleType : RoleType)]
+[file (getFolderPath() +'/crof/Crof'+ aType.name.toUpperFirst()+aRoleType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 
-public class Crok[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]{
+public class Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]{
 
 	private String player;
 	private String played;

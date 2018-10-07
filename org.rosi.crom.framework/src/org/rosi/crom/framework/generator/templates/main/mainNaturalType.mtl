@@ -7,7 +7,7 @@
 [import org::rosi::crom::framework::generator::templates::main::interfaceNaturalType/]
 [import org::rosi::crom::framework::generator::templates::main::implNaturalTypeState/]
 [import org::rosi::crom::framework::generator::templates::main::implNaturalType/]
-[import org::rosi::crom::framework::generator::templates::main::crokNaturalType/]
+[import org::rosi::crom::framework::generator::templates::main::crofNaturalType/]
 
 [**
  * The documentation of the template generateNaturalType.
@@ -17,5 +17,5 @@
 [interfaceNaturalType(aNaturalType, aModel)/]
 [implNaturalTypeState(aNaturalType, aModel)/]
 [implNaturalType(aNaturalType, aModel)/]
-[crokNaturalType(aNaturalType, aModel)/]
+[crofNaturalType(aNaturalType, aModel)/]
 [/template]

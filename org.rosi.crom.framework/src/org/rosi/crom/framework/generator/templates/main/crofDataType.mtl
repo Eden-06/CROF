@@ -2,7 +2,7 @@
 [**
  * The documentation of the module generateDataType.
  */]
-[module crokDataType('platform:/resource/org.rosi.crom.metamodel/')]
+[module crofDataType('platform:/resource/org.rosi.crom.metamodel/')]
 [import org::rosi::crom::framework::generator::templates::main::universalQueries/]
 [import org::rosi::crom::framework::generator::templates::main::universalTemplates/]
 
@@ -10,14 +10,14 @@
  * The documentation of the template generateDataType.
  * @param aDataType
  */]
-[template public crokDataType(aDataType : DataType,aModel:Model)]
-[file (getFolderPath() +'/crok/Crok'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
-package [getPackagePath()/].crok;
+[template public crofDataType(aDataType : DataType,aModel:Model)]
+[file (getFolderPath() +'/crof/Crof'+ aDataType.name.toUpperFirst()+'.java', false, 'UTF-8')]
+package [getPackagePath()/].crof;
 
 
-public class Crok[aDataType.name/][addExtends(aDataType,aModel.relations)/] {
-	[crokFields(aDataType.attributes)/]
-	[crokProperties(aDataType.attributes)/]
+public class Crof[aDataType.name/][addExtends(aDataType,aModel.relations)/] {
+	[crofFields(aDataType.attributes)/]
+	[crofProperties(aDataType.attributes)/]
 }
 [/file]
 [/template]
@@ -25,7 +25,7 @@ public class Crok[aDataType.name/][addExtends(aDataType,aModel.relations)/] {
 [template private addExtends(aDataType : DataType, relations : Set(Relation)) post(replaceAll('\n',''))]
 [if(hasSuper(aDataType,relations))]
 [let superDataType:DataType=getSuper(aDataType,relations)]
- extends Crok[superDataType.name.toUpperFirst()/]
+ extends Crof[superDataType.name.toUpperFirst()/]
 [/let]
 [/if]
 [/template]
