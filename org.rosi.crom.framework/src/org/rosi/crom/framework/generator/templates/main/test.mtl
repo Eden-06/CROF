@@ -28,10 +28,11 @@ public class Test {
 /*
 		//Bank
 		Bank bank=model.createBank();
-		bank.setName("bank");
+		bank.setName("DB");
 		Person peter=model.createPerson();
 		peter.setFirstName("Peter");
 		Bank.Consultant con1=bank.bindConsultant(peter);
+		con1.setPhone("0176******");
 		Bank.Customer cu1=bank.bindCustomer(peter);
 		System.out.println(con1.addAdvices(cu1));
 		Person klaus=model.createPerson();
@@ -62,6 +63,10 @@ public class Test {
 		
 		Transaction.Target ta=t.bindTarget(account2);
 		so.addTrans(ta);
+		
+		factory.storeJson(model);
+		Model fromJson=factory.loadJson("./instance/bank_1.croj");
+		factory.storeJson(fromJson);
 		
 
 
@@ -188,7 +193,7 @@ public class Test {
 		
 		
 		//factory.loadJson("./instance/inheritance_1.croj");
-		Model fromJson=factory.loadJson("./instance/bank_1.croj");
+		//Model fromJson=factory.loadJson("./instance/bank_1.croj");
 	}
 }
 
