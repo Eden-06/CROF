@@ -92,12 +92,16 @@ public class Test {
 		Comp.Role ra=c.bindRole(sup);
 		ra.setName("supRole");
 		Comp.Role rb=c.bindRole(mid);
-		rb.setName("minRole");
+		rb.setName("midRole");
 		Comp.Role rc=c.bindRole(sub);
 		rc.setName("subRole");
 		System.out.println(((SuperNaturalImpl)ra.getPlayer()).getSupField());
 		System.out.println(((NaturalImpl)rb.getPlayer()).getSupField());
 		System.out.println(((SubNaturalImpl)rc.getPlayer()).getSupField());
+
+		factory.storeJson(model);
+		Model fromJson=factory.loadJson("./instance/inheritance_1.croj");
+		factory.storeJson(fromJson);
 		
 		*/
 		

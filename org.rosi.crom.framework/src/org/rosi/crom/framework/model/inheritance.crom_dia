@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.framed.orm.model:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.framed.orm.model="http://orm/1.0">
+  <elements xsi:type="org.framed.orm.model:Shape" name="Comp" incomingRelations="//@elements.6 //@elements.8">
+    <firstSegment>
+      <elements name="name:String"/>
+    </firstSegment>
+    <secondSegment/>
+    <model>
+      <elements xsi:type="org.framed.orm.model:Shape" name="Role" type="RoleType">
+        <firstSegment>
+          <elements name="name:String"/>
+        </firstSegment>
+        <secondSegment/>
+        <description name="*"/>
+        <boundaries>
+          <topLeft x="24" y="9"/>
+          <bottomRight x="226" y="171"/>
+        </boundaries>
+      </elements>
+    </model>
+    <boundaries>
+      <topLeft x="404" y="88"/>
+      <bottomRight x="607" y="251"/>
+    </boundaries>
+  </elements>
+  <elements xsi:type="org.framed.orm.model:Shape" name="String" type="DataType">
+    <firstSegment/>
+    <secondSegment/>
+    <boundaries>
+      <topLeft x="112" y="453"/>
+      <bottomRight x="319" y="500"/>
+    </boundaries>
+  </elements>
+  <elements xsi:type="org.framed.orm.model:Shape" name="Natural" incomingRelations="//@elements.4" outgoingRelations="//@elements.5" type="NaturalType">
+    <firstSegment>
+      <elements name="midField:String"/>
+    </firstSegment>
+    <secondSegment/>
+    <boundaries>
+      <topLeft x="115" y="279"/>
+      <bottomRight x="317" y="441"/>
+    </boundaries>
+  </elements>
+  <elements xsi:type="org.framed.orm.model:Shape" name="SubNatural" outgoingRelations="//@elements.4 //@elements.8" type="NaturalType">
+    <firstSegment/>
+    <secondSegment/>
+    <boundaries>
+      <topLeft x="400" y="312"/>
+      <bottomRight x="604" y="476"/>
+    </boundaries>
+  </elements>
+  <elements xsi:type="org.framed.orm.model:Relation" type="Inheritance" target="//@elements.2" source="//@elements.3"/>
+  <elements xsi:type="org.framed.orm.model:Relation" type="Inheritance" target="//@elements.7" source="//@elements.2"/>
+  <elements xsi:type="org.framed.orm.model:Relation" type="Fulfillment" target="//@elements.0" source="//@elements.7" referencedRoles="//@elements.0/@model/@elements.0"/>
+  <elements xsi:type="org.framed.orm.model:Shape" name="SuperNatural" incomingRelations="//@elements.5" outgoingRelations="//@elements.6" type="NaturalType">
+    <firstSegment>
+      <elements name="supField:String"/>
+    </firstSegment>
+    <secondSegment>
+      <elements name="a():String"/>
+    </secondSegment>
+    <boundaries>
+      <topLeft x="113" y="88"/>
+      <bottomRight x="316" y="251"/>
+    </boundaries>
+  </elements>
+  <elements xsi:type="org.framed.orm.model:Relation" type="Fulfillment" target="//@elements.0" source="//@elements.3" referencedRoles="//@elements.0/@model/@elements.0"/>
+</org.framed.orm.model:Model>
