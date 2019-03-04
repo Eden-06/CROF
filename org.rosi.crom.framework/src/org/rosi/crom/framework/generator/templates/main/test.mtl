@@ -34,14 +34,14 @@ public class Test {
 		Bank.Consultant con1=bank.bindConsultant(peter);
 		con1.setPhone("0176******");
 		Bank.Customer cu1=bank.bindCustomer(peter);
-		System.out.println(con1.addAdvices(cu1));
+		System.out.println(con1.addAdvises(cu1));
 		Person klaus=model.createPerson();
 		klaus.setFirstName("Klaus");
 		Bank.Customer cu2=bank.bindCustomer(klaus);
 		Company company=model.createCompany();
 		company.setName("Google");
 		Bank.Customer cu3=bank.bindCustomer(company);
-		System.out.println(con1.addAdvices(cu3));
+		System.out.println(con1.addAdvises(cu3));
 		Account account1=model.createAccount();
 		account1.setBalance(model.createMoney());
 		Bank.SavingsAccount sa=bank.bindSavingsAccount(account1);
@@ -49,7 +49,7 @@ public class Test {
 		Account account2=model.createAccount();
 		account2.setBalance(model.createMoney());
 
-		Bank.CheckingsAccount ca=bank.bindCheckingsAccount(account2);
+		Bank.CheckingsAccount ca=bank.bindCheckingAccount(account2);
 		ca.setLimit(model.createMoney());
 		cu3.addOwn_sa(sa);
 		cu2.addOwn_ca(ca);
