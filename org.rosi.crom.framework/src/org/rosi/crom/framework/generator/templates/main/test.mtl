@@ -43,39 +43,35 @@ public class Test {
 		Bank.Customer cu3=bank.bindCustomer(company);
 		System.out.println(con1.addAdvises(cu3));
 		Account account1=model.createAccount();
-		account1.setBalance(model.createMoney());
+		account1.setBalance(500.0);
 		Bank.SavingsAccount sa=bank.bindSavingsAccount(account1);
+		sa.setFee(0.05);
 		
 		Account account2=model.createAccount();
-		account2.setBalance(model.createMoney());
+		account2.setBalance(2500.0);
 
 		Bank.CheckingAccount ca=bank.bindCheckingAccount(account2);
-		ca.setLimit(model.createMoney());
+		ca.setLimit(500.0);
 		cu3.addOwn_sa(sa);
 		cu2.addOwn_ca(ca);
 		
 		Transaction t=model.createTransaction();
+		t.setAmount(500.0);
+		t.setCreationTime(1000000);
 		Bank.MoneyTransfer m=bank.bindMoneyTransfer(t);
-		t.setAmount(model.createMoney());
-		t.setCreationTime(model.createDateTime());
-		m.setExecution(model.createDateTime());
+		m.setExecution(1000001);
 		Transaction.Source so=t.bindSource(account1);
 		
 		Transaction.Target ta=t.bindTarget(account2);
 		so.addTrans(ta);
 
-		System.out.println(factory.toJson(model));
-		factory.storeJson(model,"./instance/bank.croj");
-		Model fromJson=factory.loadJson("./instance/bank.croj");
-		System.out.println(factory.toJson(fromJson));
-		
-
-
-
 */
 
-
-
+		System.out.println(factory.toJson(model));
+		factory.storeJson(model,"./instance/model.croj");
+		
+		Model fromJson=factory.loadJson("./instance/model.croj");
+		System.out.println(factory.toJson(fromJson));
 
 		
 		//inheritance
@@ -194,11 +190,6 @@ public class Test {
 		System.out.println(ra1.addAdvices(rb3));
 */	
 		
-		//factory.storeJson(model);
-		
-		
-		//factory.loadJson("./instance/inheritance_1.croj");
-		//Model fromJson=factory.loadJson("./instance/bank_1.croj");
 	}
 }
 
