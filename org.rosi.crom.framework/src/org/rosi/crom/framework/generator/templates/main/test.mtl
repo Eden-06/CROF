@@ -49,7 +49,7 @@ public class Test {
 		Account account2=model.createAccount();
 		account2.setBalance(model.createMoney());
 
-		Bank.CheckingsAccount ca=bank.bindCheckingAccount(account2);
+		Bank.CheckingAccount ca=bank.bindCheckingAccount(account2);
 		ca.setLimit(model.createMoney());
 		cu3.addOwn_sa(sa);
 		cu2.addOwn_ca(ca);
