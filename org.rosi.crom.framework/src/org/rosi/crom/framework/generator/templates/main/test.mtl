@@ -63,10 +63,11 @@ public class Test {
 		
 		Transaction.Target ta=t.bindTarget(account2);
 		so.addTrans(ta);
-		
-		factory.storeJson(model);
-		Model fromJson=factory.loadJson("./instance/bank_1.croj");
-		factory.storeJson(fromJson);
+
+		System.out.println(factory.toJson(model));
+		factory.storeJson(model,"./instance/bank.croj");
+		Model fromJson=factory.loadJson("./instance/bank.croj");
+		System.out.println(factory.toJson(fromJson));
 		
 
 

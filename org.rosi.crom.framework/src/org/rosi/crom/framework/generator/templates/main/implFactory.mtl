@@ -38,8 +38,13 @@ public class FactoryImpl implements Factory{
 		//TODO
 	}[/comment]
 	@Override
-	public void storeJson(Model model){
-		new Serializer().toJson(model);
+	public void storeJson(Model model,String filePath){
+		new Serializer().toJson(model,filePath);
+	}
+
+	@Override
+	public String toJson(Model model){
+		return new Serializer().toJson(model);
 	}
 
 [comment]	@Override

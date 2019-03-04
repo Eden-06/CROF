@@ -100,7 +100,7 @@ public class Serializer{
 [/let]
 [/if]
 [/for]
-	public void toJson(Model model) {
+	public void toJson(Model model,String filePath) {
 		this.model=model;
 [for (aModelElement : ModelElement | aModel.elements)]
 [if(aModelElement.oclIsKindOf(DataType))]
@@ -135,44 +135,53 @@ public class Serializer{
 [/if]
 [/for]
 		String str = new Gson().toJson(crofModel,CrofModel.class);
-		BufferedWriter writer = null;
-		String filePath="./instance/"+model.getModelName()+"_1.croj";
-        File file = new File(filePath);
-[comment]        //如果文件不存在，则新建一个  
-//        if(!file.exists()){  
-//            try {  
-//                file.createNewFile();  
-//            } catch (IOException e) {  
-//               System.out.println(e);
-//            }  
-//        }  [/comment]
-        
-        while(file.exists()) {
-        		String num=filePath.substring(filePath.lastIndexOf("_")+1, filePath.lastIndexOf("."));
-        		int number=Integer.parseInt(num)+1;
-        		filePath="./instance/"+model.getModelName()+"_"+number+".croj";
-        		file = new File(filePath);
-        }
-        try {  
+		File file = new File(filePath);
+		try {  
             file.createNewFile();  
+	        try ( BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8")); ){  
+	            writer.write(str);
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        }
         } catch (IOException e) {  
-           System.out.println(e);
+            e.printStackTrace();
         }
-        //写入  
-        try {  
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));  
-            writer.write(str);  
-        } catch (IOException e) {  
-            e.printStackTrace();  
-        }finally {  
-            try {  
-                if(writer != null){  
-                    writer.close();  
-                }  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        }
+	}
+	public String toJson(Model model) {
+		this.model=model;
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(DataType))]
+[let aDataType:DataType=aModelElement.oclAsType(DataType)]
+[if(notJavaType(aDataType))]
+[comment]		List<[aDataType.name.toUpperFirst()/]> [aDataType.name.toLowerFirst()/]s=(ArrayList<[aDataType.name.toUpperFirst()/]>)model.get[aDataType.name.toUpperFirst()/]();[/comment]
+[comment]		exchange[aDataType.name.toUpperFirst()/]([aDataType.name.toLowerFirst()/]s);[/comment]
+		exchange[aDataType.name.toUpperFirst()/](model.get[aDataType.name.toUpperFirst()/]());
+[/if]
+[/let]
+[elseif(aModelElement.oclIsKindOf(NaturalType))]
+[let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
+[comment]		List<[aNaturalType.name.toUpperFirst()/]> [aNaturalType.name.toLowerFirst()/]s=(ArrayList<[aNaturalType.name.toUpperFirst()/]>)model.get[aNaturalType.name.toUpperFirst()/]();[/comment]
+[comment]		exchange[aNaturalType.name.toUpperFirst()/]([aNaturalType.name.toLowerFirst()/]s);[/comment]
+		exchange[aNaturalType.name.toUpperFirst()/](model.get[aNaturalType.name.toUpperFirst()/]());
+[/let]
+[elseif(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+		List<[aCompartmentType.name.toUpperFirst()/]> [aCompartmentType.name.toLowerFirst()/]s=model.get[aCompartmentType.name.toUpperFirst()/]();
+		exchange[aCompartmentType.name.toUpperFirst()/]([aCompartmentType.name.toLowerFirst()/]s);
+[/let]
+[/if]
+[/for]
+[for (aModelElement : ModelElement | aModel.elements)]
+[if(aModelElement.oclIsKindOf(CompartmentType))]
+[let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
+		for(int i = 0; i<[aCompartmentType.name.toLowerFirst()/]s.size(); i++){
+			exchange[aCompartmentType.name.toUpperFirst()/]([aCompartmentType.name.toLowerFirst()/]s.get(i));
+[comment]			exchange[aCompartmentType.name.toUpperFirst()/]([aCompartmentType.name.toLowerFirst()/]s.get(i),i);[/comment]
+		}
+[/let]
+[/if]
+[/for]
+		return new Gson().toJson(crofModel,CrofModel.class);		
 	}
 }
 [/file]

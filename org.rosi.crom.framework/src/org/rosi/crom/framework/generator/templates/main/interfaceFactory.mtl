@@ -20,7 +20,8 @@ public interface Factory {
 	Factory INSTANCE = [getPackagePath()/].impl.FactoryImpl.init();
 	Model createModel();
 [comment]	void storeXML(Model model);[/comment]
-	void storeJson(Model model);
+	void storeJson(Model model,String filePath);
+	String toJson(Model model);
 [comment]	Model loadXML(String filePath);[/comment]
 	Model loadJson(String filePath);
 }
