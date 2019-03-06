@@ -65,6 +65,14 @@ public class Test {
 		Transaction.Target ta=t.bindTarget(account2);
 		so.addTrans(ta);
 
+
+		System.out.println("Object Schizo Test");
+		System.out.println(peter.isSame(cu1));
+		System.out.println(peter.isSame(con1));
+		System.out.println(peter.isSame(peter));
+		System.out.println(peter.isSame(cu2));
+		System.out.println(peter.isSame(klaus));
+
 */
 
 		System.out.println(factory.toJson(model));

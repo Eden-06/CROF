@@ -47,6 +47,12 @@ public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
 [template private isSame(aNaturalType : NaturalType,relations : Set(Relation))]
 @Override
 public boolean isSame(Object object){
+    if(object instanceof [aNaturalType.name.toUpperFirst()/]Impl)
+		return this.state.equals((([aNaturalType.name.toUpperFirst()/]Impl) object).state);
+	return false;
+}
+[comment]@Override
+public boolean isSame(Object object){
 [let roles:Set(RoleType)=getRoles(aNaturalType,relations)]
 [for(aRoleType:RoleType|roles)]
 	if(object instanceof [getOwner(aRoleType).name/]Impl.[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])
@@ -55,16 +61,7 @@ public boolean isSame(Object object){
 [/let]
 	return false;
 }
-[comment]@Override
-public boolean isSame(Object object){
-[let roleTypes:Set(RoleType)=getRoles(aNaturalType,relations)]
-[for(aRoleType:RoleType|roleTypes)]
-	if(object instanceof [getOwner(aRoleType).name/].[aRoleType.name/])
-		return this.getCompoundObject().equals((([getOwner(aRoleType).name/].[aRoleType.name/])object).getPlayer());
-[/for]
-	return false;
-}
-[/let][/comment]
+[/comment]
 [/template]
 
 [template private implementProperties(aNaturalType : NaturalType,relations : Set(Relation))]
