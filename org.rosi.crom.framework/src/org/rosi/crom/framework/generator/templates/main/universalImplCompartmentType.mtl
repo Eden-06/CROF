@@ -290,9 +290,10 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpper
 	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
 		if ([aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aNaturalType.name.toLowerFirst()/])) {
 			[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
+			return [aNaturalType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 		}
 	}
-	return [aNaturalType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
+	return false;
 }
 [/template]
 
@@ -302,9 +303,10 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toU
 	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
 		if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aCompartmentType.name.toLowerFirst()/])) {
 			[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
+			return [aCompartmentType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 		}
 	}
-	return [aCompartmentType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
+	return false;
 }
 [/template]
 
