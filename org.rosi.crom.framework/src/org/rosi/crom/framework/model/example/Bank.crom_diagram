@@ -3,7 +3,7 @@
   <pi:Diagram visible="true" gridUnit="10" diagramTypeId="CROM_Diagram" name="Container" version="0.14.0">
     <properties key="diagram kind" value="container_diagram"/>
     <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@colors.1" foreground="/0/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
-    <children xsi:type="pi:Diagram" visible="true" gridUnit="10" diagramTypeId="CROM_Diagram" name="Bank" snapToGrid="true" pictogramLinks="/0/@children.0/@link /0/@children.0/@children.0/@link /0/@children.0/@children.0/@children.1/@link /0/@children.0/@children.0/@children.0/@link /0/@children.0/@children.0/@children.1/@children.0/@link /0/@children.0/@children.0/@children.1/@children.1/@link /0/@children.0/@children.0/@children.1/@children.2/@link /0/@children.0/@children.0/@children.1/@children.3/@link /0/@children.0/@children.0/@children.1/@children.4/@link /0/@children.0/@children.1/@link /0/@children.0/@children.1/@children.1/@link /0/@children.0/@children.1/@children.0/@link /0/@children.0/@children.1/@children.1/@children.0/@link /0/@children.0/@children.1/@children.1/@children.1/@link /0/@children.0/@children.1/@children.1/@children.2/@link /0/@children.0/@children.1/@children.1/@children.3/@link /0/@children.0/@children.1/@children.1/@children.4/@link /0/@children.0/@children.0/@children.1/@children.2/@children.0/@link /0/@children.0/@children.0/@children.1/@children.2/@children.1/@link /0/@children.0/@children.0/@children.1/@children.2/@children.2/@link /0/@children.0/@children.0/@children.1/@children.2/@children.3/@link /0/@children.0/@children.1/@children.1/@children.2/@children.0/@link /0/@children.0/@children.1/@children.1/@children.2/@children.1/@link /0/@children.0/@children.1/@children.1/@children.2/@children.2/@link /0/@children.0/@children.1/@children.1/@children.2/@children.3/@link /0/@children.0/@children.2/@link /0/@children.0/@children.2/@children.1/@link /0/@children.0/@children.2/@children.0/@link /0/@children.0/@children.2/@children.1/@children.0/@link /0/@children.0/@children.2/@children.1/@children.1/@link /0/@children.0/@children.2/@children.1/@children.2/@link /0/@children.0/@children.2/@children.1/@children.3/@link /0/@children.0/@children.2/@children.1/@children.4/@link /0/@children.0/@children.2/@children.1/@children.2/@children.0/@link /0/@children.0/@children.2/@children.1/@children.2/@children.1/@link /0/@children.0/@children.2/@children.1/@children.4/@children.0/@link /0/@children.0/@children.2/@children.1/@children.4/@children.1/@link /0/@children.1/@link /0/@children.0/@children.3/@link /0/@children.0/@children.3/@children.1/@link /0/@children.0/@children.3/@children.0/@link /0/@children.0/@children.3/@children.1/@children.0/@link /0/@children.0/@children.3/@children.1/@children.1/@link /0/@children.0/@children.3/@children.1/@children.2/@link /0/@children.0/@children.3/@children.1/@children.3/@link /0/@children.0/@children.3/@children.1/@children.4/@link /0/@children.0/@children.3/@children.1/@children.5/@link /0/@children.0/@children.3/@children.1/@children.6/@link /0/@children.2/@link /0/@children.0/@children.4/@link /0/@children.0/@children.4/@children.1/@link /0/@children.0/@children.4/@children.0/@link /0/@children.0/@children.4/@children.1/@children.0/@link /0/@children.0/@children.4/@children.1/@children.1/@link /0/@children.0/@children.4/@children.1/@children.2/@link /0/@children.0/@children.4/@children.1/@children.3/@link /0/@children.0/@children.4/@children.1/@children.4/@link /0/@children.0/@children.4/@children.1/@children.5/@link /0/@children.0/@children.4/@children.1/@children.6/@link /0/@children.0/@children.4/@children.1/@children.2/@children.0/@link /0/@children.0/@children.4/@children.1/@children.2/@children.1/@link /0/@children.0/@children.4/@children.1/@children.4/@children.0/@link /0/@children.0/@children.3/@children.1/@children.2/@children.0/@link /0/@children.0/@connections.0/@link /0/@children.0/@connections.0/@connectionDecorators.0/@link /0/@children.0/@connections.0/@connectionDecorators.1/@link /0/@children.0/@connections.1/@link /0/@children.0/@connections.1/@connectionDecorators.0/@link /0/@children.0/@connections.1/@connectionDecorators.1/@link /0/@children.0/@connections.2/@link /0/@children.0/@connections.2/@connectionDecorators.0/@link /0/@children.0/@connections.2/@connectionDecorators.1/@link /0/@children.0/@connections.3/@link /0/@children.0/@connections.3/@connectionDecorators.0/@link /0/@children.0/@connections.3/@connectionDecorators.1/@link /0/@children.0/@children.5/@link /0/@children.0/@children.5/@children.0/@link /0/@children.0/@children.5/@children.1/@link /0/@children.0/@children.5/@children.1/@children.0/@link /0/@children.0/@children.5/@children.1/@children.1/@link /0/@children.0/@children.5/@children.1/@children.2/@link /0/@children.0/@children.5/@children.1/@children.3/@link /0/@children.0/@children.5/@children.1/@children.4/@link /0/@children.0/@children.6/@link /0/@children.0/@children.6/@children.0/@link /0/@children.0/@children.6/@children.1/@link /0/@children.0/@children.6/@children.1/@children.0/@link /0/@children.0/@children.6/@children.1/@children.1/@link /0/@children.0/@children.6/@children.1/@children.2/@link /0/@children.0/@children.6/@children.1/@children.3/@link /0/@children.0/@children.6/@children.1/@children.4/@link /0/@children.0/@children.7/@link /0/@children.0/@children.7/@children.0/@link /0/@children.0/@children.7/@children.1/@link /0/@children.0/@children.7/@children.1/@children.0/@link /0/@children.0/@children.7/@children.1/@children.1/@link /0/@children.0/@children.7/@children.1/@children.2/@link /0/@children.0/@children.7/@children.1/@children.3/@link /0/@children.0/@children.7/@children.1/@children.4/@link /0/@children.0/@connections.4/@link /0/@children.0/@connections.4/@connectionDecorators.0/@link /0/@children.0/@connections.4/@connectionDecorators.1/@link /0/@children.0/@children.8/@link /0/@children.0/@children.8/@children.0/@link /0/@children.0/@children.8/@children.1/@link /0/@children.0/@children.8/@children.1/@children.0/@link /0/@children.0/@children.8/@children.1/@children.1/@link /0/@children.0/@children.8/@children.1/@children.2/@link /0/@children.0/@children.8/@children.1/@children.3/@link /0/@children.0/@children.8/@children.1/@children.4/@link" version="0.15.0">
+    <children xsi:type="pi:Diagram" visible="true" gridUnit="10" diagramTypeId="CROM_Diagram" name="Bank" snapToGrid="true" pictogramLinks="/0/@children.0/@link /0/@children.0/@children.0/@link /0/@children.0/@children.0/@children.1/@link /0/@children.0/@children.0/@children.0/@link /0/@children.0/@children.0/@children.1/@children.0/@link /0/@children.0/@children.0/@children.1/@children.1/@link /0/@children.0/@children.0/@children.1/@children.2/@link /0/@children.0/@children.0/@children.1/@children.3/@link /0/@children.0/@children.0/@children.1/@children.4/@link /0/@children.0/@children.1/@link /0/@children.0/@children.1/@children.1/@link /0/@children.0/@children.1/@children.0/@link /0/@children.0/@children.1/@children.1/@children.0/@link /0/@children.0/@children.1/@children.1/@children.1/@link /0/@children.0/@children.1/@children.1/@children.2/@link /0/@children.0/@children.1/@children.1/@children.3/@link /0/@children.0/@children.1/@children.1/@children.4/@link /0/@children.0/@children.0/@children.1/@children.2/@children.0/@link /0/@children.0/@children.0/@children.1/@children.2/@children.1/@link /0/@children.0/@children.0/@children.1/@children.2/@children.2/@link /0/@children.0/@children.0/@children.1/@children.2/@children.3/@link /0/@children.0/@children.1/@children.1/@children.2/@children.0/@link /0/@children.0/@children.1/@children.1/@children.2/@children.1/@link /0/@children.0/@children.1/@children.1/@children.2/@children.2/@link /0/@children.0/@children.1/@children.1/@children.2/@children.3/@link /0/@children.0/@children.2/@link /0/@children.0/@children.2/@children.1/@link /0/@children.0/@children.2/@children.0/@link /0/@children.0/@children.2/@children.1/@children.0/@link /0/@children.0/@children.2/@children.1/@children.1/@link /0/@children.0/@children.2/@children.1/@children.2/@link /0/@children.0/@children.2/@children.1/@children.3/@link /0/@children.0/@children.2/@children.1/@children.4/@link /0/@children.0/@children.2/@children.1/@children.2/@children.0/@link /0/@children.0/@children.2/@children.1/@children.2/@children.1/@link /0/@children.0/@children.2/@children.1/@children.4/@children.0/@link /0/@children.0/@children.2/@children.1/@children.4/@children.1/@link /0/@children.1/@link /0/@children.0/@children.3/@link /0/@children.0/@children.3/@children.1/@link /0/@children.0/@children.3/@children.0/@link /0/@children.0/@children.3/@children.1/@children.0/@link /0/@children.0/@children.3/@children.1/@children.1/@link /0/@children.0/@children.3/@children.1/@children.2/@link /0/@children.0/@children.3/@children.1/@children.3/@link /0/@children.0/@children.3/@children.1/@children.4/@link /0/@children.0/@children.3/@children.1/@children.5/@link /0/@children.0/@children.3/@children.1/@children.6/@link /0/@children.2/@link /0/@children.0/@children.4/@link /0/@children.0/@children.4/@children.1/@link /0/@children.0/@children.4/@children.0/@link /0/@children.0/@children.4/@children.1/@children.0/@link /0/@children.0/@children.4/@children.1/@children.1/@link /0/@children.0/@children.4/@children.1/@children.2/@link /0/@children.0/@children.4/@children.1/@children.3/@link /0/@children.0/@children.4/@children.1/@children.4/@link /0/@children.0/@children.4/@children.1/@children.5/@link /0/@children.0/@children.4/@children.1/@children.6/@link /0/@children.0/@children.4/@children.1/@children.2/@children.0/@link /0/@children.0/@children.4/@children.1/@children.2/@children.1/@link /0/@children.0/@children.4/@children.1/@children.4/@children.0/@link /0/@children.0/@children.3/@children.1/@children.2/@children.0/@link /0/@children.0/@connections.0/@link /0/@children.0/@connections.0/@connectionDecorators.0/@link /0/@children.0/@connections.0/@connectionDecorators.1/@link /0/@children.0/@connections.1/@link /0/@children.0/@connections.1/@connectionDecorators.0/@link /0/@children.0/@connections.1/@connectionDecorators.1/@link /0/@children.0/@connections.2/@link /0/@children.0/@connections.2/@connectionDecorators.0/@link /0/@children.0/@connections.2/@connectionDecorators.1/@link /0/@children.0/@connections.3/@link /0/@children.0/@connections.3/@connectionDecorators.0/@link /0/@children.0/@connections.3/@connectionDecorators.1/@link /0/@children.0/@children.5/@link /0/@children.0/@children.5/@children.0/@link /0/@children.0/@children.5/@children.1/@link /0/@children.0/@children.5/@children.1/@children.0/@link /0/@children.0/@children.5/@children.1/@children.1/@link /0/@children.0/@children.5/@children.1/@children.2/@link /0/@children.0/@children.5/@children.1/@children.3/@link /0/@children.0/@children.5/@children.1/@children.4/@link /0/@children.0/@children.6/@link /0/@children.0/@children.6/@children.0/@link /0/@children.0/@children.6/@children.1/@link /0/@children.0/@children.6/@children.1/@children.0/@link /0/@children.0/@children.6/@children.1/@children.1/@link /0/@children.0/@children.6/@children.1/@children.2/@link /0/@children.0/@children.6/@children.1/@children.3/@link /0/@children.0/@children.6/@children.1/@children.4/@link /0/@children.0/@children.7/@link /0/@children.0/@children.7/@children.0/@link /0/@children.0/@children.7/@children.1/@link /0/@children.0/@children.7/@children.1/@children.0/@link /0/@children.0/@children.7/@children.1/@children.1/@link /0/@children.0/@children.7/@children.1/@children.2/@link /0/@children.0/@children.7/@children.1/@children.3/@link /0/@children.0/@children.7/@children.1/@children.4/@link /0/@children.0/@connections.4/@link /0/@children.0/@connections.4/@connectionDecorators.0/@link /0/@children.0/@connections.4/@connectionDecorators.1/@link /0/@children.0/@children.8/@link /0/@children.0/@children.8/@children.0/@link /0/@children.0/@children.8/@children.1/@link /0/@children.0/@children.8/@children.1/@children.0/@link /0/@children.0/@children.8/@children.1/@children.1/@link /0/@children.0/@children.8/@children.1/@children.2/@link /0/@children.0/@children.8/@children.1/@children.3/@link /0/@children.0/@children.8/@children.1/@children.4/@link /0/@children.0/@children.3/@children.1/@children.4/@children.0/@link" version="0.15.0">
       <properties key="diagram kind" value="main_diagram"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" foreground="/0/@children.0/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
       <link businessObjects="/1"/>
@@ -210,12 +210,12 @@
         <link businessObjects="/1/@elements.3"/>
         <children xsi:type="pi:ContainerShape" visible="true" active="true">
           <properties key="shape id" value="shape_ct_shadow"/>
-          <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.2" foreground="/0/@children.0/@colors.2" lineWidth="1" transparency="0.0" width="301" height="231" x="313" y="13"/>
+          <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.2" foreground="/0/@children.0/@colors.2" lineWidth="1" transparency="0.0" width="301" height="271" x="313" y="13"/>
           <link businessObjects="/1/@elements.3"/>
         </children>
         <children xsi:type="pi:ContainerShape" visible="true" active="true">
           <properties key="shape id" value="shape_ct_typebody"/>
-          <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" foreground="/0/@children.0/@colors.3" lineWidth="1" transparency="0.0" width="301" height="231" x="310" y="10"/>
+          <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" foreground="/0/@children.0/@colors.3" lineWidth="1" transparency="0.0" width="301" height="271" x="310" y="10"/>
           <link businessObjects="/1/@elements.3"/>
           <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@children.0/@connections.0 /0/@children.0/@connections.1 /0/@children.0/@connections.2 /0/@children.0/@connections.3"/>
           <children visible="true">
@@ -233,7 +233,7 @@
           </children>
           <children xsi:type="pi:ContainerShape" visible="true">
             <properties key="shape id" value="shape_ct_attcontainer"/>
-            <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" lineWidth="1" lineVisible="false" transparency="0.0" width="295" height="64" x="3" y="23"/>
+            <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" lineWidth="1" lineVisible="false" transparency="0.0" width="295" height="77" x="3" y="23"/>
             <link businessObjects="/1/@elements.3"/>
             <children visible="true" active="true">
               <properties key="shape id" value="shape_att_text"/>
@@ -244,51 +244,52 @@
           <children visible="true">
             <properties key="shape id" value="shape_ct_secondline"/>
             <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0">
-              <points y="90"/>
-              <points x="301" y="90"/>
+              <points y="103"/>
+              <points x="301" y="103"/>
             </graphicsAlgorithm>
             <link businessObjects="/1/@elements.3"/>
           </children>
           <children xsi:type="pi:ContainerShape" visible="true">
             <properties key="shape id" value="shape_ct_opcontainer"/>
-            <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" lineWidth="1" lineVisible="false" transparency="0.0" width="295" height="64" x="3" y="93"/>
+            <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" lineWidth="1" lineVisible="false" transparency="0.0" width="295" height="77" x="3" y="106"/>
             <link businessObjects="/1/@elements.3"/>
+            <children visible="true" active="true">
+              <properties key="shape id" value="shape_op_text"/>
+              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="295" height="15" x="3" y="106" value="transfer(sourceId:Integer,target:Account,amount:Double)"/>
+              <link businessObjects="/1/@elements.3/@secondSegment/@elements.0"/>
+            </children>
           </children>
           <children visible="true">
             <properties key="shape id" value="shape_ct_thirdline"/>
             <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0">
-              <points y="160"/>
-              <points x="301" y="160"/>
+              <points y="186"/>
+              <points x="301" y="186"/>
             </graphicsAlgorithm>
             <link businessObjects="/1/@elements.3"/>
           </children>
           <children xsi:type="pi:ContainerShape" visible="true">
             <properties key="shape id" value="shape_ct_contentpreview"/>
-            <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" lineWidth="1" lineVisible="false" transparency="0.0" width="295" height="64" x="3" y="163"/>
+            <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.0/@colors.1" lineWidth="1" lineVisible="false" transparency="0.0" width="295" height="77" x="3" y="189"/>
             <link businessObjects="/1/@elements.3"/>
             <children visible="true" active="true">
               <properties key="shape id" value="shape_ct_element"/>
-              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="163" value="RoleType Customer"/>
+              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="189" value="RoleType Customer"/>
             </children>
             <children visible="true" active="true">
               <properties key="shape id" value="shape_ct_element"/>
-              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="178" value="RoleType MoneyTransfer"/>
+              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="204" value="RoleType MoneyTransfer"/>
             </children>
             <children visible="true" active="true">
               <properties key="shape id" value="shape_ct_element"/>
-              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="193" value="RoleType Consultant"/>
-            </children>
-            <children active="true">
-              <properties key="shape id" value="shape_ct_element"/>
-              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="208" value="RoleType CheckingAccount"/>
-            </children>
-            <children active="true">
-              <properties key="shape id" value="shape_ct_element"/>
-              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="223" value="RoleType SavingsAccount"/>
+              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="219" value="RoleType Consultant"/>
             </children>
             <children visible="true" active="true">
-              <properties key="shape id" value="shape_ct_indicator_dots"/>
-              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="208" value="..."/>
+              <properties key="shape id" value="shape_ct_element"/>
+              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="234" value="RoleType CheckingAccount"/>
+            </children>
+            <children visible="true" active="true">
+              <properties key="shape id" value="shape_ct_element"/>
+              <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.0/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="289" height="15" x="3" y="249" value="RoleType SavingsAccount"/>
             </children>
           </children>
         </children>
@@ -727,7 +728,7 @@
       <colors/>
       <colors red="192" green="192" blue="192"/>
     </children>
-    <children xsi:type="pi:Diagram" visible="true" gridUnit="10" diagramTypeId="CROM_Diagram" name="Bank" snapToGrid="true" pictogramLinks="/0/@children.1/@children.0/@link /0/@children.1/@children.0/@children.1/@link /0/@children.1/@children.0/@children.2/@link /0/@children.1/@children.0/@children.0/@link /0/@children.1/@children.0/@children.2/@children.0/@link /0/@children.1/@children.0/@children.2/@children.1/@link /0/@children.1/@children.0/@children.2/@children.2/@link /0/@children.1/@children.0/@children.2/@children.3/@link /0/@children.1/@children.0/@children.2/@children.4/@link /0/@children.1/@children.0/@children.2/@children.2/@children.0/@link /0/@children.1/@children.1/@link /0/@children.1/@children.1/@children.1/@link /0/@children.1/@children.1/@children.2/@link /0/@children.1/@children.1/@children.0/@link /0/@children.1/@children.1/@children.2/@children.0/@link /0/@children.1/@children.1/@children.2/@children.1/@link /0/@children.1/@children.1/@children.2/@children.2/@link /0/@children.1/@children.1/@children.2/@children.3/@link /0/@children.1/@children.1/@children.2/@children.4/@link /0/@children.1/@children.1/@children.2/@children.2/@children.0/@link /0/@children.1/@children.2/@link /0/@children.1/@children.2/@children.1/@link /0/@children.1/@children.2/@children.2/@link /0/@children.1/@children.2/@children.0/@link /0/@children.1/@children.2/@children.2/@children.0/@link /0/@children.1/@children.2/@children.2/@children.1/@link /0/@children.1/@children.2/@children.2/@children.2/@link /0/@children.1/@children.2/@children.2/@children.3/@link /0/@children.1/@children.2/@children.2/@children.4/@link /0/@children.1/@children.2/@children.2/@children.2/@children.0/@link /0/@children.1/@children.3/@link /0/@children.1/@children.3/@children.1/@link /0/@children.1/@children.3/@children.2/@link /0/@children.1/@children.3/@children.0/@link /0/@children.1/@children.3/@children.2/@children.0/@link /0/@children.1/@children.3/@children.2/@children.1/@link /0/@children.1/@children.3/@children.2/@children.2/@link /0/@children.1/@children.3/@children.2/@children.3/@link /0/@children.1/@children.3/@children.2/@children.4/@link /0/@children.1/@connections.0/@link /0/@children.1/@connections.0/@connectionDecorators.0/@link /0/@children.1/@connections.0/@connectionDecorators.1/@link /0/@children.1/@connections.0/@connectionDecorators.2/@link /0/@children.1/@connections.0/@connectionDecorators.3/@link /0/@children.1/@connections.1/@link /0/@children.1/@connections.1/@connectionDecorators.0/@link /0/@children.1/@connections.1/@connectionDecorators.1/@link /0/@children.1/@connections.1/@connectionDecorators.2/@link /0/@children.1/@connections.1/@connectionDecorators.3/@link /0/@children.1/@connections.1/@connectionDecorators.4/@link /0/@children.1/@children.4/@link /0/@children.1/@children.4/@children.1/@link /0/@children.1/@children.4/@children.2/@link /0/@children.1/@children.4/@children.0/@link /0/@children.1/@children.4/@children.2/@children.0/@link /0/@children.1/@children.4/@children.2/@children.1/@link /0/@children.1/@children.4/@children.2/@children.2/@link /0/@children.1/@children.4/@children.2/@children.3/@link /0/@children.1/@children.4/@children.2/@children.4/@link /0/@children.1/@connections.2/@link /0/@children.1/@connections.2/@connectionDecorators.0/@link /0/@children.1/@connections.2/@connectionDecorators.1/@link /0/@children.1/@connections.2/@connectionDecorators.2/@link /0/@children.1/@connections.2/@connectionDecorators.3/@link /0/@children.1/@children.3/@children.2/@children.2/@children.0/@link /0/@children.1/@children.4/@children.2/@children.2/@children.0/@link /0/@children.1/@children.3/@children.2/@children.4/@children.0/@link /0/@children.1/@children.4/@children.2/@children.4/@children.0/@link /0/@children.1/@children.0/@children.2/@children.4/@children.0/@link" version="0.15.0">
+    <children xsi:type="pi:Diagram" visible="true" gridUnit="10" diagramTypeId="CROM_Diagram" name="Bank" snapToGrid="true" pictogramLinks="/0/@children.1/@children.0/@link /0/@children.1/@children.0/@children.1/@link /0/@children.1/@children.0/@children.2/@link /0/@children.1/@children.0/@children.0/@link /0/@children.1/@children.0/@children.2/@children.0/@link /0/@children.1/@children.0/@children.2/@children.1/@link /0/@children.1/@children.0/@children.2/@children.2/@link /0/@children.1/@children.0/@children.2/@children.3/@link /0/@children.1/@children.0/@children.2/@children.4/@link /0/@children.1/@children.0/@children.2/@children.2/@children.0/@link /0/@children.1/@children.1/@link /0/@children.1/@children.1/@children.1/@link /0/@children.1/@children.1/@children.2/@link /0/@children.1/@children.1/@children.0/@link /0/@children.1/@children.1/@children.2/@children.0/@link /0/@children.1/@children.1/@children.2/@children.1/@link /0/@children.1/@children.1/@children.2/@children.2/@link /0/@children.1/@children.1/@children.2/@children.3/@link /0/@children.1/@children.1/@children.2/@children.4/@link /0/@children.1/@children.1/@children.2/@children.2/@children.0/@link /0/@children.1/@children.2/@link /0/@children.1/@children.2/@children.1/@link /0/@children.1/@children.2/@children.2/@link /0/@children.1/@children.2/@children.0/@link /0/@children.1/@children.2/@children.2/@children.0/@link /0/@children.1/@children.2/@children.2/@children.1/@link /0/@children.1/@children.2/@children.2/@children.2/@link /0/@children.1/@children.2/@children.2/@children.3/@link /0/@children.1/@children.2/@children.2/@children.4/@link /0/@children.1/@children.2/@children.2/@children.2/@children.0/@link /0/@children.1/@children.3/@link /0/@children.1/@children.3/@children.1/@link /0/@children.1/@children.3/@children.2/@link /0/@children.1/@children.3/@children.0/@link /0/@children.1/@children.3/@children.2/@children.0/@link /0/@children.1/@children.3/@children.2/@children.1/@link /0/@children.1/@children.3/@children.2/@children.2/@link /0/@children.1/@children.3/@children.2/@children.3/@link /0/@children.1/@children.3/@children.2/@children.4/@link /0/@children.1/@connections.0/@link /0/@children.1/@connections.0/@connectionDecorators.0/@link /0/@children.1/@connections.0/@connectionDecorators.1/@link /0/@children.1/@connections.0/@connectionDecorators.2/@link /0/@children.1/@connections.0/@connectionDecorators.3/@link /0/@children.1/@connections.1/@link /0/@children.1/@connections.1/@connectionDecorators.0/@link /0/@children.1/@connections.1/@connectionDecorators.1/@link /0/@children.1/@connections.1/@connectionDecorators.2/@link /0/@children.1/@connections.1/@connectionDecorators.3/@link /0/@children.1/@connections.1/@connectionDecorators.4/@link /0/@children.1/@children.4/@link /0/@children.1/@children.4/@children.1/@link /0/@children.1/@children.4/@children.2/@link /0/@children.1/@children.4/@children.0/@link /0/@children.1/@children.4/@children.2/@children.0/@link /0/@children.1/@children.4/@children.2/@children.1/@link /0/@children.1/@children.4/@children.2/@children.2/@link /0/@children.1/@children.4/@children.2/@children.3/@link /0/@children.1/@children.4/@children.2/@children.4/@link /0/@children.1/@connections.2/@link /0/@children.1/@connections.2/@connectionDecorators.0/@link /0/@children.1/@connections.2/@connectionDecorators.1/@link /0/@children.1/@connections.2/@connectionDecorators.2/@link /0/@children.1/@connections.2/@connectionDecorators.3/@link /0/@children.1/@children.3/@children.2/@children.2/@children.0/@link /0/@children.1/@children.4/@children.2/@children.2/@children.0/@link /0/@children.1/@children.3/@children.2/@children.4/@children.0/@link /0/@children.1/@children.4/@children.2/@children.4/@children.0/@link /0/@children.1/@children.0/@children.2/@children.4/@children.0/@link /0/@children.1/@connections.3/@link" version="0.15.0">
       <properties key="diagram kind" value="compartment_diagram"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@children.1/@colors.1" foreground="/0/@children.1/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
       <link businessObjects="/1/@elements.3/@model"/>
@@ -921,7 +922,7 @@
           <properties key="shape id" value="shape_rt_typebody"/>
           <graphicsAlgorithm xsi:type="al:RoundedRectangle" background="/0/@children.1/@colors.1" foreground="/0/@children.1/@colors.3" lineWidth="1" transparency="0.0" width="200" height="121" x="603" y="249" cornerHeight="40" cornerWidth="40"/>
           <link businessObjects="/1/@elements.3/@model/@elements.3"/>
-          <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@children.1/@connections.0"/>
+          <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@children.1/@connections.3" incomingConnections="/0/@children.1/@connections.0"/>
           <children visible="true">
             <properties key="shape id" value="shape_rt_name"/>
             <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="200" height="20" horizontalAlignment="ALIGNMENT_CENTER" value="CheckingAccount"/>
@@ -982,7 +983,7 @@
           <properties key="shape id" value="shape_rt_typebody"/>
           <graphicsAlgorithm xsi:type="al:RoundedRectangle" background="/0/@children.1/@colors.1" foreground="/0/@children.1/@colors.3" lineWidth="1" transparency="0.0" width="200" height="100" x="603" y="413" cornerHeight="40" cornerWidth="40"/>
           <link businessObjects="/1/@elements.3/@model/@elements.7"/>
-          <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@children.1/@connections.2"/>
+          <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@children.1/@connections.2 /0/@children.1/@connections.3"/>
           <children visible="true">
             <properties key="shape id" value="shape_rt_name"/>
             <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@children.1/@colors.3" lineWidth="1" filled="false" transparency="0.0" width="200" height="20" horizontalAlignment="ALIGNMENT_CENTER" value="SavingsAccount"/>
@@ -1107,6 +1108,26 @@
           <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" transparency="0.0" width="1" height="1"/>
           <link businessObjects="/1/@elements.3/@model/@elements.8"/>
           <anchors xsi:type="pi:ChopboxAnchor"/>
+        </connectionDecorators>
+      </connections>
+      <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.3/@children.2/@anchors.0" end="/0/@children.1/@children.4/@children.2/@anchors.0">
+        <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@children.1/@colors.2" lineWidth="2" lineStyle="DASH" filled="false" transparency="0.0"/>
+        <link businessObjects="/1/@elements.3/@model/@elements.9"/>
+        <connectionDecorators visible="true" locationRelative="true" location="1.0">
+          <properties key="shape id" value="shape_rc_decorator"/>
+          <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@children.1/@colors.2" lineWidth="2" filled="false" transparency="0.0">
+            <points y="10"/>
+            <points x="-15"/>
+            <points y="-10"/>
+          </graphicsAlgorithm>
+        </connectionDecorators>
+        <connectionDecorators visible="true" locationRelative="true">
+          <properties key="shape id" value="shape_rc_decorator"/>
+          <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@children.1/@colors.2" lineWidth="2" filled="false" transparency="0.0">
+            <points y="10"/>
+            <points x="-15"/>
+            <points y="-10"/>
+          </graphicsAlgorithm>
         </connectionDecorators>
       </connections>
       <colors red="227" green="238" blue="249"/>
@@ -1325,7 +1346,9 @@
       <firstSegment>
         <elements name="name:String"/>
       </firstSegment>
-      <secondSegment/>
+      <secondSegment>
+        <elements name="transfer(sourceId:Integer,target:Account,amount:Double)"/>
+      </secondSegment>
       <model>
         <elements xsi:type="org.framed.iorm.model:Shape" name="Customer" incomingRelations="/1/@elements.3/@model/@elements.5 /1/@elements.3/@model/@elements.6" outgoingRelations="/1/@elements.3/@model/@elements.4 /1/@elements.3/@model/@elements.8" type="RoleType">
           <firstSegment>
@@ -1350,7 +1373,7 @@
           <secondSegment/>
           <description name="*"/>
         </elements>
-        <elements xsi:type="org.framed.iorm.model:Shape" name="CheckingAccount" incomingRelations="/1/@elements.3/@model/@elements.4" type="RoleType">
+        <elements xsi:type="org.framed.iorm.model:Shape" name="CheckingAccount" incomingRelations="/1/@elements.3/@model/@elements.4" outgoingRelations="/1/@elements.3/@model/@elements.9" type="RoleType">
           <firstSegment>
             <elements name="limit:Double"/>
           </firstSegment>
@@ -1368,7 +1391,7 @@
           <targetLabel name="1..*"/>
         </elements>
         <elements xsi:type="org.framed.iorm.model:Relation" type="Irreflexive" target="/1/@elements.3/@model/@elements.0" source="/1/@elements.3/@model/@elements.2" referencedRelation="/1/@elements.3/@model/@elements.5"/>
-        <elements xsi:type="org.framed.iorm.model:Shape" name="SavingsAccount" incomingRelations="/1/@elements.3/@model/@elements.8" type="RoleType">
+        <elements xsi:type="org.framed.iorm.model:Shape" name="SavingsAccount" incomingRelations="/1/@elements.3/@model/@elements.8 /1/@elements.3/@model/@elements.9" type="RoleType">
           <firstSegment>
             <elements name="fee:Double"/>
           </firstSegment>
@@ -1381,6 +1404,7 @@
           <sourceLabel name="1..*"/>
           <targetLabel name="*"/>
         </elements>
+        <elements xsi:type="org.framed.iorm.model:Relation" type="RoleProhibition" target="/1/@elements.3/@model/@elements.7" source="/1/@elements.3/@model/@elements.3"/>
       </model>
     </elements>
     <elements xsi:type="org.framed.iorm.model:Shape" name="Transaction" incomingRelations="/1/@elements.12" outgoingRelations="/1/@elements.7">

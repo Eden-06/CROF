@@ -24,6 +24,11 @@
   </elements>
   <elements xsi:type="crom_l1_composed:CompartmentType" name="Bank">
     <attributes name="name" type="//@elements.5"/>
+    <operations name="transfer">
+      <params name="sourceId" type="//@elements.6"/>
+      <params name="target" type="//@elements.2"/>
+      <params name="amount" type="//@elements.7"/>
+    </operations>
     <parts>
       <role xsi:type="crom_l1_composed:RoleType" name="Customer" incoming="//@elements.3/@relationships.1" outgoing="//@elements.3/@relationships.0 //@elements.3/@relationships.2">
         <attributes name="id" type="//@elements.6"/>
@@ -69,6 +74,7 @@
       <second holder="//@elements.3/@parts.4/@role"/>
     </relationships>
     <constraints xsi:type="crom_l1_composed:Irreflexive" relation="//@elements.3/@relationships.1"/>
+    <constraints xsi:type="crom_l1_composed:RoleProhibition" first="//@elements.3/@parts.3/@role" second="//@elements.3/@parts.4/@role"/>
   </elements>
   <elements xsi:type="crom_l1_composed:CompartmentType" name="Transaction">
     <attributes name="amount" type="//@elements.7"/>
