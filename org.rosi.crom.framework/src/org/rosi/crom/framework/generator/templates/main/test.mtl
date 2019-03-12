@@ -33,37 +33,42 @@ public class Test {
 		peter.setFirstName("Peter");
 		Bank.Consultant con1=bank.bindConsultant(peter);
 		con1.setPhone("0176******");
-		Bank.Customer cu1=bank.bindCustomer(peter);
-		System.out.println(con1.addAdvises(cu1));
 		Person klaus=model.createPerson();
 		klaus.setFirstName("Klaus");
-		Bank.Customer cu2=bank.bindCustomer(klaus);
+		Bank.Customer cu1=bank.bindCustomer(klaus);
 		Company company=model.createCompany();
 		company.setName("Google");
-		Bank.Customer cu3=bank.bindCustomer(company);
-		System.out.println(con1.addAdvises(cu3));
+		Bank.Customer cu2=bank.bindCustomer(company);
+		con1.addAdvises(cu2);
+				
 		Account account1=model.createAccount();
+		account1.setId(1);
 		account1.setBalance(500.0);
 		Bank.SavingsAccount sa=bank.bindSavingsAccount(account1);
 		sa.setFee(0.05);
+		cu2.addOwn_sa(sa);
 		
 		Account account2=model.createAccount();
+		account1.setId(2);
 		account2.setBalance(2500.0);
-
 		Bank.CheckingAccount ca=bank.bindCheckingAccount(account2);
 		ca.setLimit(500.0);
-		cu3.addOwn_sa(sa);
-		cu2.addOwn_ca(ca);
+		cu1.addOwn_ca(ca);
+		
+		bank.transfer(1, (Account) ca, 500.0);
+		
+		factory.storeJson(model,"bank.croj");
+		Model loadedBank=factory.loadJson("bank.croj");
 		
 		Transaction t=model.createTransaction();
 		t.setAmount(500.0);
 		t.setCreationTime(1000000);
 		Bank.MoneyTransfer m=bank.bindMoneyTransfer(t);
+		Transaction.Source src=t.bindSource(account1);
+		Transaction.Target trg=t.bindTarget(account2);
+		src.addTrans(trg);
 		m.setExecution(1000001);
-		Transaction.Source so=t.bindSource(account1);
 		
-		Transaction.Target ta=t.bindTarget(account2);
-		so.addTrans(ta);
 
 
 		System.out.println("Object Schizo Test");
@@ -72,6 +77,8 @@ public class Test {
 		System.out.println(peter.isSame(peter));
 		System.out.println(peter.isSame(cu2));
 		System.out.println(peter.isSame(klaus));
+
+
 
 */
 
