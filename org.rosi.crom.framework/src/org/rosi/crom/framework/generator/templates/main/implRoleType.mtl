@@ -105,14 +105,14 @@ else [setRoleState(getSuper(aCompartmentType,relations),targetCompartmentType,re
 [let partnerRoleType:RoleType=getPartner(aRoleType,aRelationship)]
 @Override
 public List<[partnerRoleType.name.toUpperFirst()/]> get[aRelationship.name.toUpperFirst()/](){
-	return [aRelationship.name.toLowerFirst()/]Instance.get[partnerRoleType.name.toUpperFirst()/]s(this);
+	return [aRelationship.name.toLowerFirst()/]Extent.get[partnerRoleType.name.toUpperFirst()/]s(this);
 }
 @Override
 public boolean add[aRelationship.name.toUpperFirst()/]([partnerRoleType.name.toUpperFirst()/] [partnerRoleType.name.toLowerFirst()/]){
 [if(aRelationship.first.holder=aRoleType)]
-	return [aRelationship.name.toLowerFirst()/]Instance.add(this,[partnerRoleType.name.toLowerFirst()/]);
+	return [aRelationship.name.toLowerFirst()/]Extent.add(this,[partnerRoleType.name.toLowerFirst()/]);
 [else]
-	return [aRelationship.name.toLowerFirst()/]Instance.add([partnerRoleType.name.toLowerFirst()/],this);
+	return [aRelationship.name.toLowerFirst()/]Extent.add([partnerRoleType.name.toLowerFirst()/],this);
 [/if]
 }
 [/let]

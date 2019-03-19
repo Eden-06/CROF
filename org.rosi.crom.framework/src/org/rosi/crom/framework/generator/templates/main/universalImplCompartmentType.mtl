@@ -449,6 +449,6 @@ this.[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.put([aType.na
 
 [template private relationshipAttributes(relationships:OrderedSet(Relationship))]
 [for(aRelationship:Relationship|relationships)]
-private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirst()/]Instance=new [aRelationship.name.toUpperFirst()/]Impl();
+private [aRelationship.name.toUpperFirst()/]Impl [aRelationship.name.toLowerFirst()/]Extent=new [aRelationship.name.toUpperFirst()/]Impl();
 [/for]
 [/template]
