@@ -23,10 +23,18 @@ import java.util.Map;
 import [getPackagePath()/].*;
 
 public class [aCompartmentType.name.toUpperFirst()/]Impl implements [aCompartmentType.name.toUpperFirst()/]{
-	[aCompartmentType.name/]State state;
-	public [aCompartmentType.name/]Impl() {
+	protected [aCompartmentType.name/]State state;
+	private final Model model;
+
+	public [aCompartmentType.name/]Impl(Model model) {
 		state=new [aCompartmentType.name/]State();
 		state.compoundObject=this;
+		this.model=model;
+	}
+
+	@Override
+	public Model getModel(){
+		return this.model;
 	}
 
 	@Override

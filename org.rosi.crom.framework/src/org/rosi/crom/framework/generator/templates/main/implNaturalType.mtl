@@ -23,10 +23,17 @@ import [getPackagePath()/].*;
 
 public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
 	protected [aNaturalType.name/]State state;
+	private final Model model;
 
-	public [aNaturalType.name/]Impl() {
+
+	public [aNaturalType.name/]Impl(Model model) {
 		this.state=new [aNaturalType.name/]State();
 		this.state.compoundObject=this;
+		this.model=model;
+	}
+
+	private Model getModel(){
+		return this.model;
 	}
 
 	[implementProperties(aNaturalType,aModel.relations)/]

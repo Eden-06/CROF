@@ -402,7 +402,7 @@ public [aRoleType.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFi
 }
 [/template]
 
-
+[comment]The below method is never used[/comment]
 [template private ctConstructor(aCompartmentType : CompartmentType, relations:Set(Relation))]
 [if(hasConstructor(aCompartmentType))]
 [comment][for(p:Part | preparePartForConstructor(aCompartmentType))]

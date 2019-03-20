@@ -22,7 +22,18 @@ import java.util.Map;
 
 import [getPackagePath()/].*;
 
-public class [ct.name.toUpperFirst()/]Impl implements [ct.name.toUpperFirst()/]{	
+public class [ct.name.toUpperFirst()/]Impl implements [ct.name.toUpperFirst()/]{
+	private final Model model;
+
+	public [ct.name/]Impl(Model model) {
+		this.model=model;
+	}
+
+	@Override
+	public Model getModel(){
+		return this.model;
+	}
+	
 	[universalImplCompartmentType(ct,model)/]
 }
 [/file]

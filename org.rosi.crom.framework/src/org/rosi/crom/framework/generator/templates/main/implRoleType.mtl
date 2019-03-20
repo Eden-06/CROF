@@ -33,12 +33,13 @@ something wrong in aRoleTypeImpl.mtl line 15.
 [template private roleTypeImpl(aType:Type,aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
 public class [aType.name/][aRoleType.name/] extends [aType.name/]Impl implements [aRoleType.name/]{
 	[privateFields(aRoleType.attributes)/]
-
+	[comment]
 	public [aType.name/][aRoleType.name/](){
-		super();
+		super([getOwner(aRoleType).name.toUpperFirst()/]Impl.this.getModel());
 	}
+	[/comment]
 	public [aType.name/][aRoleType.name/]([aType.name/] [aType.name.toLowerFirst()/]){
-		super();
+		super([getOwner(aRoleType).name.toUpperFirst()/]Impl.this.getModel());
 [if(aType.oclIsKindOf(NaturalType))]
 [if(hasSub(aType.oclAsType(NaturalType),relations))]
 		[setRoleState(getLastSub(aType.oclAsType(NaturalType),relations),aType.oclAsType(NaturalType),relations)/]

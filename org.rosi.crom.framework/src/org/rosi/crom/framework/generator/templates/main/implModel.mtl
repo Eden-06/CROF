@@ -67,7 +67,7 @@ public class ModelImpl implements Model{
 	}
 	@Override
 	public [aModelElement.name/] create[aModelElement.name/](){
-		[aModelElement.name.toUpperFirst()/]Impl [aModelElement.name.toLowerFirst()/]=new [aModelElement.name.toUpperFirst()/]Impl();
+		[aModelElement.name.toUpperFirst()/]Impl [aModelElement.name.toLowerFirst()/]=new [aModelElement.name.toUpperFirst()/]Impl(this);
 		this.[aModelElement.name.toLowerFirst()/]s.add([aModelElement.name.toLowerFirst()/]);
 		return [aModelElement.name.toLowerFirst()/];
 	}
