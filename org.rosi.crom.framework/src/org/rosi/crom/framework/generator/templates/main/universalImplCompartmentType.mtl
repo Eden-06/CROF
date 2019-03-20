@@ -206,9 +206,9 @@ public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aC
 [template private ntbindFunktion(aNaturalType:NaturalType,aRoleType : RoleType,relations:Set(Relation))]
 @Override
 public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
-	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aNaturalType.name.toLowerFirst()/])) {
-			return [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aNaturalType.name.toLowerFirst()/])) {
+			return [aRoleType.name.toLowerFirst()/];
 		}
 	}
 	[aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role = new [aNaturalType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([aNaturalType.name.toLowerFirst()/]);
@@ -238,9 +238,9 @@ else [addRole(getSuper(aNaturalType,relations),targetNaturlType,aRoleType,relati
 [template private ctbindFunktion(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] bind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
-	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aCompartmentType.name.toLowerFirst()/])) {
-			return [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aCompartmentType.name.toLowerFirst()/])) {
+			return [aRoleType.name.toLowerFirst()/];
 		}
 	}
 	[aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] role = new [aCompartmentType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](([aCompartmentType.name.toUpperFirst()/]Impl) [aCompartmentType.name.toLowerFirst()/]);
@@ -287,9 +287,9 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toU
 [template private ntUnbindFunktion(aNaturalType:NaturalType,aRoleType : RoleType)]
 @Override
 public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
-	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aNaturalType.name.toLowerFirst()/])) {
-			[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aNaturalType.name.toLowerFirst()/])) {
+			[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove([aRoleType.name.toLowerFirst()/]);
 			return [aNaturalType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 		}
 	}
@@ -300,9 +300,9 @@ public boolean unbind[aRoleType.name.toUpperFirst()/]([aNaturalType.name.toUpper
 [template private ctUnbindFunktion(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public boolean unbind[aRoleType.name.toUpperFirst()/]([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
-	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aCompartmentType.name.toLowerFirst()/])) {
-			[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aCompartmentType.name.toLowerFirst()/])) {
+			[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove([aRoleType.name.toLowerFirst()/]);
 			return [aCompartmentType.name.toLowerFirst()/].remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/](this);
 		}
 	}
@@ -354,9 +354,10 @@ public [aRoleType.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFi
 public List<[aNaturalType.name.toUpperFirst()/]> getRole([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
 	List<[aNaturalType.name.toUpperFirst()/]> list=new ArrayList<[aNaturalType.name.toUpperFirst()/]>();
 [for(aRoleType:RoleType|roleTypes)]
-	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aNaturalType.name.toLowerFirst()/])) {
-			list.add(([aNaturalType.name.toUpperFirst()/])[aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i));break;
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aNaturalType.name.toLowerFirst()/])) {
+			list.add(([aNaturalType.name.toUpperFirst()/])[aRoleType.name.toLowerFirst()/]);
+			break;
 		}
 	}
 [/for]
@@ -367,9 +368,9 @@ public List<[aNaturalType.name.toUpperFirst()/]> getRole([aNaturalType.name.toUp
 [template private ntgetRole(aNaturalType : NaturalType,aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] getRole([aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]){
-	for (int i = 0; i < [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aNaturalType.name.toLowerFirst()/])) {
-			return [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aNaturalType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aNaturalType.name.toLowerFirst()/])) {
+			return [aRoleType.name.toLowerFirst()/];
 		}
 	}
 	return null;
@@ -380,9 +381,10 @@ public [aRoleType.name.toUpperFirst()/] getRole([aNaturalType.name.toUpperFirst(
 public List<[aCompartmentType.name.toUpperFirst()/]> getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
 	List<[aCompartmentType.name.toUpperFirst()/]> list=new ArrayList<[aCompartmentType.name.toUpperFirst()/]>();
 [for(aRoleType:RoleType|roleTypes)]
-	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aCompartmentType.name.toLowerFirst()/])) {
-			list.add(([aCompartmentType.name.toUpperFirst()/])[aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i));break;
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aCompartmentType.name.toLowerFirst()/])) {
+			list.add(([aCompartmentType.name.toUpperFirst()/])[aRoleType.name.toLowerFirst()/]);
+			break;
 		}
 	}
 [/for]
@@ -393,9 +395,9 @@ public List<[aCompartmentType.name.toUpperFirst()/]> getRole([aCompartmentType.n
 [template private ctgetRole(aCompartmentType:CompartmentType, aRoleType : RoleType)]
 @Override
 public [aRoleType.name.toUpperFirst()/] getRole([aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]){
-	for (int i = 0; i < [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size(); i++) {
-		if ([aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).isSame([aCompartmentType.name.toLowerFirst()/])) {
-			return [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+	for ([aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aCompartmentType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s) {
+		if ([aRoleType.name.toLowerFirst()/].isSame([aCompartmentType.name.toLowerFirst()/])) {
+			return [aRoleType.name.toLowerFirst()/];
 		}
 	}
 	return null;

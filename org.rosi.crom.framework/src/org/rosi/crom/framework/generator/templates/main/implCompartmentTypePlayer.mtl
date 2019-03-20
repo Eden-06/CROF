@@ -82,8 +82,8 @@ public boolean isSame(Object object){
 [for(aRoleType:RoleType|roleTypes)]
 @Override
 public boolean has[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
-	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
-		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+	for([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: state.[aRoleType.name.toLowerFirst()/]s){
+		if([aRoleType.name.toLowerFirst()/].getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
 			return true;
 		}
 	}
@@ -91,9 +91,9 @@ public boolean has[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toU
 }
 @Override
 public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
-	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++){
-		if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
-			return state.[aRoleType.name.toLowerFirst()/]s.get(i);
+	for([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: state.[aRoleType.name.toLowerFirst()/]s){
+		if([aRoleType.name.toLowerFirst()/].getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return [aRoleType.name.toLowerFirst()/];
 		}
 	}
 	return null;
@@ -104,19 +104,20 @@ public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFi
 }
 @Override
 public boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
-	if(state.[aRoleType.name.toLowerFirst()/]s.contains([aRoleType.name.toLowerFirst()/]))
-			return false;
-		return state.[aRoleType.name.toLowerFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
+	if(state.[aRoleType.name.toLowerFirst()/]s.contains([aRoleType.name.toLowerFirst()/])) {
+		return false;
+	}
+	return state.[aRoleType.name.toLowerFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
 }
 @Override
 public boolean remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
-	for(int i=0;i<state.[aRoleType.name.toLowerFirst()/]s.size();i++) {
-			if(state.[aRoleType.name.toLowerFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
-				state.[aRoleType.name.toLowerFirst()/]s.remove(i);
-				return true;
-			}
+	for([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: state.[aRoleType.name.toLowerFirst()/]s){
+		if([aRoleType.name.toLowerFirst()/].getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
+			state.[aRoleType.name.toLowerFirst()/]s.remove([aRoleType.name.toLowerFirst()/]);
+			return true;
 		}
-		return false;
+	}
+	return false;
 }
 [/for]
 [/let]

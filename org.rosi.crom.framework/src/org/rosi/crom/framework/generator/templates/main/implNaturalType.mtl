@@ -25,7 +25,6 @@ public class [aNaturalType.name/]Impl implements [aNaturalType.name/]{
 	protected [aNaturalType.name/]State state;
 	private final Model model;
 
-
 	public [aNaturalType.name/]Impl(Model model) {
 		this.state=new [aNaturalType.name/]State();
 		this.state.compoundObject=this;
@@ -88,18 +87,19 @@ public boolean isSame(Object object){
 [for(aRoleType:RoleType|roleTypes)]
 @Override
 public boolean has[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
-	for(int i=0;i<state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++){
-		if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+	for([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s){
+		if([aRoleType.name.toLowerFirst()/].getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
 			return true;
 		}
 	}
 	return false;
 }
+
 @Override
 public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name.toUpperFirst()/] [getOwner(aRoleType).name.toLowerFirst()/]){
-	for(int i=0;i<state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++){
-		if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
-			return this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
+	for([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s){
+		if([aRoleType.name.toLowerFirst()/].getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			return [aRoleType.name.toLowerFirst()/];
 		}
 	}
 	return null;
@@ -109,21 +109,23 @@ public [getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()
 public List<[getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/]> get[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(){
 	return Collections.unmodifiableList(this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s);
 }
+
 @Override
 public boolean add[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]) {
-	if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.contains([aRoleType.name.toLowerFirst()/]))
-			return false;
-		return this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
+	if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.contains([aRoleType.name.toLowerFirst()/])) {
+		return false;
+	}
+	return this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add([aRoleType.name.toLowerFirst()/]);
 }
 @Override
 public boolean remove[getOwner(aRoleType).name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]([getOwner(aRoleType).name/] [getOwner(aRoleType).name.toLowerFirst()/]){
-	for(int i=0;i<state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++) {
-			if(state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])) {
-				this.state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove(i);
-				return true;
-			}
+	for([getOwner(aRoleType).name.toUpperFirst()/].[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s){
+		if([aRoleType.name.toLowerFirst()/].getOwner().equals([getOwner(aRoleType).name.toLowerFirst()/])){
+			state.[getOwner(aRoleType).name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.remove([aRoleType.name.toLowerFirst()/]);
+			return true;
 		}
-		return false;
+	}	
+	return false;
 }
 [/for]
 [/let]

@@ -38,13 +38,13 @@ public class Deserializer{
 [let aDataType:DataType=aModelElement.oclAsType(DataType)]
 [if(notJavaType(aDataType))]
 	public void exchange[aDataType.name.toUpperFirst()/](List<Crof[aDataType.name.toUpperFirst()/]> crof[aDataType.name.toUpperFirst()/]s){
-		for(int i=0;i<crof[aDataType.name.toUpperFirst()/]s.size();i++) {
+		for(Crof[aDataType.name.toUpperFirst()/] crof[aDataType.name.toUpperFirst()/]: crof[aDataType.name.toUpperFirst()/]s) {
 			[aDataType.name.toUpperFirst()/] [aDataType.name.toLowerFirst()/]=model.create[aDataType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aDataType.attributes)]
 [if(notJavaType(aAttribute.type))]
-			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aDataType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
-			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aDataType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+			[aDataType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aDataType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]());
 [/if]
 [/for]
 			[superType(aDataType,aDataType, aModel.relations)/]
@@ -55,13 +55,13 @@ public class Deserializer{
 [elseif(aModelElement.oclIsKindOf(NaturalType))]
 [let aNaturalType:NaturalType=aModelElement.oclAsType(NaturalType)]
 	public void exchange[aNaturalType.name.toUpperFirst()/](List<Crof[aNaturalType.name.toUpperFirst()/]> crof[aNaturalType.name.toUpperFirst()/]s){
-		for(int i=0;i<crof[aNaturalType.name.toUpperFirst()/]s.size();i++) {
+		for(Crof[aNaturalType.name.toUpperFirst()/] crof[aNaturalType.name.toUpperFirst()/]: crof[aNaturalType.name.toUpperFirst()/]s) {
 			[aNaturalType.name.toUpperFirst()/] [aNaturalType.name.toLowerFirst()/]=model.create[aNaturalType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aNaturalType.attributes)]
 [if(notJavaType(aAttribute.type))]
-			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aNaturalType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
-			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aNaturalType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+			[aNaturalType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aNaturalType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]());
 [/if]
 [/for]
 			[superType(aNaturalType,aNaturalType, aModel.relations)/]
@@ -71,13 +71,13 @@ public class Deserializer{
 [elseif(aModelElement.oclIsKindOf(CompartmentType))]
 [let aCompartmentType:CompartmentType=aModelElement.oclAsType(CompartmentType)]
 	public void exchange[aCompartmentType.name.toUpperFirst()/](List<Crof[aCompartmentType.name.toUpperFirst()/]> crof[aCompartmentType.name.toUpperFirst()/]s){
-		for(int i=0;i<crof[aCompartmentType.name.toUpperFirst()/]s.size();i++) {
+		for(Crof[aCompartmentType.name.toUpperFirst()/] crof[aCompartmentType.name.toUpperFirst()/]: crof[aCompartmentType.name.toUpperFirst()/]s) {
 			[aCompartmentType.name.toUpperFirst()/] [aCompartmentType.name.toLowerFirst()/]=model.create[aCompartmentType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aCompartmentType.attributes)]
 [if(notJavaType(aAttribute.type))]
-			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aCompartmentType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]Position()));
+			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aCompartmentType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
-			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/]s.get(i).get[aAttribute.name.toUpperFirst()/]());
+			[aCompartmentType.name.toLowerFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]());
 [/if]
 [/for]
 		}
@@ -94,8 +94,8 @@ public class Deserializer{
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String line = reader.readLine();
             do {  
-            		str+=line+"\n";
-            		line = reader.readLine();
+            	str+=line+"\n";
+            	line = reader.readLine();
             }  while(line != null);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -177,8 +177,7 @@ something wrong in rtModel.mtl line 21.
 [/for]
 [for(aRelationship:Relationship|aCompartmentType.relationships)]
 	List<Crof[aRelationship.name.toUpperFirst()/]> crof[aRelationship.name.toUpperFirst()/]s = crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRelationship.name.toUpperFirst()/]();
-	for(int i=0;i<crof[aRelationship.name.toUpperFirst()/]s.size();i++){
-		Crof[aRelationship.name.toUpperFirst()/] crof[aRelationship.name.toUpperFirst()/]=crof[aRelationship.name.toUpperFirst()/]s.get(i);
+	for(Crof[aRelationship.name.toUpperFirst()/] crof[aRelationship.name.toUpperFirst()/]: crof[aRelationship.name.toUpperFirst()/]s) {
 		[exchangeRelationship(aRelationship,relations)/]
 	}
 [/for]
@@ -188,9 +187,8 @@ something wrong in rtModel.mtl line 21.
 [template public exchangeRelations(aCompartmentType : CompartmentType, aRoleType : RoleType, aType:Type,relations:Set(Relation))]
 List<Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s=crof[aCompartmentType.name.toUpperFirst()/].getCrof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s();
 List<[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> [aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
-for(int i=0;i<crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.size();i++) {
+for(Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]: crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s) {
 	[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]=null;
-	Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/]=crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.get(i);
 [if(aType.oclIsKindOf(CompartmentType))]
 	[findLastSubCompartmentTypePlayer(aCompartmentType, aRoleType, aType,aType.oclAsType(CompartmentType),relations)/]
 [elseif(aType.oclIsKindOf(NaturalType))]
@@ -199,9 +197,9 @@ for(int i=0;i<crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.
 [/if]
 [for(aAttribute:Attribute|aRoleType.attributes)]
 [if(notJavaType(aAttribute.type))]
-	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get([aType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]Position()));
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](((List<[aAttribute.type.name.toUpperFirst()/]>)model.get[aAttribute.type.name.toUpperFirst()/]()).get(crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get(crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]Position()));
 [else]
-	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get(crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s.get(i).getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]());
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/](crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s().get(crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].getPlayedPosition()).get[aAttribute.name.toUpperFirst()/]());
 [/if]
 [/for]
 	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add([aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]);
@@ -261,7 +259,7 @@ else if([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPla
 [/template]
 
 [template private playerExchangeRelation(aCompartmentType : CompartmentType, aRoleType : RoleType, targetType:Type,subType:Type)]
-[targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]=([aCompartmentType.name.toUpperFirst()/]Impl.[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[aCompartmentType.name.toLowerFirst()/].bind[aRoleType.name.toUpperFirst()/](model.get[subType.name.toUpperFirst()/]().get([targetType.name.toLowerFirst()/][aRoleType.name.toLowerFirst()/].getPlayerPosition()));
+[targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]=([aCompartmentType.name.toUpperFirst()/]Impl.[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[aCompartmentType.name.toLowerFirst()/].bind[aRoleType.name.toUpperFirst()/](model.get[subType.name.toUpperFirst()/]().get(crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].getPlayerPosition()));
 [/template]
 
 

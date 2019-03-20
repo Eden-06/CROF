@@ -21,17 +21,15 @@ import [getPackagePath()/].util.*;
 
 
 public class FactoryImpl implements Factory{
+
 	@Override
 	public Model createModel() {
 		return new ModelImpl();
 	}
 
-
-
 	public static Factory init(){
 		return new FactoryImpl();	
 	}
-
 
 [comment]	@Override
 	public void storeXML(Model model){
