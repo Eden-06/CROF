@@ -12,7 +12,7 @@
                class="org.rosi.crom.framework.popupMenus.AcceleoGenerateAction"
                id="org.crof.generator.popupMenus.acceleoGenerateAcceleoAction"
                label="CROM Framework"
-               menubarPath="org.rosi.crom.toformal.menu/group1">
+               menubarPath="org.rosi.crom.metamodel.menu/group1">
          </action>
       </objectContribution>
    </extension>
