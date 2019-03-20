@@ -20,6 +20,7 @@ package [getPackagePath()/].crof;
 
 import java.util.List;
 import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
 
 public class Crof[aCompartmentType.name.toUpperFirst()/][addExtends(aCompartmentType,aModel.relations)/]{	
@@ -61,14 +62,17 @@ something wrong in rtModel.mtl line 21.
 [/template]
 
 [template private roleTypeAttributesFunctions(aRoleType : RoleType)]
+@SerializedName("[aRoleType.name.toLowerFirst()/]s")
 List<Crof[aRoleType.name.toUpperFirst()/]> crof[aRoleType.name.toUpperFirst()/]s=new ArrayList<Crof[aRoleType.name.toUpperFirst()/]>();
 
 public void setCrof[aRoleType.name.toUpperFirst()/]s(List<Crof[aRoleType.name.toUpperFirst()/]> crof[aRoleType.name.toUpperFirst()/]s){
 	this.crof[aRoleType.name.toUpperFirst()/]s=crof[aRoleType.name.toUpperFirst()/]s;
 }
+
 public List<Crof[aRoleType.name.toUpperFirst()/]> getCrof[aRoleType.name.toUpperFirst()/]s(){
 	return crof[aRoleType.name.toUpperFirst()/]s;
 }
+
 [/template]
 
 [template private relationAttributes(aCompartmentType : CompartmentType,relations : Set(Relation))]
@@ -92,25 +96,31 @@ something wrong in rtModel.mtl line 21.
 [/template]
 
 [template private relationAttributesFunctions(aType:Type,aRoleType : RoleType,relationships:OrderedSet(Relationship),constraints:OrderedSet(Constraint),relations:Set(Relation))]
+@SerializedName("[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s")
 List<Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
 
 public void setCrof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(List<Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s){
 	this.crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s=crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
+
 public List<Crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> getCrof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s(){
 	return crof[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s;
 }
+
 [/template]
 
 [template private relationshipAttributes(aRelationship : Relationship) ]
+@SerializedName("[aRelationship.name.toLowerFirst()/]s")
 List<Crof[aRelationship.name.toUpperFirst()/]> crof[aRelationship.name.toUpperFirst()/]=new ArrayList<Crof[aRelationship.name.toUpperFirst()/]>();
 
 public void setCrof[aRelationship.name.toUpperFirst()/](List<Crof[aRelationship.name.toUpperFirst()/]> crof[aRelationship.name.toUpperFirst()/]){
 	this.crof[aRelationship.name.toUpperFirst()/]=crof[aRelationship.name.toUpperFirst()/];
 }
+
 public List<Crof[aRelationship.name.toUpperFirst()/]> getCrof[aRelationship.name.toUpperFirst()/](){
 	return crof[aRelationship.name.toUpperFirst()/];
 }
+
 [/template]
 
 

@@ -357,9 +357,9 @@ else if([targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].getPla
 
 [template private playerExchangeRelation(subType:Type,targetType:Type,aCompartmentType : CompartmentType, aRoleType : RoleType)]
 int playerPosition=model.getIndex(([subType.name.toUpperFirst()/])[targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].getPlayer());
-crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayer("Crof[subType.name.toUpperFirst()/]@"+playerPosition);			
+crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayer("[subType.name.toUpperFirst()/]@"+playerPosition);			
 int playedPosition=crof[aRoleType.name.toUpperFirst()/]s.size()-1;
-crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayed("Crof[aRoleType.name.toUpperFirst()/]@"+playedPosition);
+crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayed("[aRoleType.name.toUpperFirst()/]@"+playedPosition);
 [/template]
 
 
