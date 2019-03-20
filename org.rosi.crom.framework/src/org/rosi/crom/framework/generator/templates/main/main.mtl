@@ -8,7 +8,7 @@
 [import org::rosi::crom::framework::generator::templates::main::mainNaturalType/]
 [import org::rosi::crom::framework::generator::templates::main::mainCompartmentType/]
 [import org::rosi::crom::framework::generator::templates::main::mainFactory/]
-[import org::rosi::crom::framework::generator::templates::main::test/]
+[import org::rosi::crom::framework::generator::templates::main::generateMain/]
 [import org::rosi::crom::framework::generator::templates::main::mainEnum/]
 [import org::rosi::crom::framework::generator::templates::main::mainModel/]
 [import org::rosi::crom::framework::generator::templates::main::serializer/]
@@ -34,7 +34,7 @@
 [mainFactory()/]
 [mainEnum()/]
 [mainModel()/]
-[test()/]
+[main()/]
 [/template]
 
 
