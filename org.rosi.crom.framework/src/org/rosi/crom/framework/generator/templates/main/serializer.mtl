@@ -250,16 +250,15 @@ something wrong in rtModel.mtl line 21.
 
 [template private exchangeRelations(aCompartmentType : CompartmentType, aRoleType : RoleType, aType:Type,relations:Set(Relation))]
 List<[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]> [aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s=new ArrayList<[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]>();
-for(int i=0;i<[aCompartmentType.name.toLowerFirst()/]Impl.get[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s().size();i++) {
-	[aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/] [aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]=([aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[aCompartmentType.name.toLowerFirst()/]Impl.get[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s().get(i);
-	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add([aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]);
+for([aCompartmentType.name.toUpperFirst()/]Impl.[aRoleType.name.toUpperFirst()/] [aRoleType.name.toLowerFirst()/]: [aCompartmentType.name.toLowerFirst()/]Impl.get[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/]s()) {
+	[aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/]s.add(([aCompartmentType.name.toUpperFirst()/]Impl.[aType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/])[aRoleType.name.toLowerFirst()/]);
 	Crof[aRoleType.name.toUpperFirst()/] crof[aRoleType.name.toUpperFirst()/]= new Crof[aRoleType.name.toUpperFirst()/]();
 [for(aAttribute:Attribute|aRoleType.attributes)]
 [if(notJavaType(aAttribute.type))]
-	int position[aAttribute.name.toUpperFirst()/]=model.getIndex([aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]());
+	int position[aAttribute.name.toUpperFirst()/]=model.getIndex([aRoleType.name.toLowerFirst()/].get[aAttribute.name.toUpperFirst()/]());
 	crof[aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/]("[aAttribute.type.name.toUpperFirst()/]@"+position[aAttribute.name.toUpperFirst()/]);
 [else]
-	crof[aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/]([aType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].get[aAttribute.name.toUpperFirst()/]());
+	crof[aRoleType.name.toUpperFirst()/].set[aAttribute.name.toUpperFirst()/]([aRoleType.name.toLowerFirst()/].get[aAttribute.name.toUpperFirst()/]());
 [/if]	
 [/for]	
 	List<Crof[aRoleType.name.toUpperFirst()/]> crof[aRoleType.name.toUpperFirst()/]s=crof[aCompartmentType.name.toUpperFirst()/].getCrof[aRoleType.name.toUpperFirst()/]s();
@@ -356,7 +355,7 @@ else if([targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].getPla
 [/template]
 
 [template private playerExchangeRelation(subType:Type,targetType:Type,aCompartmentType : CompartmentType, aRoleType : RoleType)]
-int playerPosition=model.getIndex(([subType.name.toUpperFirst()/])[targetType.name.toLowerFirst()/][aRoleType.name.toUpperFirst()/].getPlayer());
+int playerPosition=model.getIndex(([subType.name.toUpperFirst()/])[aRoleType.name.toLowerFirst()/].getPlayer());
 crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayer("[subType.name.toUpperFirst()/]@"+playerPosition);			
 int playedPosition=crof[aRoleType.name.toUpperFirst()/]s.size()-1;
 crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayed("[aRoleType.name.toUpperFirst()/]@"+playedPosition);
@@ -368,12 +367,10 @@ crof[targetType.name.toUpperFirst()/][aRoleType.name.toUpperFirst()/].setPlayed(
 [let first:RoleType=aRelationship.first.holder]
 [let second:RoleType=aRelationship.second.holder]
 [for(firstPlayer:Type|getPlayers(first,relations))]
-for(int i=0;i<[firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]s.size();i++){
-	[getOwner(first).name.toUpperFirst()/]Impl.[firstPlayer.name.toUpperFirst()/][first.name.toUpperFirst()/] [firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]=([getOwner(first).name.toUpperFirst()/]Impl.[firstPlayer.name.toUpperFirst()/][first.name.toUpperFirst()/])[firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]s.get(i);
+for([getOwner(first).name.toUpperFirst()/]Impl.[firstPlayer.name.toUpperFirst()/][first.name.toUpperFirst()/] [firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]: [firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/]s){
 	List<[getOwner(first).name.toUpperFirst()/].[second.name.toUpperFirst()/]> [second.name.toLowerFirst()/]s=[firstPlayer.name.toLowerFirst()/][first.name.toUpperFirst()/].get[aRelationship.name.toUpperFirst()/]();
 	if(![second.name.toLowerFirst()/]s.isEmpty()) {
-		for(int j=0;j<[second.name.toLowerFirst()/]s.size();j++){
-			[getOwner(first).name.toUpperFirst()/].[second.name.toUpperFirst()/] [second.name.toLowerFirst()/]=[second.name.toLowerFirst()/]s.get(j);
+		for([getOwner(first).name.toUpperFirst()/].[second.name.toUpperFirst()/] [second.name.toLowerFirst()/]: [second.name.toLowerFirst()/]s){
 		[for(secondPlayer:Type|getPlayers(second,relations))]
 			if([second.name.toLowerFirst()/] instanceof [getOwner(second).name.toUpperFirst()/]Impl.[secondPlayer.name.toUpperFirst()/][second.name.toUpperFirst()/] && [second.name.toLowerFirst()/].getPlayer().getClass().getName().substring([second.name.toLowerFirst()/].getPlayer().getClass().getName().lastIndexOf(".")+1).equals("[secondPlayer.name.toUpperFirst()/]Impl")){
 				[getOwner(second).name.toUpperFirst()/]Impl.[secondPlayer.name.toUpperFirst()/][second.name.toUpperFirst()/] [secondPlayer.name.toLowerFirst()/][second.name.toUpperFirst()/]=([getOwner(second).name.toUpperFirst()/]Impl.[secondPlayer.name.toUpperFirst()/][second.name.toUpperFirst()/])[second.name.toLowerFirst()/];
