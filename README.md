@@ -62,11 +62,9 @@ After installing and running the plugin, a new Eclipse Instance is opened.
         public void transfer(int sourceId, Account target, double amount){
           if (amount<=0) throw new IllegalArgumentException();
           //find source account by id
-          Optional<Account> as=Stream
-				        .concat(accountSavingsAccounts.stream(), accountCheckingAccounts.stream())
-				        .map(a -> (Account) a)
-				        .filter(a -> a.getId()==id)
-				        .findFirst();
+          java.util.Optional<Account> as=java.util.stream.Stream
+            .concat(accountSavingsAccounts.stream(), accountCheckingAccounts.stream())
+            .map(a -> (Account) a).filter(a -> a.getId()==sourceId).findFirst();
           Account source=as.orElse(null);
           if (source!=null && target!=null && (!source.isSame(target))){
             //Create a Transaction compartment
@@ -74,7 +72,7 @@ After installing and running the plugin, a new Eclipse Instance is opened.
             t.bindSource(source);
             t.bindTarget(target);
             t.setAmount(amount);
-            t.setCreationTime(Instant.now().getNano());
+            t.setCreationTime(java.time.Instant.now().getNano());
             this.bindMoneyTransfer(t);
             System.out.println("Transaction created: "+t.toString());
           }else {
@@ -84,4 +82,6 @@ After installing and running the plugin, a new Eclipse Instance is opened.
         ```
 
 8. Finally, the `Main.java` can be run as plain Java Application via the context menu "Run > Java Application".
+9. After a successful run, two model instances are persisted as json files, i.e., `bank.croj` and `instances/model.croj`. These can be inspected as needed
+
 
