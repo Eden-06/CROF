@@ -82,6 +82,8 @@ After installing and running the plugin, a new Eclipse Instance is opened.
         ```
 
 8. Finally, the `Main.java` can be run as plain Java Application via the context menu "Run > Java Application".
-9. After a successful run, two model instances are persisted as json files, i.e., `bank.croj` and `instances/model.croj`. These can be inspected as needed
+9. After a successful run, two model instances are persisted as json files, i.e., `bank.croj` and `instances/model.croj`. These can be inspected as needed.
+
+After setting everything up you can modify the `Main.java` to create different model instances, or modify the `bank.crom` file and regenerate the model code to add new naturals, roles, and compartments.
 
 
