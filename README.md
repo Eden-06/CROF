@@ -55,7 +55,7 @@ After installing and running the plugin, a new Eclipse Instance is opened.
 6. Uncomment the source code to programmatically create, store and load a model instance.
 7. Because the implementation of the `Bank.transfer` is still empty, the model cannot be run yet.
     1. Open the `BankImpl.java` in the `src/impl` folder.
-    2. Find the `transfer` method and repalce the method implementation by the following code.
+    2. Find the `transfer` method and replace the method implementation by the following code.
 
         ```{Java}
         @Override
@@ -84,6 +84,6 @@ After installing and running the plugin, a new Eclipse Instance is opened.
 8. Finally, the `Main.java` can be run as plain Java Application via the context menu "Run > Java Application".
 9. After a successful run, two model instances are persisted as json files, i.e., `bank.croj` and `instances/model.croj`. These can be inspected as needed.
 
-After setting everything up you can modify the `Main.java` to create different model instances, or modify the `bank.crom` file and regenerate the model code to add new naturals, roles, and compartments.
+After setting everything up, you can further explore the CROM framework by modifying the `Main.java` to create different model instances, or modifying the `bank.crom` file and regenerate the model code to add new naturals, roles, and compartments to the model.
 
 
