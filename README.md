@@ -58,29 +58,29 @@ After installing and running the plugin, a new Eclipse Instance is opened.
     2. Find the `transfer` method and repalce the method implementation by the following code.
 
         ```{Java}
-@Override
-public void transfer(int sourceId, Account target, double amount){
-  if (amount<=0) throw new IllegalArgumentException();
-  //find source account by id
-  Optional<Account> as=Stream
-				.concat(accountSavingsAccounts.stream(), accountCheckingAccounts.stream())
-				.map(a -> (Account) a)
-				.filter(a -> a.getId()==id)
-				.findFirst();
-  Account source=as.orElse(null);
-  if (source!=null && target!=null && (!source.isSame(target))){
-    //Create a Transaction compartment
-    Transaction t=getModel().createTransaction();
-    t.bindSource(source);
-    t.bindTarget(target);
-    t.setAmount(amount);
-    t.setCreationTime(Instant.now().getNano());
-    this.bindMoneyTransfer(t);
-    System.out.println("Transaction created: "+t.toString());
-  }else {
-    System.out.println("Transaction failed to create for sourceId="+sourceId);
-  }
-}
+        @Override
+        public void transfer(int sourceId, Account target, double amount){
+          if (amount<=0) throw new IllegalArgumentException();
+          //find source account by id
+          Optional<Account> as=Stream
+				        .concat(accountSavingsAccounts.stream(), accountCheckingAccounts.stream())
+				        .map(a -> (Account) a)
+				        .filter(a -> a.getId()==id)
+				        .findFirst();
+          Account source=as.orElse(null);
+          if (source!=null && target!=null && (!source.isSame(target))){
+            //Create a Transaction compartment
+            Transaction t=getModel().createTransaction();
+            t.bindSource(source);
+            t.bindTarget(target);
+            t.setAmount(amount);
+            t.setCreationTime(Instant.now().getNano());
+            this.bindMoneyTransfer(t);
+            System.out.println("Transaction created: "+t.toString());
+          }else {
+            System.out.println("Transaction failed to create for sourceId="+sourceId);
+          }
+        }
         ```
 
 8. Finally, the `Main.java` can be run as plain Java Application via the context menu "Run > Java Application".
