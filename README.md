@@ -25,7 +25,7 @@ This Repository contains the proof of concept "Contextual and Relational Role-ba
 
 After installing and running the plugin, a new Eclipse Instance is opened.
 
-# Case Study
+### Case Study
 
 1. Import the *CROF-Example* repository into the Eclipse Instance.
     1. Select "File" -> "Import" to open the import wizard, select "Projects from Git" and hit "Next>".
