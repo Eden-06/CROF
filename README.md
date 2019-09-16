@@ -8,7 +8,7 @@ This Repository contains the proof of concept "Contextual and Relational Role-ba
 * [FRaMED 2.0](https://github.com/Eden-06/FRaMED-2.0)
 * or alternatively only [CROM](https://github.com/Eden-06/CROM)
 
-### How to import CROM Validator repository into Eclipse
+### How to import the CROM Framework into Eclipse
 1. Install *FRaMED 2.0* using the [Step-by-Step installation guied](https://github.com/Eden-06/FRaMED-2.0/wiki/Install)
 2. Install the following packages via `Help -> Eclipse Marketplace`
     * Install *Acceleo 3.7* (or higher)
